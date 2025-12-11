@@ -52,13 +52,7 @@
         </div>
     </section>
 
-<!-- Section 2: Overview -->
-
-<!-- Add these libraries -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/plugins/animation.gsap.js"></script>
-
+    <!-- Section 2: Overview -->
     <section class="section-overview" id="overview">
         <div class="container">
             <div class="section-header">
@@ -69,27 +63,16 @@
             </div>
             
             <div class="overview-grid">
-                <div class="overview-left">
-                    <div class="overview-text">
-                        <p class="large-text">
-                            Our assistive feeding device combines computer vision, robotics, and embedded systems 
-                            to create an affordable solution for individuals with limited upper body mobility.
-                        </p>
-                        <p>
-                            The system uses real-time mouth tracking to position food at the optimal location, 
-                            giving users control over their feeding process. Built with accessibility in mind, 
-                            the entire system costs under $500 and can be replicated by other teams.
-                        </p>
-                    </div>
-                    
-                    <!-- Exploded View Video -->
-                    <div class="exploded-video-wrapper">
-                        <video id="explosionVideo" muted playsinline preload="auto">
-                            <source src="explode.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <div class="video-label">Scroll to explore assembly</div>
-                    </div>
+                <div class="overview-text">
+                    <p class="large-text">
+                        Our assistive feeding device combines computer vision, robotics, and embedded systems 
+                        to create an affordable solution for individuals with limited upper body mobility.
+                    </p>
+                    <p>
+                        The system uses real-time mouth tracking to position food at the optimal location, 
+                        giving users control over their feeding process. Built with accessibility in mind, 
+                        the entire system costs under $500 and can be replicated by other teams.
+                    </p>
                 </div>
                 
                 <div class="overview-features">
@@ -118,87 +101,6 @@
         </div>
     </section>
 
-<!-- ADD THIS CSS TO YOUR styles.css FILE -->
-<style>
-/* Update overview grid to stack video under text on left */
-.overview-left {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-/* Exploded Video Styling */
-.exploded-video-wrapper {
-    position: relative;
-    width: 100%;
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(59, 130, 246, 0.05));
-    border-radius: 16px;
-    border: 1px solid rgba(255,255,255,0.1);
-    padding: 1.5rem;
-    overflow: hidden;
-}
-
-#explosionVideo {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px;
-}
-
-.video-label {
-    text-align: center;
-    margin-top: 1rem;
-    color: rgba(255,255,255,0.5);
-    font-size: 0.9rem;
-    font-style: italic;
-}
-
-@media (max-width: 768px) {
-    .overview-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .exploded-video-wrapper {
-        margin-bottom: 2rem;
-    }
-}
-</style>
-
-<!-- ADD THIS JAVASCRIPT AT THE BOTTOM OF YOUR HTML (before closing </body> tag) -->
-
-<!-- Then add this script -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const video = document.getElementById('explosionVideo');
-    const videoWrapper = document.querySelector('.exploded-video-wrapper');
-    
-    if (!video || !videoWrapper) return;
-
-    video.pause();
-    video.currentTime = 0;
-
-    // Initialize ScrollMagic Controller
-    const controller = new ScrollMagic.Controller();
-
-    // Get video duration once loaded
-    video.addEventListener('loadedmetadata', () => {
-        const videoDuration = video.duration;
-        
-        // Create ScrollMagic Scene
-        new ScrollMagic.Scene({
-            triggerElement: videoWrapper,
-            triggerHook: 1, // Start when video enters bottom of viewport
-            duration: videoWrapper.offsetHeight + window.innerHeight // Duration of scroll effect
-        })
-        .on("progress", function (event) {
-            // Update video frame based on scroll progress
-            video.currentTime = videoDuration * event.progress;
-        })
-        .addTo(controller);
-    });
-});
-</script>
-    
     <!-- Section 3: Demo -->
     <section class="section-demo" id="demo">
         <div class="container">
