@@ -9,19 +9,32 @@
 </head>
 <body>
     <canvas class="webgl"></canvas>
-    
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-logo">MUNCHKIN.</div>
-        <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#overview">Overview</a>
-            <a href="#process">Process</a>
-            <a href="#technical">Technical</a>
-            <a href="#contact">Contact</a>
+
+  <!-- Navigation -->
+<nav class="nav">
+    <div class="nav-logo">MUNCHKIN.</div>
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#overview">Overview</a>
+        <a href="#process">Process</a>
+        <div class="nav-dropdown">
+            <a href="#technical" class="dropdown-trigger">
+                Technical
+                <svg width="12" height="12" viewBox="0 0 12 12" style="margin-left: 4px; transition: transform 0.3s;">
+                    <path d="M2 4 L6 8 L10 4" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </a>
+            <div class="dropdown-menu">
+                <a href="#data-flow">Data & Energy Flow</a>
+                <a href="#electrical">Electrical</a>
+                <a href="#mechanical">Mechanical</a>
+                <a href="#software">Software</a>
+            </div>
         </div>
-        <a href="#demo" class="nav-cta">View Demo</a>
-    </nav>
+        <a href="#contact">Contact</a>
+    </div>
+    <a href="#demo" class="nav-cta">View Demo</a>
+</nav>
 
     <!-- Section 1: Hero -->
     <section class="hero" id="home">
@@ -956,7 +969,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
         <!-- Data and Energy Flow Diagram -->
-        <div class="tech-block">
+        <div class="tech-block" id="data-flow">
             <h3>Data and Energy Flow</h3>
             
             <div class="flow-diagram">
@@ -1108,7 +1121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
 <!-- Electrical -->
-            <div class="tech-block">
+            <div class="tech-block" id="electrical">
                 <h3>Electrical Design</h3>
 
                 <!-- Circuit Diagrams Side by Side -->
@@ -1462,7 +1475,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </script>
 
             <!-- Mechanical -->
-            <div class="tech-block">
+            <div class="tech-block" id="mechanical">
                 <h3>Mechanical Design</h3>
                 <div class="diagram-placeholder">
                     <p>Insert CAD renderings showing isometric, side view, and joint details</p>
@@ -1475,11 +1488,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="spec-card">
                         <strong>DOF</strong>
-                        <p>[Number and type of joints]</p>
+                        4 degrees of freedom using 4 dual shaft servo motors.<p>A panning swivel joint at the base of the arm, and 3 tilting pivot joints at the base, middle, and end of the arm.</p>
                     </div>
                     <div class="spec-card">
                         <strong>Materials</strong>
-                        <p>[3D printed PLA/ABS, aluminum, acrylic]</p>
+                    3D Printed PLA Filament:<p>Arm, Base, Motor Mounts, End Effector</p>
+                    Manually Machined Aluminum:<p>Swivel Motor Shaft</p>
                     </div>
                     <div class="spec-card">
                         <strong>End Effector</strong>
@@ -1504,7 +1518,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
 
             <!-- Software -->
-            <div class="tech-block">
+            <div class="tech-block" id="software">
                 <h3>Software and Firmware</h3>
 
                 <div class="software-modules">
