@@ -931,58 +931,42 @@ section {
 
 /* Dropdown Styles */
 .nav-dropdown {
-    position: relative;
+    position: relative !important;
 }
 
 .dropdown-trigger {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+    display: flex !important;
+    align-items: center !important;
+    cursor: pointer !important;
 }
 
 .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: rgba(10, 10, 15, 0.98);
-    border: 1px solid rgba(139, 92, 246, 0.3);
-    border-radius: 8px;
-    padding: 0.5rem 0;
-    min-width: 200px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-    margin-top: 0.5rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-}
-
-.nav-dropdown:hover .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.nav-dropdown:hover .dropdown-trigger svg {
-    transform: rotate(180deg);
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    background: rgba(10, 10, 15, 0.98) !important;
+    border: 1px solid rgba(139, 92, 246, 0.3) !important;
+    border-radius: 8px !important;
+    padding: 0.5rem 0 !important;
+    min-width: 200px !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(-10px) !important;
+    transition: all 0.3s ease !important;
+    margin-top: 0.5rem !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+    z-index: 1000 !important;
+    display: block !important; /* ADD THIS */
 }
 
 .dropdown-menu a {
-    display: block;
-    padding: 0.75rem 1.5rem;
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: all 0.2s ease;
-    border-left: 3px solid transparent;
-}
-
-.dropdown-menu a:hover {
-    background: rgba(139, 92, 246, 0.1);
-    color: rgba(139, 92, 246, 1);
-    border-left-color: rgba(139, 92, 246, 1);
-    padding-left: 1.75rem;
+    display: block !important;
+    padding: 0.75rem 1.5rem !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    text-decoration: none !important;
+    font-size: 0.95rem !important;
+    transition: all 0.2s ease !important;
+    border-left: 3px solid transparent !important;
 }
 
 /* Sections */
