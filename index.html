@@ -635,6 +635,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="section-header">
             <span class="section-label">Our Process</span>
             <h2 class="section-title">Design decisions and trade-offs</h2>
+        .section-title {
+        white-space: nowrap;
+        }
         </div>
 
         <div class="process-intro">
@@ -1106,11 +1109,449 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         </div>
 
-        <!-- Electrical (placeholder for you to add electrical section content) -->
-        <div class="tech-block">
-            <h3>Electrical Design</h3>
-            <p>Add your electrical section content here (circuit diagrams, etc.)</p>
+<!-- Electrical -->
+            <div class="tech-block">
+                <h3>Electrical Design</h3>
+
+                <!-- Circuit Diagrams Side by Side -->
+                <div class="circuits-container">
+                    <!-- Detailed Circuit Diagram (Left) -->
+                    <div class="circuit-detailed">
+                        <h4>Detailed Schematic</h4>
+                        <div class="diagram-container detailed-circuit">
+                            <object data="circuit_diagram_detailed.svg" type="image/svg+xml" class="circuit-svg" id="detailedCircuit">
+                                <img src="circuit_diagram_detailed.svg" alt="Detailed Circuit Diagram" class="circuit-fallback">
+                            </object>
+                        </div>
+                        <p class="diagram-caption">Complete circuit schematic with pin assignments and component specifications</p>
+                    </div>
+
+                    <!-- Simplified Circuit Overview (Right) -->
+                    <div class="circuit-overview">
+                        <h4>System Overview</h4>
+                        <div class="diagram-container simple-circuit">
+                            <img src="circuit_diagram_simple.png" alt="Simplified Circuit Diagram" class="circuit-image">
+                        </div>
+                        <p class="diagram-caption">Simplified system overview showing main electrical connections</p>
+                    </div>
+                </div>
+
+                <!-- Key Components Grid -->
+                <div class="components-grid">
+                    <div class="component-item">
+                        <strong>Microcontroller</strong>
+                        <p>Raspberry Pi 4 Model B (4GB RAM)</p>
+                        <p class="component-detail">Quad-core ARM Cortex-A72 @ 1.5GHz</p>
+                    </div>
+                    <div class="component-item">
+                        <strong>Depth Camera</strong>
+                        <p>Intel RealSense D435/D455</p>
+                        <p class="component-detail">RGB-D at 1920×1080, 30fps</p>
+                    </div>
+                    <div class="component-item">
+                        <strong>Servo Motors</strong>
+                        <p>4× HiWonder LX-15D</p>
+                        <p class="component-detail">15 kg·cm torque, 240° range</p>
+                    </div>
+                    <div class="component-item">
+                        <strong>Motor Controller</strong>
+                        <p>BusLinker V2.2</p>
+                        <p class="component-detail">USB to Serial Bus converter</p>
+                    </div>
+                    <div class="component-item">
+                        <strong>Power Supply</strong>
+                        <p>Dual rail: 5V @ 5A, 9V @ 3A</p>
+                        <p class="component-detail">~50W total system power</p>
+                    </div>
+                    <div class="component-item">
+                        <strong>Safety Systems</strong>
+                        <p>2× Emergency stop buttons</p>
+                        <p class="component-detail">Primary + shoulder-mounted</p>
+                    </div>
+                </div>
+
+                <!-- Technical Analysis -->
+                <div class="analysis-grid">
+                    <div class="analysis-item">
+                        <h4>Power Architecture</h4>
+                        <p><strong>5V Rail (25W):</strong> Powers Raspberry Pi (3-7W), Intel RealSense camera (3-5W), and cooling fan (2W). Uses switching power adapter with ~85% efficiency.</p>
+                        <p><strong>9V Rail (27W):</strong> Dedicated servo power through BusLinker V2.2. Isolated from computing components to prevent motor noise interference.</p>
+                        <p><strong>Peak Consumption:</strong> ~50W with all servos under load during active feeding motion.</p>
+                    </div>
+                    <div class="analysis-item">
+                        <h4>Signal Architecture</h4>
+                        <p><strong>Camera Interface:</strong> USB 3.0 connection provides high-bandwidth RGB-D streaming at 30fps.</p>
+                        <p><strong>Servo Protocol:</strong> USB → Serial Bus communication at 115200 baud. BusLinker converts USB commands to daisy-chained serial bus protocol for 4 servos.</p>
+                        <p><strong>Safety I/O:</strong> E-stop buttons wired directly to Raspberry Pi GPIO pins for <10ms emergency response time.</p>
+                    </div>
+                    <div class="analysis-item">
+                        <h4>Safety Features</h4>
+                        <p><strong>Dual E-Stops:</strong> Primary hard-wired button plus shoulder-mounted option for hands-free accessibility. Both trigger immediate motor power cut via GPIO monitoring.</p>
+                        <p><strong>Power Isolation:</strong> Physical power switch allows servo system shutdown while keeping Pi active for testing/calibration.</p>
+                        <p><strong>Thermal Management:</strong> Active cooling keeps Pi below 65°C during continuous operation.</p>
+                    </div>
+                </div>
+
+                <!-- Wiring Specifications -->
+                <div class="wiring-specs">
+                    <h4>Key Connections</h4>
+                    <div class="connections-grid">
+                        <div class="connection-item">
+                            <strong>Camera → Pi</strong>
+                            <p>USB 3.0 (blue port)</p>
+                        </div>
+                        <div class="connection-item">
+                            <strong>BusLinker → Pi</strong>
+                            <p>USB 2.0</p>
+                        </div>
+                        <div class="connection-item">
+                            <strong>E-Stops → Pi</strong>
+                            <p>GPIO pins (pull-down)</p>
+                        </div>
+                        <div class="connection-item">
+                            <strong>Servos → BusLinker</strong>
+                            <p>Serial bus daisy-chain</p>
+                        </div>
+                        <div class="connection-item">
+                            <strong>Pi Power</strong>
+                            <p>5V via USB-C</p>
+                        </div>
+                        <div class="connection-item">
+                            <strong>Servo Power</strong>
+                            <p>9V barrel jack via switch</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <style>
+                /* Circuit Diagrams Container - Side by Side */
+                .circuits-container {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 2rem;
+                    margin: 2rem 0 3rem 0;
+                }
+
+                .circuit-overview h4, .circuit-detailed h4 {
+                    color: #fff;
+                    margin-bottom: 1rem;
+                    font-size: 1.3rem;
+                }
+
+                .diagram-container {
+                    background: 
+                        linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+                        rgba(15, 15, 25, 0.8);
+                    background-size: 20px 20px, 20px 20px, 100% 100%;
+                    border: 1px solid rgba(139, 92, 246, 0.2);
+                    border-radius: 12px;
+                    padding: 2rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 450px;
+                    position: relative;
+                }
+
+                /* Remove the ::before pseudo-element we added earlier */
+                .diagram-container::before {
+                    display: none;
+                }
+
+                .circuit-image {
+                    max-width: 100%;
+                    height: auto;
+                    display: block;
+                    position: relative;
+                    z-index: 1;
+                }
+
+                .circuit-svg {
+                    width: 100%;
+                    height: auto;
+                    max-width: 100%;
+                    position: relative;
+                    z-index: 1;
+                    filter: invert(1) brightness(0.9) sepia(0.3) hue-rotate(200deg);
+                }
+
+                .circuit-fallback {
+                    max-width: 100%;
+                    height: auto;
+                    position: relative;
+                    z-index: 1;
+                    filter: invert(1) brightness(0.9) sepia(0.3) hue-rotate(200deg);
+                }                
+                .diagram-caption {
+                    text-align: center;
+                    color: rgba(255,255,255,0.6);
+                    font-size: 0.9rem;
+                    margin-top: 1rem;
+                    font-style: italic;
+                }
+
+                /* Components Grid */
+                .components-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                    gap: 1.5rem;
+                    margin: 2rem 0;
+                }
+
+                .component-item {
+                    background: rgba(255,255,255,0.03);
+                    border: 1px solid rgba(255,255,255,0.1);
+                    border-radius: 8px;
+                    padding: 1.5rem;
+                }
+
+                .component-item strong {
+                    display: block;
+                    color: rgba(139, 92, 246, 1);
+                    font-size: 1.1rem;
+                    margin-bottom: 0.5rem;
+                }
+
+                .component-item p {
+                    color: rgba(255,255,255,0.8);
+                    margin: 0.25rem 0;
+                    line-height: 1.6;
+                }
+
+                .component-detail {
+                    color: rgba(255,255,255,0.5) !important;
+                    font-size: 0.9rem !important;
+                }
+
+                /* Analysis Grid */
+                .analysis-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                    gap: 2rem;
+                    margin: 2rem 0;
+                }
+
+                .analysis-item {
+                    background: rgba(255,255,255,0.03);
+                    border-left: 3px solid rgba(139, 92, 246, 0.6);
+                    padding: 1.5rem;
+                    border-radius: 4px;
+                }
+
+                .analysis-item h4 {
+                    color: #fff;
+                    margin-bottom: 1rem;
+                    font-size: 1.2rem;
+                }
+
+                .analysis-item p {
+                    color: rgba(255,255,255,0.7);
+                    line-height: 1.8;
+                    margin-bottom: 0.75rem;
+                }
+
+                .analysis-item strong {
+                    color: rgba(255,255,255,0.9);
+                }
+
+                /* Wiring Specifications */
+                .wiring-specs {
+                    margin: 2rem 0;
+                    background: rgba(255,255,255,0.03);
+                    border-radius: 12px;
+                    padding: 2rem;
+                }
+
+                .wiring-specs h4 {
+                    color: #fff;
+                    margin-bottom: 1.5rem;
+                    font-size: 1.3rem;
+                }
+
+                .connections-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 1rem;
+                }
+
+                .connection-item {
+                    background: rgba(255,255,255,0.05);
+                    border: 1px solid rgba(255,255,255,0.1);
+                    border-radius: 6px;
+                    padding: 1rem;
+                    text-align: center;
+                }
+
+                .connection-item strong {
+                    display: block;
+                    color: rgba(139, 92, 246, 1);
+                    font-size: 0.95rem;
+                    margin-bottom: 0.5rem;
+                }
+
+                .connection-item p {
+                    color: rgba(255,255,255,0.7);
+                    font-size: 0.9rem;
+                    margin: 0;
+                }
+
+                @media (max-width: 1024px) {
+                    .circuits-container {
+                        grid-template-columns: 1fr;
+                    }
+                }
+
+                @media (max-width: 768px) {
+                    .diagram-container {
+                        padding: 1rem;
+                        min-height: 300px;
+                    }
+
+                    .components-grid {
+                        grid-template-columns: 1fr;
+                    }
+
+                    .analysis-grid {
+                        grid-template-columns: 1fr;
+                    }
+
+                    .connections-grid {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+                }
+            </style>
+
+            <script>
+                // Fix SVG colors for dark theme
+                document.addEventListener('DOMContentLoaded', function() {
+                    const svgObject = document.getElementById('detailedCircuit');
+
+                    if (svgObject) {
+                        svgObject.addEventListener('load', function() {
+                            try {
+                                const svgDoc = svgObject.contentDocument;
+                                if (svgDoc) {
+                                    const svgElement = svgDoc.documentElement;
+
+                                    // Make SVG background transparent
+                                    const bgElements = svgDoc.querySelectorAll('rect[fill="#000000"], rect[fill="black"], rect[fill="#000"]');
+                                    bgElements.forEach(el => {
+                                        if (el.getAttribute('width') === '100%' || parseFloat(el.getAttribute('width')) > 1000) {
+                                            el.setAttribute('fill', 'none');
+                                            el.setAttribute('opacity', '0');
+                                        }
+                                    });
+
+                                    // Change black lines/text to white for visibility
+                                    const blackElements = svgDoc.querySelectorAll('[stroke="#000000"], [stroke="black"], [fill="#000000"], [fill="black"]');
+                                    blackElements.forEach(el => {
+                                        if (el.getAttribute('stroke') === '#000000' || el.getAttribute('stroke') === 'black') {
+                                            el.setAttribute('stroke', '#ffffff');
+                                        }
+                                        if ((el.getAttribute('fill') === '#000000' || el.getAttribute('fill') === 'black') && el.tagName !== 'rect') {
+                                            el.setAttribute('fill', '#ffffff');
+                                        }
+                    });
+                                }
+                            } catch (e) {
+                                console.log('SVG manipulation not possible due to CORS');
+                            }
+                        });
+                    }
+                });
+            </script>
+
+            <!-- Mechanical -->
+            <div class="tech-block">
+                <h3>Mechanical Design</h3>
+                <div class="diagram-placeholder">
+                    <p>Insert CAD renderings showing isometric, side view, and joint details</p>
+                </div>
+
+                <div class="specs-grid">
+                    <div class="spec-card">
+                        <strong>Workspace</strong>
+                        <p>[Describe reach and range of motion]</p>
+                    </div>
+                    <div class="spec-card">
+                        <strong>DOF</strong>
+                        <p>[Number and type of joints]</p>
+                    </div>
+                    <div class="spec-card">
+                        <strong>Materials</strong>
+                        <p>[3D printed PLA/ABS, aluminum, acrylic]</p>
+                    </div>
+                    <div class="spec-card">
+                        <strong>End Effector</strong>
+                        <p>[Spoon holder design]</p>
+                    </div>
+                </div>
+
+                <div class="analysis-grid">
+                    <div class="analysis-item">
+                        <h4>Load Calculations</h4>
+                        <p>[Weight of food + utensil, arm weights, torque requirements]</p>
+                    </div>
+                    <div class="analysis-item">
+                        <h4>Stability Analysis</h4>
+                        <p>[Center of mass, tipping analysis, base requirements]</p>
+                    </div>
+                    <div class="analysis-item">
+                        <h4>Manufacturing</h4>
+                        <p>[3D printing/laser cutting process, design files in repository]</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Software -->
+            <div class="tech-block">
+                <h3>Software and Firmware</h3>
+
+                <div class="software-modules">
+                    <div class="module-card">
+                        <h4>Computer Vision</h4>
+                        <p><strong>Tech:</strong> [OpenCV, MediaPipe, custom model]</p>
+                        <p><strong>Function:</strong> Detects face and tracks mouth position in real-time</p>
+                        <p><strong>Performance:</strong> [FPS, accuracy metrics]</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>Motion Control</h4>
+                        <p><strong>IK:</strong> [Inverse kinematics solution method]</p>
+                        <p><strong>Planning:</strong> [Path planning for smooth movement]</p>
+                        <p><strong>Control:</strong> [PID, open-loop, feedback system]</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>User Interface</h4>
+                        <p>[Buttons, voice commands, eye tracking, etc.]</p>
+                    </div>
+                </div>
+
+                <div class="dependencies">
+                    <h4>External Dependencies</h4>
+                    <div class="deps-list">
+                        <span class="dep-tag">Python 3.x</span>
+                        <span class="dep-tag">OpenCV</span>
+                        <span class="dep-tag">NumPy</span>
+                        <span class="dep-tag">MediaPipe</span>
+                        <span class="dep-tag">PySerial</span>
+                        <span class="dep-tag">Raspberry Pi OS</span>
+                    </div>
+                </div>
+
+                <div class="code-link">
+                    <a href="[YOUR_GITHUB_LINK]" class="btn-primary">
+                        <span>View Source Code</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </a>
+                    <p class="code-note">Complete repository includes CV code, IK solver, motor control firmware, CAD files, and schematics</p>
+                </div>
+            </div>
         </div>
+    </section>
 
         <!-- Mechanical (placeholder) -->
         <div class="tech-block">
