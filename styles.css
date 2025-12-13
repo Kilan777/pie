@@ -876,6 +876,7 @@ section {
 }
 
 /* Navigation */
+
 .nav {
     position: fixed;
     top: 0;
@@ -928,7 +929,6 @@ section {
 .nav-links a:hover::after {
     width: 100%;
 }
-
 /* Dropdown Styles */
 .nav-dropdown {
     position: relative !important;
@@ -956,7 +956,19 @@ section {
     margin-top: 0.5rem !important;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
     z-index: 1000 !important;
-    display: block !important; /* ADD THIS */
+    display: block !important;
+}
+
+/* HOVER STATE - THIS WAS MISSING! */
+.nav-dropdown:hover .dropdown-menu {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+}
+
+/* Rotate arrow on hover */
+.nav-dropdown:hover .dropdown-trigger svg {
+    transform: rotate(180deg) !important;
 }
 
 .dropdown-menu a {
@@ -967,6 +979,13 @@ section {
     font-size: 0.95rem !important;
     transition: all 0.2s ease !important;
     border-left: 3px solid transparent !important;
+}
+
+.dropdown-menu a:hover {
+    background: rgba(139, 92, 246, 0.1) !important;
+    color: rgba(139, 92, 246, 1) !important;
+    border-left-color: rgba(139, 92, 246, 1) !important;
+    padding-left: 1.75rem !important;
 }
 
 /* Sections */
