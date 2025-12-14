@@ -668,27 +668,246 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
         <div class="decisions-grid">
-            <!-- Decision 1: Robotic Arm Configuration -->
-            <div class="decision-card">
-                <div class="decision-content">
-                    <div class="decision-number">01</div>
-                    <h3>Robotic Arm Configuration</h3>
-                    <div class="decision-details">
-                        <div class="detail-item">
-                            <strong>OPTIONS</strong>
-                            <p>4-DOF articulated arm, 4-DOF SCARA-style, 2-DOF pan-tilt mechanism</p>
-                        </div>
-                        <div class="detail-item">
-                            <strong>OUR CHOICE</strong>
-                            <p>4-DOF articulated arm with base rotation, shoulder, elbow, and wrist joints</p>
-                        </div>
-                        <div class="detail-item">
-                            <strong>RATIONALE</strong>
-                            <p>We chose the 4-DOF articulated configuration for maximum workspace flexibility and natural motion. The additional wrist joint (vs. 3-DOF) allows proper utensil orientation regardless of approach angle, critical for smooth feeding. While more complex than simpler designs, the improved dexterity justified the added servos and control complexity.</p>
-                        </div>
-                    </div>
+    <!-- Decision 1: Robotic Arm Configuration -->
+    <div class="decision-card">
+        <div class="decision-content">
+            <div class="decision-number">01</div>
+            <h3>Robotic Arm Configuration</h3>
+            <div class="decision-details">
+                <div class="detail-item">
+                    <strong>OPTIONS</strong>
+                    <p>4-DOF articulated arm, 4-DOF SCARA-style, 2-DOF pan-tilt mechanism</p>
+                </div>
+                <div class="detail-item">
+                    <strong>OUR CHOICE</strong>
+                    <p>4-DOF articulated arm with base rotation, shoulder, elbow, and wrist joints</p>
+                </div>
+                <div class="detail-item">
+                    <strong>RATIONALE</strong>
+                    <p>We chose the 4-DOF articulated configuration for maximum workspace flexibility and natural motion. The additional wrist joint (vs. 3-DOF) allows proper utensil orientation regardless of approach angle, critical for smooth feeding. While more complex than simpler designs, the improved dexterity justified the added servos and control complexity.</p>
                 </div>
             </div>
+        </div>
+        
+        <!-- LIVE IK DEMO -->
+        <div class="decision-showcase">
+            <div class="showcase-content" id="ikDemo">
+                <canvas id="ikCanvas" width="700" height="400" style="width: 100%; background: rgba(0,0,0,0.3); border-radius: 8px; cursor: crosshair; display: block;"></canvas>
+                
+                <div class="ik-info" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1rem;">
+                    <div style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
+                        <div style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">Base</div>
+                        <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;" id="baseAngle">0°</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
+                        <div style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">Shoulder</div>
+                        <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;" id="shoulderAngle">0°</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
+                        <div style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">Elbow</div>
+                        <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;" id="elbowAngle">0°</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
+                        <div style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">Error</div>
+                        <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;" id="distance">0px</div>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 1rem; color: rgba(255,255,255,0.6); font-size: 0.85rem; text-align: center;">Interactive inverse kinematics using FABRIK algorithm • Move your mouse to control the arm</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    const canvas = document.getElementById('ikCanvas');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    // Arm segment lengths
+    const segments = [
+        { length: 80 },  // 8 units
+        { length: 80 },  // 8 units
+        { length: 60 }   // 6 units
+    ];
+    
+    // Base position (center bottom)
+    const baseX = canvas.width / 2;
+    const baseY = canvas.height - 50;
+    
+    // Joint positions (initialized)
+    let joints = [
+        { x: baseX, y: baseY },
+        { x: baseX, y: baseY - 80 },
+        { x: baseX, y: baseY - 160 },
+        { x: baseX, y: baseY - 220 }
+    ];
+    
+    // Target position
+    let targetX = baseX;
+    let targetY = baseY - 150;
+    
+    // FABRIK Algorithm Implementation
+    function fabrik(target, iterations = 10) {
+        const n = joints.length;
+        const tolerance = 0.1;
+        
+        for (let iter = 0; iter < iterations; iter++) {
+            const dx = joints[n-1].x - target.x;
+            const dy = joints[n-1].y - target.y;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            
+            if (dist < tolerance) break;
+            
+            // Forward reaching
+            joints[n-1].x = target.x;
+            joints[n-1].y = target.y;
+            
+            for (let i = n-2; i >= 0; i--) {
+                const r = segments[i].length;
+                const lambda = r / distance(joints[i], joints[i+1]);
+                joints[i].x = (1 - lambda) * joints[i+1].x + lambda * joints[i].x;
+                joints[i].y = (1 - lambda) * joints[i+1].y + lambda * joints[i].y;
+            }
+            
+            // Backward reaching
+            joints[0].x = baseX;
+            joints[0].y = baseY;
+            
+            for (let i = 0; i < n-1; i++) {
+                const r = segments[i].length;
+                const lambda = r / distance(joints[i], joints[i+1]);
+                joints[i+1].x = (1 - lambda) * joints[i].x + lambda * joints[i+1].x;
+                joints[i+1].y = (1 - lambda) * joints[i].y + lambda * joints[i+1].y;
+            }
+        }
+    }
+    
+    function distance(p1, p2) {
+        const dx = p2.x - p1.x;
+        const dy = p2.y - p1.y;
+        return Math.sqrt(dx*dx + dy*dy);
+    }
+    
+    function calculateAngles() {
+        const angles = [];
+        const baseAngle = Math.atan2(joints[1].x - joints[0].x, -(joints[1].y - joints[0].y));
+        angles.push(baseAngle * 180 / Math.PI);
+        const shoulderAngle = Math.atan2(joints[2].y - joints[1].y, joints[2].x - joints[1].x);
+        angles.push(shoulderAngle * 180 / Math.PI);
+        const elbowAngle = Math.atan2(joints[3].y - joints[2].y, joints[3].x - joints[2].x);
+        angles.push(elbowAngle * 180 / Math.PI);
+        return angles;
+    }
+    
+    function drawArm() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Grid
+        ctx.strokeStyle = 'rgba(139, 92, 246, 0.1)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < canvas.width; i += 50) {
+            ctx.beginPath();
+            ctx.moveTo(i, 0);
+            ctx.lineTo(i, canvas.height);
+            ctx.stroke();
+        }
+        for (let i = 0; i < canvas.height; i += 50) {
+            ctx.beginPath();
+            ctx.moveTo(0, i);
+            ctx.lineTo(canvas.width, i);
+            ctx.stroke();
+        }
+        
+        // Workspace circle
+        const maxReach = segments.reduce((sum, seg) => sum + seg.length, 0);
+        ctx.strokeStyle = 'rgba(139, 92, 246, 0.2)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(baseX, baseY, maxReach, 0, Math.PI * 2);
+        ctx.stroke();
+        
+        // Base
+        ctx.fillStyle = 'rgba(139, 92, 246, 0.6)';
+        ctx.fillRect(baseX - 30, baseY - 10, 60, 20);
+        ctx.beginPath();
+        ctx.arc(baseX, baseY, 15, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Arm segments
+        const colors = ['rgba(139, 92, 246, 0.7)', 'rgba(139, 92, 246, 0.85)', 'rgba(139, 92, 246, 1)'];
+        ctx.lineCap = 'round';
+        
+        for (let i = 0; i < segments.length; i++) {
+            ctx.strokeStyle = colors[i];
+            ctx.lineWidth = 12 - i * 2;
+            ctx.beginPath();
+            ctx.moveTo(joints[i].x, joints[i].y);
+            ctx.lineTo(joints[i+1].x, joints[i+1].y);
+            ctx.stroke();
+        }
+        
+        // Joints
+        ctx.lineWidth = 3;
+        for (let i = 0; i < joints.length; i++) {
+            ctx.beginPath();
+            ctx.arc(joints[i].x, joints[i].y, i === joints.length - 1 ? 10 : 8, 0, Math.PI * 2);
+            if (i === joints.length - 1) {
+                ctx.fillStyle = 'rgba(251, 191, 36, 1)';
+                ctx.strokeStyle = 'rgba(251, 191, 36, 1)';
+            } else {
+                ctx.fillStyle = 'white';
+                ctx.strokeStyle = 'rgba(139, 92, 246, 1)';
+            }
+            ctx.fill();
+            ctx.stroke();
+        }
+        
+        // Target crosshair
+        ctx.strokeStyle = 'rgba(251, 191, 36, 0.5)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(targetX - 10, targetY);
+        ctx.lineTo(targetX + 10, targetY);
+        ctx.moveTo(targetX, targetY - 10);
+        ctx.lineTo(targetX, targetY + 10);
+        ctx.stroke();
+        
+        // Update info
+        const angles = calculateAngles();
+        const baseAngleEl = document.getElementById('baseAngle');
+        const shoulderAngleEl = document.getElementById('shoulderAngle');
+        const elbowAngleEl = document.getElementById('elbowAngle');
+        const distanceEl = document.getElementById('distance');
+        
+        if (baseAngleEl) baseAngleEl.textContent = angles[0].toFixed(1) + '°';
+        if (shoulderAngleEl) shoulderAngleEl.textContent = angles[1].toFixed(1) + '°';
+        if (elbowAngleEl) elbowAngleEl.textContent = angles[2].toFixed(1) + '°';
+        
+        const dist = distance(joints[joints.length-1], {x: targetX, y: targetY});
+        if (distanceEl) distanceEl.textContent = dist.toFixed(1) + 'px';
+    }
+    
+    canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        targetX = (e.clientX - rect.left) * scaleX;
+        targetY = (e.clientY - rect.top) * scaleY;
+    });
+    
+    function animate() {
+        fabrik({ x: targetX, y: targetY });
+        drawArm();
+        requestAnimationFrame(animate);
+    }
+    
+    animate();
+})();
+</script>
+
 
             <!-- Decision 2: Mouth Tracking Approach -->
             <div class="decision-card">
@@ -729,28 +948,257 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
 
-            <!-- Decision 3: Computing Platform -->
-            <div class="decision-card">
-                <div class="decision-content">
-                    <div class="decision-number">03</div>
-                    <h3>Computing Platform</h3>
-                    <div class="decision-details">
-                        <div class="detail-item">
-                            <strong>OPTIONS</strong>
-                            <p>Raspberry Pi, Arduino + OpenCV on laptop, Jetson Nano, microcontroller with cloud processing</p>
-                        </div>
-                        <div class="detail-item">
-                            <strong>OUR CHOICE</strong>
-                            <p>Raspberry Pi 4B (4GB RAM)</p>
-                        </div>
-                        <div class="detail-item">
-                            <strong>RATIONALE</strong>
-                            <p>Raspberry Pi 4 offers the perfect balance of compute power and cost ($62 vs. $200+ for Jetson). Quad-core ARM processor handles MediaPipe at 30fps while managing servo control and safety monitoring. Built-in USB 3.0 for camera, GPIO for safety buttons, and strong community support made development smooth. Arduino lacked ML capability, and cloud processing introduced unacceptable latency for safety-critical feeding motions.</p>
-                        </div>
-                    </div>
-                </div>
+  <!-- Decision 3: Computing Platform -->
+<div class="decision-card">
+    <div class="decision-content">
+        <div class="decision-number">03</div>
+        <h3>Computing Platform</h3>
+        <div class="decision-details">
+            <div class="detail-item">
+                <strong>OPTIONS</strong>
+                <p>Raspberry Pi, Arduino + OpenCV on laptop, Jetson Nano, microcontroller with cloud processing</p>
+            </div>
+            <div class="detail-item">
+                <strong>OUR CHOICE</strong>
+                <p>Raspberry Pi 4B (4GB RAM)</p>
+            </div>
+            <div class="detail-item">
+                <strong>RATIONALE</strong>
+                <p>Raspberry Pi 4 offers the perfect balance of compute power and cost ($62 vs. $200+ for Jetson). Quad-core ARM processor handles MediaPipe at 30fps while managing servo control and safety monitoring. Built-in USB 3.0 for camera, GPIO for safety buttons, and strong community support made development smooth. Arduino lacked ML capability, and cloud processing introduced unacceptable latency for safety-critical feeding motions.</p>
             </div>
         </div>
+    </div>
+    
+    <!-- REACTION TIME GAME -->
+    <div class="decision-showcase">
+        <div class="showcase-content" id="reactionGame">
+            <div class="game-area" id="gameArea">
+                <div id="gameContent">
+                    <div class="demo-icon">⚡</div>
+                    <p>Test your reaction time vs Raspberry Pi 4</p>
+                    <p class="demo-hint">Click when the screen turns green!</p>
+                    <button class="demo-button" id="startGameBtn">Start Challenge</button>
+                </div>
+            </div>
+            <div class="game-results" id="gameResults" style="display: none;">
+                <div class="result-item">
+                    <span class="result-label">You</span>
+                    <span class="result-value" id="yourTime">---</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Pi 4</span>
+                    <span class="result-value pi">45ms</span>
+                </div>
+            </div>
+            <p class="game-message" id="gameMessage"></p>
+        </div>
+    </div>
+</div>
+
+<style>
+.game-area {
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    padding: 3rem 2rem;
+    text-align: center;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s ease;
+}
+
+.game-area.waiting {
+    background: rgba(239, 68, 68, 0.15);
+    border: 2px solid rgba(239, 68, 68, 0.4);
+}
+
+.game-area.ready {
+    background: rgba(34, 197, 94, 0.15);
+    border: 2px solid rgba(34, 197, 94, 0.4);
+}
+
+.game-area .demo-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.game-area p {
+    color: rgba(255,255,255,0.9);
+    margin: 0.5rem 0;
+}
+
+.game-area .demo-hint {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.9rem;
+}
+
+.game-countdown {
+    font-size: 5rem;
+    font-weight: 700;
+    color: rgba(139, 92, 246, 1);
+    margin: 1rem 0;
+}
+
+.game-results {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+}
+
+.result-item {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 6px;
+}
+
+.result-label {
+    display: block;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.result-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: rgba(59, 130, 246, 1);
+}
+
+.result-value.pi {
+    color: rgba(139, 92, 246, 1);
+}
+
+.game-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(139, 92, 246, 0.1);
+    border-radius: 6px;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    text-align: center;
+}
+</style>
+
+<script>
+(function() {
+    const gameArea = document.getElementById('gameArea');
+    const gameContent = document.getElementById('gameContent');
+    const startBtn = document.getElementById('startGameBtn');
+    const gameResults = document.getElementById('gameResults');
+    const gameMessage = document.getElementById('gameMessage');
+    
+    if (!gameArea) return;
+    
+    let gameState = 'idle';
+    let startTime = 0;
+    let timeoutId = null;
+    
+    const PI_LATENCY = 45;
+    
+    function attachStartListener() {
+        const btn = document.getElementById('startGameBtn');
+        if (btn) {
+            btn.addEventListener('click', startGame);
+        }
+    }
+    
+    attachStartListener();
+    
+    function startGame() {
+        gameState = 'waiting';
+        gameArea.classList.remove('ready');
+        gameArea.classList.add('waiting');
+        gameResults.style.display = 'none';
+        gameMessage.textContent = '';
+        
+        gameContent.innerHTML = `
+            <div class="demo-icon">⏱️</div>
+            <p style="font-size: 1.5rem; font-weight: 600;">Wait for it...</p>
+            <p class="demo-hint">Click when it turns green!</p>
+        `;
+        
+        const delay = 1000 + Math.random() * 3000;
+        
+        timeoutId = setTimeout(() => {
+            showGo();
+        }, delay);
+    }
+    
+    function showGo() {
+        gameState = 'ready';
+        gameArea.classList.remove('waiting');
+        gameArea.classList.add('ready');
+        gameContent.innerHTML = `
+            <div class="game-countdown">GO!</div>
+            <p style="font-size: 1.3rem; font-weight: 600;">CLICK NOW!</p>
+        `;
+        startTime = Date.now();
+    }
+    
+    gameArea.addEventListener('click', (e) => {
+        if (e.target.classList.contains('demo-button') || e.target.closest('.demo-button')) return;
+        
+        if (gameState === 'ready') {
+            const reactionTime = Date.now() - startTime;
+            showResults(reactionTime);
+        } else if (gameState === 'waiting') {
+            clearTimeout(timeoutId);
+            gameState = 'idle';
+            gameArea.classList.remove('waiting', 'ready');
+            gameContent.innerHTML = `
+                <div class="game-countdown" style="color: rgba(239, 68, 68, 1); font-size: 3rem;">TOO EARLY!</div>
+                <p style="color: rgba(255,255,255,0.8);">Wait for the green screen</p>
+                <button class="demo-button" id="startGameBtn">Try Again</button>
+            `;
+            attachStartListener();
+        }
+    });
+    
+    function showResults(yourTime) {
+        gameState = 'complete';
+        gameArea.classList.remove('ready', 'waiting');
+        
+        const faster = yourTime < PI_LATENCY;
+        const ratio = (yourTime / PI_LATENCY).toFixed(1);
+        
+        gameContent.innerHTML = `
+            <div class="game-countdown" style="font-size: 3rem;">${yourTime}ms</div>
+            <p style="font-size: 1.2rem; font-weight: 600;">${faster ? '🎉 Impressive!' : 'Good try!'}</p>
+            <button class="demo-button" id="startGameBtn">Play Again</button>
+        `;
+        
+        attachStartListener();
+        
+        gameResults.style.display = 'grid';
+        document.getElementById('yourTime').textContent = yourTime + 'ms';
+        
+        let message;
+        if (faster) {
+            message = `Amazing! You beat the Pi by ${PI_LATENCY - yourTime}ms. However, the Pi maintains ${PI_LATENCY}ms response time consistently 24/7 without fatigue—critical for reliable feeding assistance.`;
+        } else if (yourTime < 100) {
+            message = `Great reflexes! You're only ${yourTime - PI_LATENCY}ms slower. The Pi's consistent ${PI_LATENCY}ms latency makes it perfect for real-time, safety-critical feeding motions.`;
+        } else if (yourTime < 200) {
+            message = `You're ${ratio}x slower than the Pi's ${PI_LATENCY}ms processing time. This speed is why the Pi can track mouth movements in real-time without any noticeable lag.`;
+        } else {
+            message = `You're ${ratio}x slower than the Pi! Average human reaction is 200-300ms. The Pi's ${PI_LATENCY}ms latency ensures smooth, responsive feeding every single time.`;
+        }
+        
+        gameMessage.textContent = message;
+    }
+})();
+</script>
 
         <!-- System Architecture Diagram -->
         <div class="diagram-section">
