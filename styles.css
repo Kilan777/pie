@@ -254,7 +254,7 @@ body {
 /* Section Styles */
 section {
     position: relative;
-    padding: 8rem 0;
+    padding: 3rem 0;
     z-index: 10;
 }
 
@@ -809,7 +809,7 @@ section {
 .footer {
     background: var(--bg-secondary);
     border-top: 1px solid var(--border);
-    padding: 4rem 0 2rem 0;
+    padding: 4rem 0 2rem 0; /* 2rem is about 32px - a bit tight */
     position: relative;
     z-index: 10;
 }
@@ -1494,4 +1494,27 @@ footer a:hover {
     color: var(--text-secondary);
     margin-top: 1.5rem;
     line-height: 1.6;
+}
+
+/* Make all technical cards solid dark */
+.component-item,
+.analysis-item,
+.spec-card,
+.improvement-card,
+.feature-card {
+    /* Use the same dark background as the demo specs */
+    background: #0a0a0a !important; 
+    backdrop-filter: blur(10px); /* Ensures text stays readable */
+    transition: all 0.3s ease;
+}
+
+/* Optional: Make them slightly lighter when you hover over them */
+.component-item:hover,
+.analysis-item:hover,
+.spec-card:hover,
+.improvement-card:hover,
+.feature-card:hover {
+    background: #141414 !important;
+    border-color: rgba(139, 92, 246, 0.4);
+    transform: translateY(-5px);
 }

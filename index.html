@@ -450,18 +450,28 @@
         }
 
         .spec-item {
-            text-align: center;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            transition: all 0.3s ease;
+        text-align: center;
+        padding: 1.5rem;
+        
+        /* UPDATE THIS LINE */
+        background: #0a0a0a; 
+        /* OR use a very dark semi-transparent black */
+        /* background: rgba(10, 10, 10, 0.9); */
+
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        
+        /* Optional: Adds a blur effect to the background video behind the box */
+        backdrop-filter: blur(10px); 
         }
 
         .spec-item:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(139, 92, 246, 0.4);
-            transform: translateY(-5px);
+        /* Make the background slightly lighter on hover, but still solid */
+        background: #1a1a1a; 
+        
+        border-color: rgba(139, 92, 246, 0.4);
+        transform: translateY(-5px);
         }
 
         .spec-item h4 {
@@ -667,7 +677,7 @@
     </script>
 
     <!-- Section 4: Design Process -->
-    <section class="section-process" id="process">
+<section class="section-process" id="process">
         <div class="container">
             <div class="section-header">
                 <span class="section-label">Our Process</span>
@@ -681,84 +691,170 @@
                     and a jointed arm similar to industrial robots.
                 </p>
             </div>
-
-            <div class="decisions-grid">
-                <!-- Decision 1: Robotic Arm Configuration -->
-                <div class="decision-card">
-                    <div class="decision-content">
-                        <div class="decision-number">01</div>
-                        <h3>Robotic Arm Configuration</h3>
-                        <div class="decision-details">
-                            <div class="detail-item">
-                                <strong>OPTIONS</strong>
-                                <p>4-DOF articulated arm, 4-DOF SCARA-style, 2-DOF pan-tilt mechanism</p>
-                            </div>
-                            <div class="detail-item">
-                                <strong>OUR CHOICE</strong>
-                                <p>4-DOF articulated arm with base rotation, shoulder, elbow, and wrist joints</p>
-                            </div>
-                            <div class="detail-item">
-                                <strong>RATIONALE</strong>
-                                <p>We chose the 4-DOF articulated configuration for maximum workspace flexibility and
-                                    natural motion. The additional wrist joint (vs. 3-DOF) allows proper utensil
-                                    orientation regardless of approach angle, critical for smooth feeding. While more
-                                    complex than simpler designs, the improved dexterity justified the added servos and
-                                    control complexity.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- LIVE IK DEMO -->
-                    <div class="decision-showcase">
-                        <div class="showcase-content" id="ikDemo">
-                            <canvas id="ikCanvas" width="700" height="400"
-                                style="width: 100%; background: rgba(0,0,0,0.3); border-radius: 8px; cursor: crosshair; display: block;"></canvas>
-
-                            <div class="ik-info"
-                                style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1rem;">
-                                <div
-                                    style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
-                                    <div
-                                        style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">
-                                        Base</div>
-                                    <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;"
-                                        id="baseAngle">0°</div>
-                                </div>
-                                <div
-                                    style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
-                                    <div
-                                        style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">
-                                        Shoulder</div>
-                                    <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;"
-                                        id="shoulderAngle">0°</div>
-                                </div>
-                                <div
-                                    style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
-                                    <div
-                                        style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">
-                                        Elbow</div>
-                                    <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;"
-                                        id="elbowAngle">0°</div>
-                                </div>
-                                <div
-                                    style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
-                                    <div
-                                        style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">
-                                        Error</div>
-                                    <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;"
-                                        id="distance">0px</div>
-                                </div>
-                            </div>
-
-                            <p
-                                style="margin-top: 1rem; color: rgba(255,255,255,0.6); font-size: 0.85rem; text-align: center;">
-                                Interactive inverse kinematics using FABRIK algorithm • Move your mouse to control the
-                                arm</p>
-                        </div>
-                    </div>
+<div class="decisions-grid">
+    <div class="decision-card">
+        <div class="decision-content">
+            <div class="decision-number">01</div>
+            <h3>Robotic Arm Configuration</h3>
+            <div class="decision-details">
+                <div class="detail-item">
+                    <strong>OPTIONS</strong>
+                    <p>4-DOF articulated arm, 4-DOF SCARA-style, 2-DOF pan-tilt mechanism</p>
+                </div>
+                <div class="detail-item">
+                    <strong>OUR CHOICE</strong>
+                    <p>4-DOF articulated arm with base rotation, shoulder, elbow, and wrist joints</p>
+                </div>
+                <div class="detail-item">
+                    <strong>RATIONALE</strong>
+                    <p>We chose the 4-DOF articulated configuration for maximum workspace flexibility and
+                        natural motion. The additional wrist joint (vs. 3-DOF) allows proper utensil
+                        orientation regardless of approach angle, critical for smooth feeding. While more
+                        complex than simpler designs, the improved dexterity justified the added servos and
+                        control complexity.</p>
                 </div>
             </div>
+        </div>
 
+        <div class="decision-showcase">
+            <div class="showcase-content" id="ikDemo">
+                <canvas id="ikCanvas" width="700" height="400"
+                    style="width: 100%; background: rgba(0,0,0,0.3); border-radius: 8px; cursor: crosshair; display: block;"></canvas>
+
+                <div class="ik-info"
+                    style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1rem;">
+                    <div
+                        style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
+                        <div
+                            style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">
+                            Base</div>
+                        <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;"
+                            id="baseAngle">0°</div>
+                    </div>
+                    <div
+                        style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
+                        <div
+                            style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">
+                            Shoulder</div>
+                        <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;"
+                            id="shoulderAngle">0°</div>
+                    </div>
+                    <div
+                        style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
+                        <div
+                            style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">
+                            Elbow</div>
+                        <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;"
+                            id="elbowAngle">0°</div>
+                    </div>
+                    <div
+                        style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
+                        <div
+                            style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">
+                            Error</div>
+                        <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;"
+                            id="distance">0px</div>
+                    </div>
+                </div>
+
+                <p style="margin-top: 1rem; color: rgba(255,255,255,0.6); font-size: 0.85rem; text-align: center;">
+                    Interactive inverse kinematics using FABRIK algorithm • Move your mouse to control the
+                    arm</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="decision-card">
+        <div class="decision-content">
+            <div class="decision-number">02</div>
+            <h3>Mouth Tracking Approach</h3>
+            <div class="decision-details">
+                <div class="detail-item">
+                    <strong>OPTIONS</strong>
+                    <p>MediaPipe Face Mesh, OpenCV Haar Cascades, custom CNN model, depth camera only</p>
+                </div>
+                <div class="detail-item">
+                    <strong>OUR CHOICE</strong>
+                    <p>MediaPipe Face Mesh with RealSense depth camera</p>
+                </div>
+                <div class="detail-item">
+                    <strong>RATIONALE</strong>
+                    <p>MediaPipe provides 468 facial landmarks at 30fps with excellent accuracy on Raspberry Pi
+                        4. Combines well with RealSense depth data for precise 3D positioning. Pre-trained
+                        models eliminated weeks of custom ML training, and open-source implementation made
+                        debugging straightforward. Haar Cascades were too inaccurate, and custom CNNs would
+                        require extensive datasets we didn't have.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="decision-showcase">
+            <div class="showcase-content live-demo" id="mediapipeDemo">
+                <div class="demo-placeholder">
+                    <div class="demo-icon">📹</div>
+                    <p>See mouth tracking in action</p>
+                    <p class="demo-hint">Tip: Select "Always allow" for best experience</p>
+                    <button class="demo-button" id="startDemoBtn">Try It Out</button>
+                </div>
+                <div class="demo-video-container">
+                    <video id="demoVideo" class="demo-video" autoplay playsinline></video>
+                    <canvas id="demoCanvas" class="demo-canvas"></canvas>
+                </div>
+                <button class="demo-stop" id="stopDemoBtn">Stop Demo</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="decision-card">
+        <div class="decision-content">
+            <div class="decision-number">03</div>
+            <h3>Computing Platform</h3>
+            <div class="decision-details">
+                <div class="detail-item">
+                    <strong>OPTIONS</strong>
+                    <p>Raspberry Pi, Arduino + OpenCV on laptop, Jetson Nano, microcontroller with cloud
+                        processing</p>
+                </div>
+                <div class="detail-item">
+                    <strong>OUR CHOICE</strong>
+                    <p>Raspberry Pi 4B (4GB RAM)</p>
+                </div>
+                <div class="detail-item">
+                    <strong>RATIONALE</strong>
+                    <p>Raspberry Pi 4 offers the perfect balance of compute power and cost ($62 vs. $200+ for
+                        Jetson). Quad-core ARM processor handles MediaPipe at 30fps while managing servo control
+                        and safety monitoring. Built-in USB 3.0 for camera, GPIO for safety buttons, and strong
+                        community support made development smooth. Arduino lacked ML capability, and cloud
+                        processing introduced unacceptable latency for safety-critical feeding motions.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="decision-showcase">
+            <div class="showcase-content" id="reactionGame">
+                <div class="game-area" id="gameArea">
+                    <div id="gameContent">
+                        <div class="demo-icon">⚡</div>
+                        <p>Test your reaction time vs Raspberry Pi 4</p>
+                        <p class="demo-hint">Click when the screen turns green!</p>
+                        <button class="demo-button" id="startGameBtn">Start Challenge</button>
+                    </div>
+                </div>
+                <div class="game-results" id="gameResults" style="display: none;">
+                    <div class="result-item">
+                        <span class="result-label">You</span>
+                        <span class="result-value" id="yourTime">---</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Pi 4</span>
+                        <span class="result-value pi">45ms</span>
+                    </div>
+                </div>
+                <p class="game-message" id="gameMessage"></p>
+            </div>
+        </div>
+    </div>
+</div>
             <script>
                 (function () {
                     const canvas = document.getElementById('ikCanvas');
@@ -991,102 +1087,6 @@
                     animate();
                 })();
             </script>
-
-
-            <!-- Decision 2: Mouth Tracking Approach -->
-            <div class="decision-card">
-                <div class="decision-content">
-                    <div class="decision-number">02</div>
-                    <h3>Mouth Tracking Approach</h3>
-                    <div class="decision-details">
-                        <div class="detail-item">
-                            <strong>OPTIONS</strong>
-                            <p>MediaPipe Face Mesh, OpenCV Haar Cascades, custom CNN model, depth camera only</p>
-                        </div>
-                        <div class="detail-item">
-                            <strong>OUR CHOICE</strong>
-                            <p>MediaPipe Face Mesh with RealSense depth camera</p>
-                        </div>
-                        <div class="detail-item">
-                            <strong>RATIONALE</strong>
-                            <p>MediaPipe provides 468 facial landmarks at 30fps with excellent accuracy on Raspberry Pi
-                                4. Combines well with RealSense depth data for precise 3D positioning. Pre-trained
-                                models eliminated weeks of custom ML training, and open-source implementation made
-                                debugging straightforward. Haar Cascades were too inaccurate, and custom CNNs would
-                                require extensive datasets we didn't have.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- LIVE MEDIAPIPE DEMO -->
-                <div class="decision-showcase">
-                    <div class="showcase-content live-demo" id="mediapipeDemo">
-                        <div class="demo-placeholder">
-                            <div class="demo-icon">📹</div>
-                            <p>See mouth tracking in action</p>
-                            <p class="demo-hint">Tip: Select "Always allow" for best experience</p>
-                            <button class="demo-button" id="startDemoBtn">Try It Out</button>
-                        </div>
-                        <div class="demo-video-container">
-                            <video id="demoVideo" class="demo-video" autoplay playsinline></video>
-                            <canvas id="demoCanvas" class="demo-canvas"></canvas>
-                        </div>
-                        <button class="demo-stop" id="stopDemoBtn">Stop Demo</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Decision 3: Computing Platform -->
-            <div class="decision-card">
-                <div class="decision-content">
-                    <div class="decision-number">03</div>
-                    <h3>Computing Platform</h3>
-                    <div class="decision-details">
-                        <div class="detail-item">
-                            <strong>OPTIONS</strong>
-                            <p>Raspberry Pi, Arduino + OpenCV on laptop, Jetson Nano, microcontroller with cloud
-                                processing</p>
-                        </div>
-                        <div class="detail-item">
-                            <strong>OUR CHOICE</strong>
-                            <p>Raspberry Pi 4B (4GB RAM)</p>
-                        </div>
-                        <div class="detail-item">
-                            <strong>RATIONALE</strong>
-                            <p>Raspberry Pi 4 offers the perfect balance of compute power and cost ($62 vs. $200+ for
-                                Jetson). Quad-core ARM processor handles MediaPipe at 30fps while managing servo control
-                                and safety monitoring. Built-in USB 3.0 for camera, GPIO for safety buttons, and strong
-                                community support made development smooth. Arduino lacked ML capability, and cloud
-                                processing introduced unacceptable latency for safety-critical feeding motions.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- REACTION TIME GAME -->
-                <div class="decision-showcase">
-                    <div class="showcase-content" id="reactionGame">
-                        <div class="game-area" id="gameArea">
-                            <div id="gameContent">
-                                <div class="demo-icon">⚡</div>
-                                <p>Test your reaction time vs Raspberry Pi 4</p>
-                                <p class="demo-hint">Click when the screen turns green!</p>
-                                <button class="demo-button" id="startGameBtn">Start Challenge</button>
-                            </div>
-                        </div>
-                        <div class="game-results" id="gameResults" style="display: none;">
-                            <div class="result-item">
-                                <span class="result-label">You</span>
-                                <span class="result-value" id="yourTime">---</span>
-                            </div>
-                            <div class="result-item">
-                                <span class="result-label">Pi 4</span>
-                                <span class="result-value pi">45ms</span>
-                            </div>
-                        </div>
-                        <p class="game-message" id="gameMessage"></p>
-                    </div>
-                </div>
-            </div>
 
             <style>
                 .game-area {
@@ -1934,14 +1934,6 @@
                             <strong>Servos → BusLinker</strong>
                             <p>Serial bus daisy-chain</p>
                         </div>
-                        <div class="connection-item">
-                            <strong>Pi Power</strong>
-                            <p>5V via USB-C</p>
-                        </div>
-                        <div class="connection-item">
-                            <strong>Servo Power</strong>
-                            <p>9V barrel jack via switch</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -2685,7 +2677,7 @@
             .decisions-grid {
                 display: flex;
                 flex-direction: column;
-                gap: 3rem;
+                gap: 3rem; /* <--- CHANGE THIS VALUE */
                 margin: 3rem 0;
             }
 
@@ -2693,13 +2685,14 @@
                 background: rgba(255, 255, 255, 0.02);
                 border: 1px solid rgba(255, 255, 255, 0.1);
                 border-radius: 16px;
-                padding: 2.5rem;
+                padding: 2.5rem; /* <--- CHANGE THIS VALUE */
+                margin: 0 !important;
             }
 
             .decision-card:has(.decision-showcase) {
                 display: grid;
                 grid-template-columns: 1.2fr 0.8fr;
-                gap: 2rem;
+                gap: 2rem; /* <--- CHANGE THIS VALUE */
                 align-items: start;
             }
 
@@ -4270,4 +4263,4 @@
         <script src="main.js"></script>
 </body>
 
-</html>
+</html> 
