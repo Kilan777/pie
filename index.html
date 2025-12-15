@@ -16,7 +16,13 @@
 </head>
 
 <body>
-    <canvas class="webgl"></canvas>
+    <!-- Video Background -->
+    <div class="video-background">
+    <video id="bgVideo" muted playsinline autoplay loop>
+        <source src="background.mp4" type="video/mp4">
+    </video>
+    </div>
+    <canvas class="webgl"></canvas> 
 
   <!-- Navigation -->
 <nav class="nav">
@@ -139,6 +145,44 @@
         </div>
     </section>
 
+<!-- Explosion Video Script -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const video = document.getElementById('explosionVideo');
+    const videoWrapper = document.querySelector('.exploded-video-wrapper');
+    
+    if (!video || !videoWrapper) {
+        console.log('Explosion video elements not found');
+        return;
+    }
+
+    video.pause();
+    video.currentTime = 0;
+
+    // Initialize ScrollMagic Controller
+    const controller = new ScrollMagic.Controller();
+
+    // Get video duration once loaded
+    video.addEventListener('loadedmetadata', () => {
+        const videoDuration = video.duration;
+        console.log('Explosion video loaded, duration:', videoDuration);
+        
+        // Create ScrollMagic Scene
+        new ScrollMagic.Scene({
+            triggerElement: videoWrapper,
+            triggerHook: 1,
+            duration: videoWrapper.offsetHeight * 0.1 + window.innerHeight
+        })
+        .on("progress", function (event) {
+            video.currentTime = videoDuration * event.progress;
+        })
+        .addTo(controller);
+        
+        console.log('Explosion scroll scene created');
+    });
+});
+</script>
+
 <!-- ADD THIS CSS TO YOUR styles.css FILE -->
 <style>
 /* Update overview grid to stack video under text on left */
@@ -191,35 +235,12 @@
 
 <!-- Then add this script -->
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const video = document.getElementById('explosionVideo');
-    const videoWrapper = document.querySelector('.exploded-video-wrapper');
-    
-    if (!video || !videoWrapper) return;
-
-    video.pause();
-    video.currentTime = 0;
-
-    // Initialize ScrollMagic Controller
-    const controller = new ScrollMagic.Controller();
-
-    // Get video duration once loaded
-    video.addEventListener('loadedmetadata', () => {
-        const videoDuration = video.duration;
-        
-        // Create ScrollMagic Scene
-        new ScrollMagic.Scene({
-            triggerElement: videoWrapper,
-            triggerHook: 1, // Start when video enters bottom of viewport
-            duration: videoWrapper.offsetHeight*0.1 + window.innerHeight // Duration of scroll effect
-        })
-        .on("progress", function (event) {
-            // Update video frame based on scroll progress
-            video.currentTime = videoDuration * event.progress;
-        })
-        .addTo(controller);
-    });
-});
+// Background video - just play and loop
+const bgVideo = document.getElementById('bgVideo');
+if (bgVideo) {
+    bgVideo.loop = true;
+    bgVideo.play();
+}
 </script>
 
 <!-- Section 3: Demo -->
@@ -737,7 +758,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const baseY = canvas.height - 50;
     
     // Joint angles (this is how CCD works - track angles, not positions)
-    let angles = [0, -Math.PI / 2, 0]; // Start pointing up
+    // Convert degrees to radians: degrees * (Math.PI / 180)
+    let angles = [
+    13.4 * (Math.PI / 180),   // Base: 13.4°
+    -146.9 * (Math.PI / 180), // Shoulder: -146.9°
+    135.4 * (Math.PI / 180)   // Elbow: 135.4°
+    ];
     
     // Target position
     let targetX = baseX;
@@ -2016,38 +2042,314 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
 
-            <!-- Software -->
-            <div class="tech-block" id="software">
-                <h3>Software and Firmware</h3>
-
-                <div class="software-modules">
-                    <div class="module-card">
-                        <h4>Computer Vision</h4>
-                        <p><strong>Tech:</strong> [OpenCV, MediaPipe, custom model]</p>
-                        <p><strong>Function:</strong> Detects face and tracks mouth position in real-time</p>
-                        <p><strong>Performance:</strong> [FPS, accuracy metrics]</p>
-                    </div>
-                    <div class="module-card">
-                        <h4>Motion Control</h4>
-                        <p><strong>IK:</strong> [Inverse kinematics solution method]</p>
-                        <p><strong>Planning:</strong> [Path planning for smooth movement]</p>
-                        <p><strong>Control:</strong> [PID, open-loop, feedback system]</p>
-                    </div>
-                    <div class="module-card">
-                        <h4>User Interface</h4>
-                        <p>[Buttons, voice commands, eye tracking, etc.]</p>
+            <div class="tech-block" id="software" style="position: relative;">
+                <div style="display: flex; justify-content: space-between; align-items: end; margin-bottom: 2rem;">
+                    <h3>Software Design</h3>
+                    <div style="font-family: 'Courier New', monospace; font-size: 0.8rem; color: var(--accent); background: rgba(99, 102, 241, 0.1); padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid rgba(99, 102, 241, 0.3); display: flex; gap: 1.5rem;"
+                        id="telemetryBar">
+                        <span style="display: flex; align-items: center; gap: 0.5rem;"><span
+                                style="display: block; width: 6px; height: 6px; background: #34d399; border-radius: 50%; box-shadow: 0 0 8px #34d399;"></span>
+                            SYS: ONLINE</span>
+                        <span>FREQ: 100Hz</span>
+                        <span>THREADS: 4</span>
                     </div>
                 </div>
 
-                <div class="dependencies">
-                    <h4>External Dependencies</h4>
-                    <div class="deps-list">
-                        <span class="dep-tag">Python 3.x</span>
-                        <span class="dep-tag">OpenCV</span>
-                        <span class="dep-tag">NumPy</span>
-                        <span class="dep-tag">MediaPipe</span>
-                        <span class="dep-tag">PySerial</span>
-                        <span class="dep-tag">Raspberry Pi OS</span>
+                <div
+                    style="background: linear-gradient(135deg, rgba(20, 20, 20, 1), rgba(30, 30, 30, 1)); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 0; margin-bottom: 4rem; position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr;">
+                    <div class="video-placeholder"
+                        style="margin: 0; background: #050505; border-right: 1px solid rgba(255,255,255,0.1); border-radius: 20px 0 0 20px; min-height: 400px; display: flex; flex-direction: column; justify-content: space-between; padding: 2rem; position: relative;">
+                        <div style="display: flex; justify-content: space-between; width: 100%;">
+                            <div
+                                style="border: 2px solid rgba(255,255,255,0.3); border-right: none; border-bottom: none; width: 20px; height: 20px;">
+                            </div>
+                            <div
+                                style="border: 2px solid rgba(255,255,255,0.3); border-left: none; border-bottom: none; width: 20px; height: 20px;">
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div
+                                style="color: #ef4444; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.1em; display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 1rem;">
+                                <div
+                                    style="width: 10px; height: 10px; background: #ef4444; border-radius: 50%; animation: pulse 2s infinite;">
+                                </div>
+                                REC MODE
+                            </div>
+                            <p style="font-style: italic; color: rgba(255,255,255,0.4);">[Video: User physically guiding
+                                arm]</p>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; width: 100%;">
+                            <div
+                                style="border: 2px solid rgba(255,255,255,0.3); border-right: none; border-top: none; width: 20px; height: 20px;">
+                            </div>
+                            <div
+                                style="border: 2px solid rgba(255,255,255,0.3); border-left: none; border-top: none; width: 20px; height: 20px;">
+                            </div>
+                        </div>
+                        <div
+                            style="position: absolute; bottom: 2rem; left: 2rem; right: 2rem; height: 2px; background: rgba(255,255,255,0.1);">
+                            <div
+                                style="width: 30%; height: 100%; background: #ef4444; position: relative; animation: scrub 4s infinite linear;">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding: 3rem; display: flex; flex-direction: column; justify-content: center;">
+                        <div
+                            style="display: inline-block; color: var(--accent); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1rem;">
+                            User Experience</div>
+                        <h4 style="color: #fff; font-size: 2rem; margin-bottom: 1.5rem; line-height: 1.1;">
+                            Human-in-the-Loop Training</h4>
+                        <p
+                            style="color: rgba(255,255,255,0.8); font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem;">
+                            Hard-coding a scooping trajectory is rigid. We implemented a
+                            <strong>teach-and-repeat</strong> system that puts the user in control.
+                        </p>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 1rem; line-height: 1.7;">
+                            The user physically guides the arm through their preferred motion once. The system records
+                            the high-fidelity joint states and replays them dynamically, allowing for instant
+                            customization of approach angles without writing code.
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    style="background: #0a0a0a; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; margin-bottom: 4rem; overflow: hidden;">
+                    <div
+                        style="background: rgba(255,255,255,0.03); padding: 1rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center;">
+                        <div
+                            style="color: var(--accent-light); font-size: 0.8rem; font-weight: bold; letter-spacing: 0.05em;">
+                            FREQUENCY DECOUPLING ENGINE</div>
+                        <div style="font-family: monospace; font-size: 0.7rem; color: #a0aec0;">STATUS: SYNCHRONIZED
+                        </div>
+                    </div>
+
+                    <div
+                        style="display: grid; grid-template-columns: 1fr 200px 1fr; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <div
+                            style="padding: 2rem; border-right: 1px solid rgba(255,255,255,0.05); background: #050505; position: relative;">
+                            <div
+                                style="color: #a0aec0; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem; display: flex; justify-content: space-between;">
+                                <span>VISION THREAD</span>
+                                <span style="color: #ef4444;">30 Hz (Laggy)</span>
+                            </div>
+                            <div
+                                style="height: 150px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; position: relative; overflow: hidden;">
+                                <div
+                                    style="width: 12px; height: 12px; background: rgba(255,255,255,0.1); border-radius: 50%; position: absolute; top: 50%; left: 0; margin-top: -6px; animation: moveTarget 3s ease-in-out infinite alternate;">
+                                </div>
+                                <div
+                                    style="width: 20px; height: 20px; border: 2px solid #ef4444; position: absolute; top: 50%; left: 0; margin-top: -10px; margin-left: -4px; animation: moveTarget 3s steps(8) infinite alternate;">
+                                </div>
+                                <div
+                                    style="position: absolute; bottom: 5px; right: 5px; font-family: monospace; font-size: 0.6rem; color: #ef4444;">
+                                    PROCESSING...</div>
+                            </div>
+                        </div>
+
+                        <div
+                            style="padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(139, 92, 246, 0.05); position: relative;">
+                            <div
+                                style="width: 2px; height: 100%; background: linear-gradient(to bottom, transparent, var(--accent), transparent); position: absolute; left: 50%; opacity: 0.3;">
+                            </div>
+                            <div
+                                style="background: #1a1a1a; border: 1px solid var(--accent); padding: 0.5rem 1rem; border-radius: 50px; z-index: 2; box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);">
+                                <span style="color: var(--accent); font-weight: 700; font-size: 0.9rem;">RQ</span>
+                            </div>
+                            <div
+                                style="margin-top: 1rem; font-family: monospace; font-size: 0.7rem; color: rgba(255,255,255,0.6); text-align: center;">
+                                ASYNC<br>BUFFER
+                            </div>
+                            <div
+                                style="position: absolute; width: 6px; height: 6px; background: #fff; border-radius: 50%; top: 20%; left: 50%; transform: translateX(-50%); animation: dropData 1s infinite linear;">
+                            </div>
+                        </div>
+
+                        <div style="padding: 2rem; border-left: 1px solid rgba(255,255,255,0.05); background: #050505;">
+                            <div
+                                style="color: #a0aec0; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem; display: flex; justify-content: space-between;">
+                                <span>CONTROL THREAD</span>
+                                <span style="color: #34d399;">100 Hz (Smooth)</span>
+                            </div>
+                            <div
+                                style="height: 150px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; position: relative; overflow: hidden;">
+                                <div
+                                    style="width: 12px; height: 12px; background: rgba(255,255,255,0.1); border-radius: 50%; position: absolute; top: 50%; left: 0; margin-top: -6px; animation: moveTarget 3s ease-in-out infinite alternate;">
+                                </div>
+                                <div
+                                    style="width: 20px; height: 20px; border: 2px solid #34d399; border-radius: 50%; position: absolute; top: 50%; left: 0; margin-top: -10px; margin-left: -4px; animation: moveTarget 3s ease-in-out infinite alternate; box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);">
+                                </div>
+                                <div
+                                    style="position: absolute; bottom: 5px; right: 5px; font-family: monospace; font-size: 0.6rem; color: #34d399;">
+                                    INTERPOLATING</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="padding: 2rem; background: rgba(255,255,255,0.02);">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+                            <div>
+                                <h5 style="color: #fff; font-size: 1.1rem; margin-bottom: 0.5rem;">The Latency Problem
+                                </h5>
+                                <p style="color: rgba(255,255,255,0.6); font-size: 0.95rem; line-height: 1.6;">
+                                    Computer vision is computationally heavy (max ~30fps). If the robot waited for every
+                                    frame to process, the motors would "stutter," causing dangerous jerky motions as
+                                    seen in the left visual.
+                                </p>
+                            </div>
+                            <div>
+                                <h5 style="color: var(--accent); font-size: 1.1rem; margin-bottom: 0.5rem;">The Redis
+                                    Queue Solution</h5>
+                                <p style="color: rgba(255,255,255,0.6); font-size: 0.95rem; line-height: 1.6;">
+                                    We decoupled the systems using <strong>Redis Queue (RQ)</strong>. The vision thread
+                                    dumps data as fast as it can (jittery). The control thread pulls the latest data at
+                                    a fixed 100Hz, interpolating the path to ensure "butter smooth" safety-critical
+                                    motion (right visual).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 4rem;">
+                    <div style="border-left: 2px solid var(--accent); padding-left: 2rem;">
+                        <h4 style="color: #fff; font-size: 1.8rem; margin-bottom: 1.5rem;">Robust Gradient Descent
+                            Control</h4>
+                        <p
+                            style="color: rgba(255,255,255,0.8); font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem; max-width: 900px;">
+                            Traditional trajectory generation failed due to depth noise. Instead, we implemented a
+                            <strong>closed-loop numerical approach</strong> that functions like a magnetic pull,
+                            constantly correcting the path.
+                        </p>
+                    </div>
+                    <div
+                        style="background: rgba(10, 10, 10, 0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 2rem 3rem; margin-top: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2rem;">
+                        <div
+                            style="font-family: 'Times New Roman', serif; font-size: 2rem; color: #fff; letter-spacing: 0.02em;">
+                            <span style="opacity: 0.8; font-style: italic;">J</span>(<span
+                                style="font-style: italic;">q</span>)
+                            <span style="color: var(--accent); font-weight: bold; font-style: italic;">q̇</span>
+                            =
+                            <span style="color: #34d399; font-style: italic;">ẋ</span>
+                            +
+                            <span style="opacity: 0.8;">λ</span><span style="font-style: italic;">e</span>
+                        </div>
+                        <div
+                            style="display: flex; gap: 2rem; font-size: 0.85rem; color: rgba(255,255,255,0.5); font-family: 'Inter', sans-serif;">
+                            <div><span
+                                    style="display: block; color: var(--accent); font-weight: 600; margin-bottom: 0.25rem;">q̇
+                                    (Joint Vel)</span>Output Command</div>
+                            <div><span
+                                    style="display: block; color: #34d399; font-weight: 600; margin-bottom: 0.25rem;">ẋ
+                                    (Task Vel)</span>Desired Motion</div>
+                            <div><span style="display: block; color: #fff; font-weight: 600; margin-bottom: 0.25rem;">e
+                                    (Error)</span>Correction Vector</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 4rem;">
+                    <div>
+                        <h4 style="color: #fff; font-size: 1.4rem; margin-bottom: 1rem;">System Logic</h4>
+                        <div class="terminal-window"
+                            style="background: #0f1117; border-radius: 8px; border: 1px solid #2d3748; box-shadow: 0 20px 40px rgba(0,0,0,0.5); font-family: 'Fira Code', 'Courier New', monospace; font-size: 0.8rem; height: 320px; display: flex; flex-direction: column;">
+                            <div
+                                style="background: #1a202c; padding: 0.5rem 1rem; border-bottom: 1px solid #2d3748; color: #718096; font-size: 0.7rem;">
+                                pi@munchkin-bot:~
+                            </div>
+                            <div
+                                style="padding: 1rem; color: #a0aec0; overflow: hidden; position: relative; flex-grow: 1;">
+                                <div id="typewriter"
+                                    style="white-space: pre-wrap; word-wrap: break-word; line-height: 1.5;"></div>
+                            </div>
+                        </div>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-top: 1rem; line-height: 1.6;">
+                            The terminal above represents our real-time logging, showing the state transitions and RQ
+                            job processing happening in parallel.
+                        </p>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; justify-content: center;">
+                        <h4 style="color: #fff; font-size: 1.4rem; margin-bottom: 1.5rem;">Finite State Machine</h4>
+
+                        <div style="display: grid; grid-template-columns: 40px 1fr; gap: 0; position: relative;">
+                            <div
+                                style="position: absolute; left: 19px; top: 20px; bottom: 20px; width: 2px; background: rgba(255,255,255,0.1); z-index: 1;">
+                            </div>
+
+                            <div
+                                style="position: relative; height: 100px; display: flex; align-items: flex-start; justify-content: center; padding-top: 5px;">
+                                <div
+                                    style="width: 14px; height: 14px; background: #2d3748; border: 2px solid #718096; border-radius: 50%; z-index: 2; position: relative;">
+                                </div>
+                            </div>
+                            <div
+                                style="height: 100px; display: flex; flex-direction: column; justify-content: flex-start;">
+                                <strong style="color: #a0aec0; display: block; margin-bottom: 0.25rem;">IDLE</strong>
+                                <span style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Waiting for user trigger
+                                    or voice command.</span>
+                            </div>
+
+                            <div
+                                style="position: relative; height: 100px; display: flex; align-items: flex-start; justify-content: center; padding-top: 5px;">
+                                <div
+                                    style="width: 14px; height: 14px; background: rgba(52, 211, 153, 0.2); border: 2px solid #34d399; border-radius: 50%; z-index: 2; box-shadow: 0 0 10px rgba(52, 211, 153, 0.3); position: relative;">
+                                </div>
+                            </div>
+                            <div
+                                style="height: 100px; display: flex; flex-direction: column; justify-content: flex-start;">
+                                <strong
+                                    style="color: #34d399; display: block; margin-bottom: 0.25rem;">TRACKING</strong>
+                                <span style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Closed-loop gradient
+                                    descent active.</span>
+                            </div>
+
+                            <div
+                                style="position: relative; height: auto; display: flex; align-items: flex-start; justify-content: center; padding-top: 5px;">
+                                <div
+                                    style="width: 14px; height: 14px; background: #2d3748; border: 2px solid #6366f1; border-radius: 50%; z-index: 2; position: relative;">
+                                </div>
+                            </div>
+                            <div
+                                style="height: auto; display: flex; flex-direction: column; justify-content: flex-start;">
+                                <strong
+                                    style="color: var(--accent); display: block; margin-bottom: 0.25rem;">SCOOPING</strong>
+                                <span style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Replaying recorded human
+                                    trajectory.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4rem;">
+                    <h4 style="color: #fff; font-size: 1.4rem; margin-bottom: 2rem;">Priority Safety Layer</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 100px 1fr; gap: 1rem; align-items: center;">
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div
+                                style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: #fff; font-weight: 600;">Primary E-Stop</span>
+                                <span style="font-family: monospace; color: #a0aec0; font-size: 0.8rem;">GPIO_17</span>
+                            </div>
+                            <div
+                                style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: #fff; font-weight: 600;">Shoulder Stop</span>
+                                <span style="font-family: monospace; color: #a0aec0; font-size: 0.8rem;">GPIO_27</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: center; color: rgba(255,255,255,0.2);">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M5 12h14M13 5l7 7-7 7" />
+                            </svg>
+                        </div>
+                        <div
+                            style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 12px; padding: 1.5rem; text-align: center;">
+                            <div
+                                style="color: #fca5a5; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem;">
+                                Hardware Interrupt</div>
+                            <div style="height: 1px; background: rgba(239, 68, 68, 0.3); margin: 0.8rem 0;"></div>
+                            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem; line-height: 1.5;">Bypasses main
+                                loop.<br><strong>Instant torque cut.</strong></p>
+                        </div>
                     </div>
                 </div>
 
@@ -2055,15 +2357,135 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="[YOUR_GITHUB_LINK]" class="btn-primary">
                         <span>View Source Code</span>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2"/>
+                            <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" />
                         </svg>
                     </a>
-                    <p class="code-note">Complete repository includes CV code, IK solver, motor control firmware, CAD files, and schematics</p>
+                    <p class="code-note">Full repository includes kinematics solver, FSM implementation, and
+                        multithreading logic.</p>
                 </div>
             </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const textElement = document.getElementById('typewriter');
+                    const telemetry = document.getElementById('telemetryBar');
+                    if (window.innerWidth > 768) { telemetry.style.display = 'flex'; }
+
+                    const lines = [
+                        { text: "> initializing system...", color: "#718096" },
+                        { text: "[INFO] BusLinker connected on /dev/ttyUSB0", color: "#a0aec0" },
+                        { text: "[INFO] Camera stream started (30fps)", color: "#a0aec0" },
+                        { text: "[SUCCESS] Motor controller online. Voltage: 9.1V", color: "#34d399" },
+                        { text: "> starting main_control_loop.py", color: "#6366f1" },
+                        { text: "[THREAD-1] Vision Queue: ACTIVE", color: "#a0aec0" },
+                        { text: "[THREAD-2] Safety Monitor: ACTIVE", color: "#a0aec0" },
+                        { text: "----------------------------------------", color: "#4a5568" },
+                        { text: "STATE: IDLE", color: "#f59e0b" },
+                        { text: "waiting for user input...", color: "#718096" },
+                        { text: "STATE: TRACKING", color: "#34d399" },
+                        { text: "Target: [x:120, y:45, z:300] | Err: 12mm", color: "#a0aec0" },
+                        { text: "STATE: SCOOPING", color: "#6366f1" }
+                    ];
+
+                    let lineIndex = 0; let charIndex = 0;
+                    function typeLine() {
+                        if (lineIndex < lines.length) {
+                            const currentLine = lines[lineIndex];
+                            if (charIndex === 0) {
+                                const div = document.createElement('div');
+                                div.style.color = currentLine.color;
+                                div.style.marginBottom = '4px';
+                                div.id = `line-${lineIndex}`;
+                                textElement.appendChild(div);
+                            }
+                            const currentDiv = document.getElementById(`line-${lineIndex}`);
+                            currentDiv.textContent += currentLine.text.charAt(charIndex);
+                            charIndex++;
+                            if (charIndex < currentLine.text.length) {
+                                setTimeout(typeLine, Math.random() * 20 + 5);
+                            } else {
+                                lineIndex++; charIndex = 0;
+                                const terminalWindow = textElement.parentElement;
+                                terminalWindow.scrollTop = terminalWindow.scrollHeight;
+                                setTimeout(typeLine, 150);
+                            }
+                        } else {
+                            setTimeout(() => { textElement.innerHTML = ''; lineIndex = 0; charIndex = 0; typeLine(); }, 5000);
+                        }
+                    }
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => { if (entry.isIntersecting && textElement.innerHTML === '') typeLine(); });
+                    });
+                    observer.observe(document.getElementById('software'));
+                });
+            </script>
+
+            <style>
+                @keyframes pulse {
+                    0% {
+                        transform: scale(1);
+                        opacity: 1;
+                    }
+
+                    50% {
+                        transform: scale(1.5);
+                        opacity: 0.5;
+                    }
+
+                    100% {
+                        transform: scale(1);
+                        opacity: 1;
+                    }
+                }
+
+                @keyframes blink {
+
+                    0%,
+                    100% {
+                        opacity: 1;
+                    }
+
+                    50% {
+                        opacity: 0.3;
+                    }
+                }
+
+                @keyframes scrub {
+                    0% {
+                        width: 0%;
+                    }
+
+                    100% {
+                        width: 100%;
+                    }
+                }
+
+                @keyframes moveTarget {
+                    0% {
+                        left: 10%;
+                    }
+
+                    100% {
+                        left: 90%;
+                    }
+                }
+
+                @keyframes dropData {
+                    0% {
+                        top: -10px;
+                        opacity: 1;
+                    }
+
+                    100% {
+                        top: 100%;
+                        opacity: 0;
+                    }
+                }
+            </style>
         </div>
 
 
+            
 <!-- ADD MEDIAPIPE LIBRARIES -->
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils"></script>
@@ -3601,6 +4023,10 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         </div>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="main.js"></script>
+<script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="main.js"></script>
