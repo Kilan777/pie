@@ -200,6 +200,7 @@ body {
     margin-bottom: 3rem;
     width: fit-content;
 }
+
 .hero-title {
     font-size: clamp(2.4rem, 7vw, 6rem);
     font-weight: 700;
@@ -207,8 +208,6 @@ body {
     letter-spacing: -0.03em;
     margin-bottom: 4rem;
     max-width: 1200px;
-    overflow: visible;
-    padding: 0 0 15px 0; /* Padding ONLY at bottom of entire title block */
 }
 
 .hero-gradient {
@@ -216,12 +215,6 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    display: inline;
-    line-height: inherit;
-}
-
-.hero {
-    overflow: visible !important;
 }
 
 .hero-stats {
@@ -231,6 +224,7 @@ body {
     max-width: 1000px;
     margin-top: 2rem;
 }
+
 .stat {
     border-top: 2px solid var(--border);
     padding-top: 1.5rem;
