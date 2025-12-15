@@ -208,6 +208,8 @@ body {
     letter-spacing: -0.03em;
     margin-bottom: 4rem;
     max-width: 1200px;
+    overflow: visible;
+    padding: 0 0 15px 0; /* Padding ONLY at bottom of entire title block */
 }
 
 .hero-gradient {
@@ -215,6 +217,12 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    display: inline;
+    line-height: inherit;
+}
+
+.hero {
+    overflow: visible !important;
 }
 
 .hero-stats {
