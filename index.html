@@ -51,8 +51,7 @@
             We help people<br>
             with disabilities<br>
             <span class="hero-gradient">feed independently</span><br>
-            through intelligent<br>
-            robotics.
+            with intelligent robotics.<br>
         </h1>
         <div class="hero-stats">
             <div class="stat">
@@ -737,51 +736,90 @@ document.addEventListener('DOMContentLoaded', () => {
     const baseX = canvas.width / 2;
     const baseY = canvas.height - 50;
     
-    // Joint positions (initialized)
-    let joints = [
-        { x: baseX, y: baseY },
-        { x: baseX, y: baseY - 80 },
-        { x: baseX, y: baseY - 160 },
-        { x: baseX, y: baseY - 220 }
-    ];
+    // Joint angles (this is how CCD works - track angles, not positions)
+    let angles = [0, -Math.PI / 2, 0]; // Start pointing up
     
     // Target position
     let targetX = baseX;
-    let targetY = baseY - 150;
+    let targetY = baseY - 220;
+    let mouseHasMoved = false;
     
-    // FABRIK Algorithm Implementation
-    function fabrik(target, iterations = 10) {
-        const n = joints.length;
-        const tolerance = 0.1;
+    // Calculate joint positions from angles
+    function getJointPositions() {
+        const joints = [{ x: baseX, y: baseY }];
         
+        let currentAngle = 0;
+        let currentX = baseX;
+        let currentY = baseY;
+        
+        for (let i = 0; i < segments.length; i++) {
+            currentAngle += angles[i];
+            currentX += Math.cos(currentAngle) * segments[i].length;
+            currentY += Math.sin(currentAngle) * segments[i].length;
+            joints.push({ x: currentX, y: currentY });
+        }
+        
+        return joints;
+    }
+    
+    // CCD Algorithm - naturally avoids self-collision
+    function solveCCD(target, iterations = 10) {
         for (let iter = 0; iter < iterations; iter++) {
-            const dx = joints[n-1].x - target.x;
-            const dy = joints[n-1].y - target.y;
-            const dist = Math.sqrt(dx*dx + dy*dy);
+            let joints = getJointPositions();
             
-            if (dist < tolerance) break;
-            
-            // Forward reaching
-            joints[n-1].x = target.x;
-            joints[n-1].y = target.y;
-            
-            for (let i = n-2; i >= 0; i--) {
-                const r = segments[i].length;
-                const lambda = r / distance(joints[i], joints[i+1]);
-                joints[i].x = (1 - lambda) * joints[i+1].x + lambda * joints[i].x;
-                joints[i].y = (1 - lambda) * joints[i+1].y + lambda * joints[i].y;
+            // Work backwards from end effector
+            for (let i = segments.length - 1; i >= 0; i--) {
+                joints = getJointPositions();
+                
+                const endEffector = joints[joints.length - 1];
+                const joint = joints[i];
+                
+                // Vector from joint to end effector
+                const toEnd = {
+                    x: endEffector.x - joint.x,
+                    y: endEffector.y - joint.y
+                };
+                
+                // Vector from joint to target
+                const toTarget = {
+                    x: target.x - joint.x,
+                    y: target.y - joint.y
+                };
+                
+                // Calculate angle between these vectors
+                const angleToEnd = Math.atan2(toEnd.y, toEnd.x);
+                const angleToTarget = Math.atan2(toTarget.y, toTarget.x);
+                
+                // Rotate this joint to point toward target
+                let deltaAngle = angleToTarget - angleToEnd;
+                
+                // Normalize to -PI to PI
+                while (deltaAngle > Math.PI) deltaAngle -= 2 * Math.PI;
+                while (deltaAngle < -Math.PI) deltaAngle += 2 * Math.PI;
+                
+                // Apply rotation with damping for smoothness
+                angles[i] += deltaAngle * 0.5;
+                
+                // Constrain each joint angle to prevent unrealistic poses
+                // Joint 0 (base): can rotate freely
+                // Joint 1 (shoulder): -170° to +170°
+                // Joint 2 (elbow): -170° to +170°
+                if (i === 1 || i === 2) {
+                    const maxAngle = Math.PI * 0.94; // 170 degrees
+                    if (angles[i] > maxAngle) angles[i] = maxAngle;
+                    if (angles[i] < -maxAngle) angles[i] = -maxAngle;
+                }
             }
             
-            // Backward reaching
-            joints[0].x = baseX;
-            joints[0].y = baseY;
+            // Check if close enough
+            joints = getJointPositions();
+            const endEffector = joints[joints.length - 1];
+            const dist = Math.sqrt(
+                Math.pow(endEffector.x - target.x, 2) + 
+                Math.pow(endEffector.y - target.y, 2)
+            );
             
-            for (let i = 0; i < n-1; i++) {
-                const r = segments[i].length;
-                const lambda = r / distance(joints[i], joints[i+1]);
-                joints[i+1].x = (1 - lambda) * joints[i].x + lambda * joints[i+1].x;
-                joints[i+1].y = (1 - lambda) * joints[i].y + lambda * joints[i+1].y;
-            }
+            if (dist < 1) break;
         }
     }
     
@@ -791,18 +829,20 @@ document.addEventListener('DOMContentLoaded', () => {
         return Math.sqrt(dx*dx + dy*dy);
     }
     
-    function calculateAngles() {
-        const angles = [];
-        const baseAngle = Math.atan2(joints[1].x - joints[0].x, -(joints[1].y - joints[0].y));
-        angles.push(baseAngle * 180 / Math.PI);
-        const shoulderAngle = Math.atan2(joints[2].y - joints[1].y, joints[2].x - joints[1].x);
-        angles.push(shoulderAngle * 180 / Math.PI);
-        const elbowAngle = Math.atan2(joints[3].y - joints[2].y, joints[3].x - joints[2].x);
-        angles.push(elbowAngle * 180 / Math.PI);
-        return angles;
+    function calculateDisplayAngles() {
+        const joints = getJointPositions();
+        const displayAngles = [];
+        
+        displayAngles.push(Math.atan2(joints[1].x - joints[0].x, -(joints[1].y - joints[0].y)) * 180 / Math.PI);
+        displayAngles.push(Math.atan2(joints[2].y - joints[1].y, joints[2].x - joints[1].x) * 180 / Math.PI);
+        displayAngles.push(Math.atan2(joints[3].y - joints[2].y, joints[3].x - joints[2].x) * 180 / Math.PI);
+        
+        return displayAngles;
     }
     
     function drawArm() {
+        const joints = getJointPositions();
+        
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         // Grid
@@ -866,31 +906,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         // Target crosshair
-        ctx.strokeStyle = 'rgba(251, 191, 36, 0.5)';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(targetX - 10, targetY);
-        ctx.lineTo(targetX + 10, targetY);
-        ctx.moveTo(targetX, targetY - 10);
-        ctx.lineTo(targetX, targetY + 10);
-        ctx.stroke();
+        if (mouseHasMoved) {
+            ctx.strokeStyle = 'rgba(251, 191, 36, 0.5)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(targetX - 10, targetY);
+            ctx.lineTo(targetX + 10, targetY);
+            ctx.moveTo(targetX, targetY - 10);
+            ctx.lineTo(targetX, targetY + 10);
+            ctx.stroke();
+        }
         
         // Update info
-        const angles = calculateAngles();
+        const displayAngles = calculateDisplayAngles();
         const baseAngleEl = document.getElementById('baseAngle');
         const shoulderAngleEl = document.getElementById('shoulderAngle');
         const elbowAngleEl = document.getElementById('elbowAngle');
         const distanceEl = document.getElementById('distance');
         
-        if (baseAngleEl) baseAngleEl.textContent = angles[0].toFixed(1) + '°';
-        if (shoulderAngleEl) shoulderAngleEl.textContent = angles[1].toFixed(1) + '°';
-        if (elbowAngleEl) elbowAngleEl.textContent = angles[2].toFixed(1) + '°';
+        if (baseAngleEl) baseAngleEl.textContent = displayAngles[0].toFixed(1) + '°';
+        if (shoulderAngleEl) shoulderAngleEl.textContent = displayAngles[1].toFixed(1) + '°';
+        if (elbowAngleEl) elbowAngleEl.textContent = displayAngles[2].toFixed(1) + '°';
         
         const dist = distance(joints[joints.length-1], {x: targetX, y: targetY});
         if (distanceEl) distanceEl.textContent = dist.toFixed(1) + 'px';
     }
     
     canvas.addEventListener('mousemove', (e) => {
+        mouseHasMoved = true;
         const rect = canvas.getBoundingClientRect();
         const scaleX = canvas.width / rect.width;
         const scaleY = canvas.height / rect.height;
@@ -899,7 +942,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     function animate() {
-        fabrik({ x: targetX, y: targetY });
+        solveCCD({ x: targetX, y: targetY });
         drawArm();
         requestAnimationFrame(animate);
     }
