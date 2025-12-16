@@ -93,3 +93,4 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 console.log('✨ Stars background loaded');
+
