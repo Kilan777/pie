@@ -2186,213 +2186,170 @@
 
             <!-- Mechanical -->
             <div class="tech-block" id="mechanical">
-                <h3 style="margin-bottom: 1rem;">Mechanical Design</h3>
-                <p style="color: rgba(255,255,255,0.6); max-width: 800px; margin-bottom: 3rem;">A 4-degree-of-freedom robotic manipulator designed for precision feeding assistance.</p>
+                <h3>Mechanical Design</h3>
 
-                <!-- Scroll-Based Exploded View Video -->
-                <div class="mech-exploded-section">
-                    <div class="exploded-container">
-                        <video id="mechExplodeVideo" class="exploded-video" muted playsinline preload="auto">
-                            <source src="explode.mp4" type="video/mp4">
-                        </video>
-                        <div class="exploded-overlay">
-                            <div class="scroll-prompt">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M12 5v14M19 12l-7 7-7-7"/>
-                                </svg>
-                                <span>Scroll to explore assembly</span>
+                <div class="infinite-gallery-wrapper">
+                    <div class="infinite-gallery-track">
+                        <div class="gallery-card">
+                            <img src="mech_iso_view.png" alt="Isometric Assembly">
+                            <div class="card-overlay">
+                                <span class="card-label">Device with Shoulder E-Stop</span>
+                                <h4>E-Stop</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card">
+                            <img src="Pic2.jpg" alt="Side Profile">
+                            <div class="card-overlay">
+                                <span class="card-label">Motion</span>
+                                <h4>Mid Scooping</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card">
+                            <img src="images/mech_exploded.png" alt="Exploded View">
+                            <div class="card-overlay">
+                                <span class="card-label">Internals</span>
+                                <h4>Exploded View</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card">
+                            <img src="images/prototype.png" alt="Prototype">
+                            <div class="card-overlay">
+                                <span class="card-label">Iteration</span>
+                                <h4>Initial Prototype</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card">
+                            <img src="images/arm_detail.png" alt="Arm Detail">
+                            <div class="card-overlay">
+                                <span class="card-label">Structure</span>
+                                <h4>Linkage Detail</h4>
+                            </div>
+                        </div>
+
+                        <div class="gallery-card">
+                            <img src="images/mech_iso_view.png" alt="Isometric Assembly">
+                            <div class="card-overlay">
+                                <span class="card-label">Full Assembly</span>
+                                <h4>Isometric View</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card">
+                            <img src="images/base_section_view.png" alt="Section View">
+                            <div class="card-overlay">
+                                <span class="card-label">Kinematics</span>
+                                <h4>Side Profile</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card">
+                            <img src="images/mech_exploded.jpg" alt="Exploded View">
+                            <div class="card-overlay">
+                                <span class="card-label">Internals</span>
+                                <h4>Exploded View</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card">
+                            <img src="images/mech_prototype.jpg" alt="Prototype">
+                            <div class="card-overlay">
+                                <span class="card-label">Real World</span>
+                                <h4>Physical Prototype</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card">
+                            <img src="images/arm_detail.jpg" alt="Arm Detail">
+                            <div class="card-overlay">
+                                <span class="card-label">Structure</span>
+                                <h4>Linkage Detail</h4>
                             </div>
                         </div>
                     </div>
+
+                    <div class="gallery-fade-left"></div>
+                    <div class="gallery-fade-right"></div>
                 </div>
 
-                <!-- Image Gallery Carousel -->
-                <div class="mech-gallery-section">
-                    <div class="gallery-carousel">
-                        <button class="carousel-btn prev" id="carouselPrev">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M15 18l-6-6 6-6"/>
-                            </svg>
-                        </button>
-
-                        <div class="carousel-track" id="carouselTrack">
-                            <div class="carousel-item active">
-                                <img src="mech_iso_view.png" alt="Isometric View">
-                                <div class="carousel-caption">
-                                    <h4>Isometric Assembly</h4>
-                                    <p>Full device with shoulder-mounted E-Stop</p>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <img src="Pic2.jpg" alt="Mid Scooping">
-                                <div class="carousel-caption">
-                                    <h4>In Action</h4>
-                                    <p>Mid-scooping motion sequence</p>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <img src="Arm.jpg" alt="Robotic Arm">
-                                <div class="carousel-caption">
-                                    <h4>4-DOF Manipulator</h4>
-                                    <p>Custom linkage design for optimal torque</p>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <img src="Tool.png" alt="Tool Changer">
-                                <div class="carousel-caption">
-                                    <h4>Magnetic Tool Changer</h4>
-                                    <p>Quick-release utensil system</p>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <img src="Base.jpg" alt="Base Assembly">
-                                <div class="carousel-caption">
-                                    <h4>Bearing-Mounted Base</h4>
-                                    <p>608ZZ bearings for smooth rotation</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button class="carousel-btn next" id="carouselNext">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 18l6-6-6-6"/>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div class="carousel-indicators" id="carouselIndicators"></div>
+                <div class="gallery-action">
+                    <a href="[YOUR_LINK_HERE]" target="_blank" class="btn-primary">
+                        <span>View Full Gallery</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                            <polyline points="16 6 12 2 8 6"></polyline>
+                            <line x1="12" y1="2" x2="12" y2="15"></line>
+                        </svg>
+                    </a>
                 </div>
 
-                <!-- Key Features Grid -->
-                <div class="mech-features-grid">
-                    <div class="mech-feature-card">
-                        <div class="feature-number">01</div>
-                        <h4>4 Degrees of Freedom</h4>
-                        <p>±120° range per joint for complete workspace coverage</p>
-                        <div class="feature-stat">
-                            <span class="stat-big">4</span>
-                            <span class="stat-label">DOF</span>
+                <div class="design-features">
+
+                    <div class="feature-card-detailed">
+                        <div class="feature-content">
+                            <h4><strong>The Robotic Arm</strong></h4>
+                            <p>
+                                A robust <strong>4-DOF manipulator</strong> optimized for weight and rigidity. We
+                                utilized a custom linkage topology to minimize the moment arm on the base servo,
+                                allowing for smoother operation without stalling.
+                            </p>
+                            <ul class="mech-list">
+                                <li><strong>Material:</strong> PLA (20% Infill)</li>
+                                <li><strong>Joints:</strong> Dual-shaft Servos</li>
+                            </ul>
+                        </div>
+                        <div class="feature-visual">
+                            <img src="Arm.jpg" alt="Arm CAD">
                         </div>
                     </div>
 
-                    <div class="mech-feature-card">
-                        <div class="feature-number">02</div>
-                        <h4>Lightweight Design</h4>
-                        <p>PLA construction with 20% infill reduces arm inertia</p>
-                        <div class="feature-stat">
-                            <span class="stat-big">850</span>
-                            <span class="stat-label">grams</span>
+                    <div class="feature-card-detailed reverse">
+                        <div class="feature-content">
+
+                            <h4><strong>Tool Changer</strong></h4>
+                            <p>
+                                We designed a <strong>passive quick-release</strong> system. The dovetail slide
+                                mechanism uses embedded neodymium magnets to snap utensils into place, allowing users to
+                                switch between spoon and fork in seconds.
+                            </p>
+                            <ul class="mech-list">
+                                <li><strong>Lock:</strong> Magnetic Detent</li>
+                                <li><strong>Grip:</strong> Compliant Flexure</li>
+                            </ul>
+                        </div>
+                        <div class="feature-visual">
+                            <img src="Tool.png" alt="End Effector">
                         </div>
                     </div>
 
-                    <div class="mech-feature-card">
-                        <div class="feature-number">03</div>
-                        <h4>Bearing-Mounted</h4>
-                        <p>608ZZ skateboard bearings isolate servo from radial loads</p>
-                        <div class="feature-stat">
-                            <span class="stat-big">2×</span>
-                            <span class="stat-label">Bearings</span>
-                        </div>
-                    </div>
+                    <div class="feature-card-detailed">
+                        <div class="feature-content">
 
-                    <div class="mech-feature-card">
-                        <div class="feature-number">04</div>
-                        <h4>Quick-Change Tools</h4>
-                        <p>Magnetic dovetail system for instant utensil swapping</p>
-                        <div class="feature-stat">
-                            <span class="stat-big">&lt;2</span>
-                            <span class="stat-label">seconds</span>
+                            <h4><strong>Base Assembly</strong></h3>
+                            <p>
+                                To prevent wobble, the main pivot rides on a <strong>machined aluminum shaft</strong>
+                                pressed into 608 skate bearings. This isolates the servo from radial loads, ensuring
+                                long-term durability.
+                            </p>
+                            <ul class="mech-list">
+                                <li><strong>Bearing:</strong> 608ZZ (x2)</li>
+                                <li><strong>Drive:</strong> Direct Coupling</li>
+                            </ul>
+                        </div>
+                        <div class="feature-visual">
+                            <img src="Base.jpg" alt="Base Section">
                         </div>
                     </div>
+                    <div class="feature-card-detailed reverse">
+                        <div class="feature-content">
+
+                            <h4><strong>Emergency Stop</strong></h3>
+                            <p>
+                                An additional optional emergency stop can be plugged in to the base, and can clip onto a shirt to be operated by the user's neck, or placed on the floor to be operated by the user's foot.
+                            </p>
+                        </div>
+                        <div class="feature-visual">
+                            <img src="" alt="Portable E-Stop">
                 </div>
-
             </div>
 
-            <script>
-                // Mechanical Section - Scroll-based exploded video
-                document.addEventListener('DOMContentLoaded', () => {
-                    const video = document.getElementById('mechExplodeVideo');
-                    const explodedSection = document.querySelector('.mech-exploded-section');
-
-                    if (video && explodedSection) {
-                        video.pause();
-                        video.currentTime = 0;
-
-                        const handleScroll = () => {
-                            const rect = explodedSection.getBoundingClientRect();
-                            const windowHeight = window.innerHeight;
-
-                            // Calculate scroll progress through the section
-                            const start = rect.top;
-                            const end = rect.bottom - windowHeight;
-                            const scrollRange = windowHeight;
-
-                            if (start < windowHeight && rect.bottom > 0) {
-                                const progress = Math.max(0, Math.min(1, (windowHeight - start) / scrollRange));
-
-                                if (video.duration) {
-                                    video.currentTime = progress * video.duration;
-                                }
-                            }
-                        };
-
-                        window.addEventListener('scroll', handleScroll);
-                        video.addEventListener('loadedmetadata', handleScroll);
-                    }
-
-                    // Carousel functionality
-                    const track = document.getElementById('carouselTrack');
-                    const prevBtn = document.getElementById('carouselPrev');
-                    const nextBtn = document.getElementById('carouselNext');
-                    const indicators = document.getElementById('carouselIndicators');
-                    const items = document.querySelectorAll('.carousel-item');
-
-                    let currentIndex = 0;
-
-                    // Create indicators
-                    items.forEach((_, index) => {
-                        const dot = document.createElement('button');
-                        dot.className = 'indicator-dot' + (index === 0 ? ' active' : '');
-                        dot.addEventListener('click', () => goToSlide(index));
-                        indicators.appendChild(dot);
-                    });
-
-                    const dots = document.querySelectorAll('.indicator-dot');
-
-                    function updateCarousel() {
-                        items.forEach((item, index) => {
-                            item.classList.toggle('active', index === currentIndex);
-                        });
-                        dots.forEach((dot, index) => {
-                            dot.classList.toggle('active', index === currentIndex);
-                        });
-
-                        const offset = -currentIndex * 100;
-                        track.style.transform = `translateX(${offset}%)`;
-                    }
-
-                    function goToSlide(index) {
-                        currentIndex = index;
-                        updateCarousel();
-                    }
-
-                    function nextSlide() {
-                        currentIndex = (currentIndex + 1) % items.length;
-                        updateCarousel();
-                    }
-
-                    function prevSlide() {
-                        currentIndex = (currentIndex - 1 + items.length) % items.length;
-                        updateCarousel();
-                    }
-
-                    nextBtn.addEventListener('click', nextSlide);
-                    prevBtn.addEventListener('click', prevSlide);
-
-                    // Auto-advance every 5 seconds
-                    setInterval(nextSlide, 5000);
-                });
-            </script>            <div class="tech-block" id="software" style="position: relative;">
+            <div class="tech-block" id="software" style="position: relative;">
                 <div style="display: flex; justify-content: space-between; align-items: end; margin-bottom: 2rem;">
                     <h3>Software Design</h3>
                     <div style="font-family: 'Courier New', monospace; font-size: 0.8rem; color: var(--accent); background: rgba(99, 102, 241, 0.1); padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid rgba(99, 102, 241, 0.3); display: flex; gap: 1.5rem;"
