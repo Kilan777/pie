@@ -18,11 +18,11 @@
 <body>
     <!-- Video Background -->
     <div class="video-background">
-    <video id="bgVideo" muted playsinline autoplay loop>
-        <source src="background.mp4" type="video/mp4">
-    </video>
+        <video id="bgVideo" muted playsinline autoplay loop>
+            <source src="background.mp4" type="video/mp4">
+        </video>
     </div>
-    <canvas class="webgl"></canvas> 
+    <canvas class="webgl"></canvas>
 
     <!-- Navigation -->
     <nav class="nav">
@@ -450,28 +450,28 @@
         }
 
         .spec-item {
-        text-align: center;
-        padding: 1.5rem;
-        
-        /* UPDATE THIS LINE */
-        background: #0a0a0a; 
-        /* OR use a very dark semi-transparent black */
-        /* background: rgba(10, 10, 10, 0.9); */
+            text-align: center;
+            padding: 1.5rem;
 
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        transition: all 0.3s ease;
-        
-        /* Optional: Adds a blur effect to the background video behind the box */
-        backdrop-filter: blur(10px); 
+            /* UPDATE THIS LINE */
+            background: #0a0a0a;
+            /* OR use a very dark semi-transparent black */
+            /* background: rgba(10, 10, 10, 0.9); */
+
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+
+            /* Optional: Adds a blur effect to the background video behind the box */
+            backdrop-filter: blur(10px);
         }
 
         .spec-item:hover {
-        /* Make the background slightly lighter on hover, but still solid */
-        background: #1a1a1a; 
-        
-        border-color: rgba(139, 92, 246, 0.4);
-        transform: translateY(-5px);
+            /* Make the background slightly lighter on hover, but still solid */
+            background: #1a1a1a;
+
+            border-color: rgba(139, 92, 246, 0.4);
+            transform: translateY(-5px);
         }
 
         .spec-item h4 {
@@ -677,7 +677,7 @@
     </script>
 
     <!-- Section 4: Design Process -->
-<section class="section-process" id="process">
+    <section class="section-process" id="process">
         <div class="container">
             <div class="section-header">
                 <span class="section-label">Our Process</span>
@@ -691,170 +691,175 @@
                     and a jointed arm similar to industrial robots.
                 </p>
             </div>
-<div class="decisions-grid">
-    <div class="decision-card">
-        <div class="decision-content">
-            <div class="decision-number">01</div>
-            <h3>Robotic Arm Configuration</h3>
-            <div class="decision-details">
-                <div class="detail-item">
-                    <strong>OPTIONS</strong>
-                    <p>4-DOF articulated arm, 4-DOF SCARA-style, 2-DOF pan-tilt mechanism</p>
+            <div class="decisions-grid">
+                <div class="decision-card">
+                    <div class="decision-content">
+                        <div class="decision-number">01</div>
+                        <h3>Robotic Arm Configuration</h3>
+                        <div class="decision-details">
+                            <div class="detail-item">
+                                <strong>OPTIONS</strong>
+                                <p>4-DOF articulated arm, 4-DOF SCARA-style, 2-DOF pan-tilt mechanism</p>
+                            </div>
+                            <div class="detail-item">
+                                <strong>OUR CHOICE</strong>
+                                <p>4-DOF articulated arm with base rotation, shoulder, elbow, and wrist joints</p>
+                            </div>
+                            <div class="detail-item">
+                                <strong>RATIONALE</strong>
+                                <p>We chose the 4-DOF articulated configuration for maximum workspace flexibility and
+                                    natural motion. The additional wrist joint (vs. 3-DOF) allows proper utensil
+                                    orientation regardless of approach angle, critical for smooth feeding. While more
+                                    complex than simpler designs, the improved dexterity justified the added servos and
+                                    control complexity.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="decision-showcase">
+                        <div class="showcase-content" id="ikDemo">
+                            <canvas id="ikCanvas" width="700" height="400"
+                                style="width: 100%; background: rgba(0,0,0,0.3); border-radius: 8px; cursor: crosshair; display: block;"></canvas>
+
+                            <div class="ik-info"
+                                style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1rem;">
+                                <div
+                                    style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
+                                    <div
+                                        style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">
+                                        Base</div>
+                                    <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;"
+                                        id="baseAngle">0°</div>
+                                </div>
+                                <div
+                                    style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
+                                    <div
+                                        style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">
+                                        Shoulder</div>
+                                    <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;"
+                                        id="shoulderAngle">0°</div>
+                                </div>
+                                <div
+                                    style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
+                                    <div
+                                        style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">
+                                        Elbow</div>
+                                    <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;"
+                                        id="elbowAngle">0°</div>
+                                </div>
+                                <div
+                                    style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
+                                    <div
+                                        style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">
+                                        Error</div>
+                                    <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;"
+                                        id="distance">0px</div>
+                                </div>
+                            </div>
+
+                            <p
+                                style="margin-top: 1rem; color: rgba(255,255,255,0.6); font-size: 0.85rem; text-align: center;">
+                                Interactive inverse kinematics using FABRIK algorithm • Move your mouse to control the
+                                arm</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="detail-item">
-                    <strong>OUR CHOICE</strong>
-                    <p>4-DOF articulated arm with base rotation, shoulder, elbow, and wrist joints</p>
+
+                <div class="decision-card">
+                    <div class="decision-content">
+                        <div class="decision-number">02</div>
+                        <h3>Mouth Tracking Approach</h3>
+                        <div class="decision-details">
+                            <div class="detail-item">
+                                <strong>OPTIONS</strong>
+                                <p>MediaPipe Face Mesh, OpenCV Haar Cascades, custom CNN model, depth camera only</p>
+                            </div>
+                            <div class="detail-item">
+                                <strong>OUR CHOICE</strong>
+                                <p>MediaPipe Face Mesh with RealSense depth camera</p>
+                            </div>
+                            <div class="detail-item">
+                                <strong>RATIONALE</strong>
+                                <p>MediaPipe provides 468 facial landmarks at 30fps with excellent accuracy on Raspberry
+                                    Pi
+                                    4. Combines well with RealSense depth data for precise 3D positioning. Pre-trained
+                                    models eliminated weeks of custom ML training, and open-source implementation made
+                                    debugging straightforward. Haar Cascades were too inaccurate, and custom CNNs would
+                                    require extensive datasets we didn't have.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="decision-showcase">
+                        <div class="showcase-content live-demo" id="mediapipeDemo">
+                            <div class="demo-placeholder">
+                                <div class="demo-icon">📹</div>
+                                <p>See mouth tracking in action</p>
+                                <p class="demo-hint">Tip: Select "Always allow" for best experience</p>
+                                <button class="demo-button" id="startDemoBtn">Try It Out</button>
+                            </div>
+                            <div class="demo-video-container">
+                                <video id="demoVideo" class="demo-video" autoplay playsinline></video>
+                                <canvas id="demoCanvas" class="demo-canvas"></canvas>
+                            </div>
+                            <button class="demo-stop" id="stopDemoBtn">Stop Demo</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="detail-item">
-                    <strong>RATIONALE</strong>
-                    <p>We chose the 4-DOF articulated configuration for maximum workspace flexibility and
-                        natural motion. The additional wrist joint (vs. 3-DOF) allows proper utensil
-                        orientation regardless of approach angle, critical for smooth feeding. While more
-                        complex than simpler designs, the improved dexterity justified the added servos and
-                        control complexity.</p>
+
+                <div class="decision-card">
+                    <div class="decision-content">
+                        <div class="decision-number">03</div>
+                        <h3>Computing Platform</h3>
+                        <div class="decision-details">
+                            <div class="detail-item">
+                                <strong>OPTIONS</strong>
+                                <p>Raspberry Pi, Arduino + OpenCV on laptop, Jetson Nano, microcontroller with cloud
+                                    processing</p>
+                            </div>
+                            <div class="detail-item">
+                                <strong>OUR CHOICE</strong>
+                                <p>Raspberry Pi 4B (4GB RAM)</p>
+                            </div>
+                            <div class="detail-item">
+                                <strong>RATIONALE</strong>
+                                <p>Raspberry Pi 4 offers the perfect balance of compute power and cost ($62 vs. $200+
+                                    for
+                                    Jetson). Quad-core ARM processor handles MediaPipe at 30fps while managing servo
+                                    control
+                                    and safety monitoring. Built-in USB 3.0 for camera, GPIO for safety buttons, and
+                                    strong
+                                    community support made development smooth. Arduino lacked ML capability, and cloud
+                                    processing introduced unacceptable latency for safety-critical feeding motions.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="decision-showcase">
+                        <div class="showcase-content" id="reactionGame">
+                            <div class="game-area" id="gameArea">
+                                <div id="gameContent">
+                                    <div class="demo-icon">⚡</div>
+                                    <p>Test your reaction time vs Raspberry Pi 4</p>
+                                    <p class="demo-hint">Click when the screen turns green!</p>
+                                    <button class="demo-button" id="startGameBtn">Start Challenge</button>
+                                </div>
+                            </div>
+                            <div class="game-results" id="gameResults" style="display: none;">
+                                <div class="result-item">
+                                    <span class="result-label">You</span>
+                                    <span class="result-value" id="yourTime">---</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label">Pi 4</span>
+                                    <span class="result-value pi">45ms</span>
+                                </div>
+                            </div>
+                            <p class="game-message" id="gameMessage"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="decision-showcase">
-            <div class="showcase-content" id="ikDemo">
-                <canvas id="ikCanvas" width="700" height="400"
-                    style="width: 100%; background: rgba(0,0,0,0.3); border-radius: 8px; cursor: crosshair; display: block;"></canvas>
-
-                <div class="ik-info"
-                    style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1rem;">
-                    <div
-                        style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
-                        <div
-                            style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">
-                            Base</div>
-                        <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;"
-                            id="baseAngle">0°</div>
-                    </div>
-                    <div
-                        style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
-                        <div
-                            style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">
-                            Shoulder</div>
-                        <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;"
-                            id="shoulderAngle">0°</div>
-                    </div>
-                    <div
-                        style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
-                        <div
-                            style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">
-                            Elbow</div>
-                        <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;"
-                            id="elbowAngle">0°</div>
-                    </div>
-                    <div
-                        style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; text-align: center;">
-                        <div
-                            style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 0.25rem;">
-                            Error</div>
-                        <div style="color: rgba(139, 92, 246, 1); font-size: 1rem; font-weight: 600;"
-                            id="distance">0px</div>
-                    </div>
-                </div>
-
-                <p style="margin-top: 1rem; color: rgba(255,255,255,0.6); font-size: 0.85rem; text-align: center;">
-                    Interactive inverse kinematics using FABRIK algorithm • Move your mouse to control the
-                    arm</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="decision-card">
-        <div class="decision-content">
-            <div class="decision-number">02</div>
-            <h3>Mouth Tracking Approach</h3>
-            <div class="decision-details">
-                <div class="detail-item">
-                    <strong>OPTIONS</strong>
-                    <p>MediaPipe Face Mesh, OpenCV Haar Cascades, custom CNN model, depth camera only</p>
-                </div>
-                <div class="detail-item">
-                    <strong>OUR CHOICE</strong>
-                    <p>MediaPipe Face Mesh with RealSense depth camera</p>
-                </div>
-                <div class="detail-item">
-                    <strong>RATIONALE</strong>
-                    <p>MediaPipe provides 468 facial landmarks at 30fps with excellent accuracy on Raspberry Pi
-                        4. Combines well with RealSense depth data for precise 3D positioning. Pre-trained
-                        models eliminated weeks of custom ML training, and open-source implementation made
-                        debugging straightforward. Haar Cascades were too inaccurate, and custom CNNs would
-                        require extensive datasets we didn't have.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="decision-showcase">
-            <div class="showcase-content live-demo" id="mediapipeDemo">
-                <div class="demo-placeholder">
-                    <div class="demo-icon">📹</div>
-                    <p>See mouth tracking in action</p>
-                    <p class="demo-hint">Tip: Select "Always allow" for best experience</p>
-                    <button class="demo-button" id="startDemoBtn">Try It Out</button>
-                </div>
-                <div class="demo-video-container">
-                    <video id="demoVideo" class="demo-video" autoplay playsinline></video>
-                    <canvas id="demoCanvas" class="demo-canvas"></canvas>
-                </div>
-                <button class="demo-stop" id="stopDemoBtn">Stop Demo</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="decision-card">
-        <div class="decision-content">
-            <div class="decision-number">03</div>
-            <h3>Computing Platform</h3>
-            <div class="decision-details">
-                <div class="detail-item">
-                    <strong>OPTIONS</strong>
-                    <p>Raspberry Pi, Arduino + OpenCV on laptop, Jetson Nano, microcontroller with cloud
-                        processing</p>
-                </div>
-                <div class="detail-item">
-                    <strong>OUR CHOICE</strong>
-                    <p>Raspberry Pi 4B (4GB RAM)</p>
-                </div>
-                <div class="detail-item">
-                    <strong>RATIONALE</strong>
-                    <p>Raspberry Pi 4 offers the perfect balance of compute power and cost ($62 vs. $200+ for
-                        Jetson). Quad-core ARM processor handles MediaPipe at 30fps while managing servo control
-                        and safety monitoring. Built-in USB 3.0 for camera, GPIO for safety buttons, and strong
-                        community support made development smooth. Arduino lacked ML capability, and cloud
-                        processing introduced unacceptable latency for safety-critical feeding motions.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="decision-showcase">
-            <div class="showcase-content" id="reactionGame">
-                <div class="game-area" id="gameArea">
-                    <div id="gameContent">
-                        <div class="demo-icon">⚡</div>
-                        <p>Test your reaction time vs Raspberry Pi 4</p>
-                        <p class="demo-hint">Click when the screen turns green!</p>
-                        <button class="demo-button" id="startGameBtn">Start Challenge</button>
-                    </div>
-                </div>
-                <div class="game-results" id="gameResults" style="display: none;">
-                    <div class="result-item">
-                        <span class="result-label">You</span>
-                        <span class="result-value" id="yourTime">---</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Pi 4</span>
-                        <span class="result-value pi">45ms</span>
-                    </div>
-                </div>
-                <p class="game-message" id="gameMessage"></p>
-            </div>
-        </div>
-    </div>
-</div>
             <script>
                 (function () {
                     const canvas = document.getElementById('ikCanvas');
@@ -2180,215 +2185,218 @@
             </script>
 
             <!-- Mechanical -->
-    <div class="tech-block" id="mechanical">
-    <h3>Mechanical Design</h3>
+            <div class="tech-block" id="mechanical">
+                <h3>Mechanical Design</h3>
 
-    <div class="infinite-gallery-wrapper">
-        <div class="infinite-gallery-track">
-            <div class="gallery-card">
-                <img src="Pic1.jpg" alt="Isometric Assembly">
-                <div class="card-overlay">
-                    <span class="card-label">Device with Shoulder E-Stop</span>
-                    <h4>E-Stop</h4>
-                </div>
-            </div>
-            <div class="gallery-card">
-                <img src="Pic2.jpg" alt="Side Profile">
-                <div class="card-overlay">
-                    <span class="card-label">Mid Scooping</span>
-                    <h4>Mid Scooping</h4>
-                </div>
-            </div>
-            <div class="gallery-card">
-                <img src="images/mech_exploded.jpg" alt="Exploded View">
-                <div class="card-overlay">
-                    <span class="card-label">Internals</span>
-                    <h4>Exploded View</h4>
-                </div>
-            </div>
-            <div class="gallery-card">
-                <img src="images/mech_prototype.jpg" alt="Prototype">
-                <div class="card-overlay">
-                    <span class="card-label">Real World</span>
-                    <h4>Physical Prototype</h4>
-                </div>
-            </div>
-            <div class="gallery-card">
-                <img src="images/arm_detail.jpg" alt="Arm Detail">
-                <div class="card-overlay">
-                    <span class="card-label">Structure</span>
-                    <h4>Linkage Detail</h4>
-                </div>
-            </div>
+                <div class="infinite-gallery-wrapper">
+                    <div class="infinite-gallery-track">
+                        <div class="gallery-card">
+                            <img src="Pic1.jpg" alt="Isometric Assembly">
+                            <div class="card-overlay">
+                                <span class="card-label">Device with Shoulder E-Stop</span>
+                                <h4>E-Stop</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card">
+                            <img src="Pic2.jpg" alt="Side Profile">
+                            <div class="card-overlay">
+                                <span class="card-label">Mid Scooping</span>
+                                <h4>Mid Scooping</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card">
+                            <img src="images/mech_exploded.jpg" alt="Exploded View">
+                            <div class="card-overlay">
+                                <span class="card-label">Internals</span>
+                                <h4>Exploded View</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card">
+                            <img src="images/mech_prototype.jpg" alt="Prototype">
+                            <div class="card-overlay">
+                                <span class="card-label">Real World</span>
+                                <h4>Physical Prototype</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card">
+                            <img src="images/arm_detail.jpg" alt="Arm Detail">
+                            <div class="card-overlay">
+                                <span class="card-label">Structure</span>
+                                <h4>Linkage Detail</h4>
+                            </div>
+                        </div>
 
-            <div class="gallery-card">
-                <img src="images/mech_iso_view.jpg" alt="Isometric Assembly">
-                <div class="card-overlay">
-                    <span class="card-label">Full Assembly</span>
-                    <h4>Isometric View</h4>
+                        <div class="gallery-card">
+                            <img src="images/mech_iso_view.jpg" alt="Isometric Assembly">
+                            <div class="card-overlay">
+                                <span class="card-label">Full Assembly</span>
+                                <h4>Isometric View</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card">
+                            <img src="images/mech_side_view.jpg" alt="Side Profile">
+                            <div class="card-overlay">
+                                <span class="card-label">Kinematics</span>
+                                <h4>Side Profile</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card">
+                            <img src="images/mech_exploded.jpg" alt="Exploded View">
+                            <div class="card-overlay">
+                                <span class="card-label">Internals</span>
+                                <h4>Exploded View</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card">
+                            <img src="images/mech_prototype.jpg" alt="Prototype">
+                            <div class="card-overlay">
+                                <span class="card-label">Real World</span>
+                                <h4>Physical Prototype</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card">
+                            <img src="images/arm_detail.jpg" alt="Arm Detail">
+                            <div class="card-overlay">
+                                <span class="card-label">Structure</span>
+                                <h4>Linkage Detail</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gallery-fade-left"></div>
+                    <div class="gallery-fade-right"></div>
                 </div>
-            </div>
-            <div class="gallery-card">
-                <img src="images/mech_side_view.jpg" alt="Side Profile">
-                <div class="card-overlay">
-                    <span class="card-label">Kinematics</span>
-                    <h4>Side Profile</h4>
+
+                <div class="gallery-action">
+                    <a href="[YOUR_LINK_HERE]" target="_blank" class="btn-primary">
+                        <span>View Full Gallery</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                            <polyline points="16 6 12 2 8 6"></polyline>
+                            <line x1="12" y1="2" x2="12" y2="15"></line>
+                        </svg>
+                    </a>
                 </div>
-            </div>
-            <div class="gallery-card">
-                <img src="images/mech_exploded.jpg" alt="Exploded View">
-                <div class="card-overlay">
-                    <span class="card-label">Internals</span>
-                    <h4>Exploded View</h4>
-                </div>
-            </div>
-            <div class="gallery-card">
-                <img src="images/mech_prototype.jpg" alt="Prototype">
-                <div class="card-overlay">
-                    <span class="card-label">Real World</span>
-                    <h4>Physical Prototype</h4>
-                </div>
-            </div>
-            <div class="gallery-card">
-                <img src="images/arm_detail.jpg" alt="Arm Detail">
-                <div class="card-overlay">
-                    <span class="card-label">Structure</span>
-                    <h4>Linkage Detail</h4>
-                </div>
-            </div>
-        </div>
-        
-        <div class="gallery-fade-left"></div>
-        <div class="gallery-fade-right"></div>
-    </div>
 
-    <div class="gallery-action">
-        <a href="[YOUR_LINK_HERE]" target="_blank" class="btn-primary">
-            <span>View Full Gallery</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
-                <polyline points="16 6 12 2 8 6"></polyline>
-                <line x1="12" y1="2" x2="12" y2="15"></line>
-            </svg>
-        </a>
-    </div>
+                <div class="design-features">
 
-    <div class="design-features">
+                    <div class="feature-card-detailed">
+                        <div class="feature-content">
+                            <h3>The Robotic Arm</h3>
+                            <h4>arm</h4>
+                            <p>
+                                A robust <strong>4-DOF manipulator</strong> optimized for weight and rigidity. We
+                                utilized a custom linkage topology to minimize the moment arm on the base servo,
+                                allowing for smoother operation without stalling.
+                            </p>
+                            <ul class="mech-list">
+                                <li><strong>Material:</strong> PLA (20% Infill)</li>
+                                <li><strong>Joints:</strong> Dual-shaft Servos</li>
+                            </ul>
+                        </div>
+                        <div class="feature-visual">
+                            <img src="Arm.jpg" alt="Arm CAD">
+                        </div>
+                    </div>
 
-        <div class="feature-card-detailed">
-            <div class="feature-content">
-                <h3>The Robotic Arm</h3>
-              <h4>arm</h4>
-                <p>
-                    A robust <strong>4-DOF manipulator</strong> optimized for weight and rigidity. We utilized a custom linkage topology to minimize the moment arm on the base servo, allowing for smoother operation without stalling.
-                </p>
-                <ul class="mech-list">
-                    <li><strong>Material:</strong> PLA (20% Infill)</li>
-                    <li><strong>Joints:</strong> Dual-shaft Servos</li>
-                </ul>
-            </div>
-            <div class="feature-visual">
-                <img src="Arm.jpg" alt="Arm CAD">
-            </div>
-        </div>
+                    <div class="feature-card-detailed reverse">
+                        <div class="feature-content">
 
-        <div class="feature-card-detailed reverse">
-            <div class="feature-content">
-         
-                <h4><strong>Tool Changer</strong></h4 >
-                <p>
-                    We designed a <strong>passive quick-release</strong> system. The dovetail slide mechanism uses embedded neodymium magnets to snap utensils into place, allowing users to switch between spoon and fork in seconds.
-                </p>
-                <ul class="mech-list">
-                    <li><strong>Lock:</strong> Magnetic Detent</li>
-                    <li><strong>Grip:</strong> Compliant Flexure</li>
-                </ul>
-            </div>
-            <div class="feature-visual">
-                <img src="Tool.png" alt="End Effector">
-            </div>
-        </div>
+                            <h4><strong>Tool Changer</strong></h4>
+                            <p>
+                                We designed a <strong>passive quick-release</strong> system. The dovetail slide
+                                mechanism uses embedded neodymium magnets to snap utensils into place, allowing users to
+                                switch between spoon and fork in seconds.
+                            </p>
+                            <ul class="mech-list">
+                                <li><strong>Lock:</strong> Magnetic Detent</li>
+                                <li><strong>Grip:</strong> Compliant Flexure</li>
+                            </ul>
+                        </div>
+                        <div class="feature-visual">
+                            <img src="Tool.png" alt="End Effector">
+                        </div>
+                    </div>
 
-        <div class="feature-card-detailed">
-            <div class="feature-content">
+                    <div class="feature-card-detailed">
+                        <div class="feature-content">
 
-                <h3>Base Assembly</h3>
-                <p>
-                    To prevent wobble, the main pivot rides on a <strong>machined aluminum shaft</strong> pressed into 608 skate bearings. This isolates the servo from radial loads, ensuring long-term durability.
-                </p>
-                <ul class="mech-list">
-                    <li><strong>Bearing:</strong> 608ZZ (x2)</li>
-                    <li><strong>Drive:</strong> Direct Coupling</li>
-                </ul>
-            </div>
-            <div class="feature-visual">
-                <img src="Base.jpg" alt="Base Section">
-            </div>
-        </div>
+                            <h3>Base Assembly</h3>
+                            <p>
+                                To prevent wobble, the main pivot rides on a <strong>machined aluminum shaft</strong>
+                                pressed into 608 skate bearings. This isolates the servo from radial loads, ensuring
+                                long-term durability.
+                            </p>
+                            <ul class="mech-list">
+                                <li><strong>Bearing:</strong> 608ZZ (x2)</li>
+                                <li><strong>Drive:</strong> Direct Coupling</li>
+                            </ul>
+                        </div>
+                        <div class="feature-visual">
+                            <img src="Base.jpg" alt="Base Section">
+                        </div>
+                    </div>
 
-    </div>
-</div>
-
-<div class="tech-block" id="software" style="position: relative;">
-            <div style="display: flex; justify-content: space-between; align-items: end; margin-bottom: 2rem;">
-                <h3>Software Design</h3>
-                <div style="font-family: 'Courier New', monospace; font-size: 0.8rem; color: var(--accent); background: rgba(99, 102, 241, 0.1); padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid rgba(99, 102, 241, 0.3); display: flex; gap: 1.5rem;"
-                    id="telemetryBar">
-                    <span style="display: flex; align-items: center; gap: 0.5rem;"><span
-                            style="display: block; width: 6px; height: 6px; background: #34d399; border-radius: 50%; box-shadow: 0 0 8px #34d399;"></span>
-                        SYS: ONLINE</span>
-                    <span>FREQ: 100Hz</span>
-                    <span>THREADS: 4</span>
                 </div>
             </div>
 
-            <div
-                style="background: linear-gradient(135deg, rgba(20, 20, 20, 1), rgba(30, 30, 30, 1)); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 0; margin-bottom: 4rem; position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr;">
-                
-                <div class="video-placeholder"
-                    style="margin: 0; background: #050505; border-right: 1px solid rgba(255,255,255,0.1); border-radius: 20px 0 0 20px; min-height: 400px; padding: 2rem; position: relative; overflow: hidden;">
-                    
-                    <video autoplay loop muted playsinline 
-                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.6; z-index: 1;">
-                        <source src="Training.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+            <div class="tech-block" id="software" style="position: relative;">
+                <div style="display: flex; justify-content: space-between; align-items: end; margin-bottom: 2rem;">
+                    <h3>Software Design</h3>
+                    <div style="font-family: 'Courier New', monospace; font-size: 0.8rem; color: var(--accent); background: rgba(99, 102, 241, 0.1); padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid rgba(99, 102, 241, 0.3); display: flex; gap: 1.5rem;"
+                        id="telemetryBar">
+                        <span style="display: flex; align-items: center; gap: 0.5rem;"><span
+                                style="display: block; width: 6px; height: 6px; background: #34d399; border-radius: 50%; box-shadow: 0 0 8px #34d399;"></span>
+                            SYS: ONLINE</span>
+                        <span>FREQ: 100Hz</span>
+                        <span>THREADS: 4</span>
+                    </div>
+                </div>
 
-                    <div style="position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
-                        
+                <div
+                    style="background: linear-gradient(135deg, rgba(20, 20, 20, 1), rgba(30, 30, 30, 1)); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 0; margin-bottom: 4rem; position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr;">
 
+                    <div class="video-placeholder"
+                        style="margin: 0; background: #050505; border-right: 1px solid rgba(255,255,255,0.1); border-radius: 20px 0 0 20px; min-height: 400px; padding: 2rem; position: relative; overflow: hidden;">
 
-                        <div>
+                        <video autoplay loop muted playsinline
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.6; z-index: 1;">
+                            <source src="Training.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
 
-                            
-                            <div style="height: 2px; background: rgba(255,255,255,0.1); width: 100%;">
-                                <div
-                                    style="width: 30%; height: 100%; background: #ef4444; position: relative; animation: scrub 4s infinite linear;">
+                        <div
+                            style="position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <div style="height: 2px; background: rgba(255,255,255,0.1); width: 100%;">
+                                    <div
+                                        style="width: 30%; height: 100%; background: #ef4444; position: relative; animation: scrub 4s infinite linear;">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div style="padding: 3rem; display: flex; flex-direction: column; justify-content: center;">
-                    <div
-                        style="display: inline-block; color: var(--accent); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1rem;">
-                        User Experience</div>
-                    <h4 style="color: #fff; font-size: 2rem; margin-bottom: 1.5rem; line-height: 1.1;">
-                        Human-in-the-Loop Training</h4>
-                    <p
-                        style="color: rgba(255,255,255,0.8); font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem;">
-                        Hard-coding a scooping trajectory is rigid. We implemented a
-                        <strong>teach-and-repeat</strong> system that puts the user in control.
-                    </p>
-                    <p style="color: rgba(255,255,255,0.7); font-size: 1rem; line-height: 1.7;">
-                        The user physically guides the arm through their preferred motion once. The system records
-                        the high-fidelity joint states and replays them dynamically, allowing for instant
-                        customization of approach angles without writing code.
-                    </p>
+                    <div style="padding: 3rem; display: flex; flex-direction: column; justify-content: center;">
+                        <div
+                            style="display: inline-block; color: var(--accent); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1rem;">
+                            User Experience</div>
+                        <h4 style="color: #fff; font-size: 2rem; margin-bottom: 1.5rem; line-height: 1.1;">
+                            Teach-and-Repeat Trajectories</h4>
+                        <p
+                            style="color: rgba(255,255,255,0.8); font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem;">
+                            Hard-coding specific motions for food scooping is inefficient and brittle. Instead, we
+                            implemented a playback system.
+                        </p>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 1rem; line-height: 1.7;">
+                            We manually guide the arm through a scooping motion once. The system records the joint
+                            states at high frequency and saves them. During operation, the robot simply replays these
+                            states to execute the scoop, allowing us to change the serving size or approach angle
+                            without rewriting the control code.
+                        </p>
+                    </div>
                 </div>
-            </div>
-        </div>
 
                 <div
                     style="background: #0a0a0a; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; margin-bottom: 4rem; overflow: hidden;">
@@ -2396,7 +2404,7 @@
                         style="background: rgba(255,255,255,0.03); padding: 1rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center;">
                         <div
                             style="color: var(--accent-light); font-size: 0.8rem; font-weight: bold; letter-spacing: 0.05em;">
-                            FREQUENCY DECOUPLING ENGINE</div>
+                            FREQUENCY DECOUPLING</div>
                         <div style="font-family: monospace; font-size: 0.7rem; color: #a0aec0;">STATUS: SYNCHRONIZED
                         </div>
                     </div>
@@ -2408,7 +2416,7 @@
                             <div
                                 style="color: #a0aec0; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem; display: flex; justify-content: space-between;">
                                 <span>VISION THREAD</span>
-                                <span style="color: #ef4444;">30 Hz (Laggy)</span>
+                                <span style="color: #ef4444;">~30 Hz (Variable)</span>
                             </div>
                             <div
                                 style="height: 150px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; position: relative; overflow: hidden;">
@@ -2446,7 +2454,7 @@
                             <div
                                 style="color: #a0aec0; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem; display: flex; justify-content: space-between;">
                                 <span>CONTROL THREAD</span>
-                                <span style="color: #34d399;">100 Hz (Smooth)</span>
+                                <span style="color: #34d399;">100 Hz (Fixed)</span>
                             </div>
                             <div
                                 style="height: 150px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; position: relative; overflow: hidden;">
@@ -2466,22 +2474,21 @@
                     <div style="padding: 2rem; background: rgba(255,255,255,0.02);">
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
                             <div>
-                                <h5 style="color: #fff; font-size: 1.1rem; margin-bottom: 0.5rem;">The Latency Problem
+                                <h5 style="color: #fff; font-size: 1.1rem; margin-bottom: 0.5rem;">Latency Management
                                 </h5>
                                 <p style="color: rgba(255,255,255,0.6); font-size: 0.95rem; line-height: 1.6;">
-                                    Computer vision is computationally heavy (max ~30fps). If the robot waited for every
-                                    frame to process, the motors would "stutter," causing dangerous jerky motions as
-                                    seen in the left visual.
+                                    Computer vision processing is heavy and inconsistent (around 30fps). If the motor
+                                    controller waits for a vision frame to complete, the movement becomes jerky and
+                                    unsafe.
                                 </p>
                             </div>
                             <div>
-                                <h5 style="color: var(--accent); font-size: 1.1rem; margin-bottom: 0.5rem;">The Redis
-                                    Queue Solution</h5>
+                                <h5 style="color: var(--accent); font-size: 1.1rem; margin-bottom: 0.5rem;">Redis Queue
+                                    (RQ) Implementation</h5>
                                 <p style="color: rgba(255,255,255,0.6); font-size: 0.95rem; line-height: 1.6;">
-                                    We decoupled the systems using <strong>Redis Queue (RQ)</strong>. The vision thread
-                                    dumps data as fast as it can (jittery). The control thread pulls the latest data at
-                                    a fixed 100Hz, interpolating the path to ensure "butter smooth" safety-critical
-                                    motion (right visual).
+                                    We used Redis Queue to decouple the threads. The vision system pushes coordinates to
+                                    the queue whenever they are ready. The control thread pulls the most recent data at
+                                    a strict 100Hz loop, interpolating between points to ensure smooth motor actuation.
                                 </p>
                             </div>
                         </div>
@@ -2490,13 +2497,13 @@
 
                 <div style="margin-bottom: 4rem;">
                     <div style="border-left: 2px solid var(--accent); padding-left: 2rem;">
-                        <h4 style="color: #fff; font-size: 1.8rem; margin-bottom: 1.5rem;">Robust Gradient Descent
-                            Control</h4>
+                        <h4 style="color: #fff; font-size: 1.8rem; margin-bottom: 1.5rem;">Closed-Loop Control</h4>
                         <p
                             style="color: rgba(255,255,255,0.8); font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem; max-width: 900px;">
-                            Traditional trajectory generation failed due to depth noise. Instead, we implemented a
-                            <strong>closed-loop numerical approach</strong> that functions like a magnetic pull,
-                            constantly correcting the path.
+                            Standard trajectory generation struggled with depth noise from the camera. To fix this, we
+                            implemented a
+                            <strong>gradient descent-based controller</strong>. It treats the target coordinate as a
+                            minimum on an error surface and iteratively drives the end-effector towards it.
                         </p>
                     </div>
                     <div
@@ -2520,16 +2527,16 @@
                                     style="display: block; color: #34d399; font-weight: 600; margin-bottom: 0.25rem;">ẋ
                                     (Task Vel)</span>Desired Motion</div>
                             <div><span style="display: block; color: #fff; font-weight: 600; margin-bottom: 0.25rem;">e
-                                    (Error)</span>Correction Vector</div>
+                                    (Error)</span>Error Vector</div>
                         </div>
                     </div>
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 4rem;">
                     <div>
-                        <h4 style="color: #fff; font-size: 1.4rem; margin-bottom: 1rem;">System Logic</h4>
+                        <h4 style="color: #fff; font-size: 1.4rem; margin-bottom: 1rem;">Live Logs</h4>
                         <div class="terminal-window"
-                            style="background: #0f1117; border-radius: 8px; border: 1px solid #2d3748; box-shadow: 0 20px 40px rgba(0,0,0,0.5); font-family: 'Fira Code', 'Courier New', monospace; font-size: 0.8rem; height: 320px; display: flex; flex-direction: column;">
+                            style="background: #0f1117; border-radius: 8px; border: 1px solid #2d3748; box-shadow: 0 20px 40px rgba(0,0,0,0.5); font-family: 'Fira Code', 'Courier New', monospace; font-size: 0.8rem; height: 450px; display: flex; flex-direction: column;">
                             <div
                                 style="background: #1a202c; padding: 0.5rem 1rem; border-bottom: 1px solid #2d3748; color: #718096; font-size: 0.7rem;">
                                 pi@munchkin-bot:~
@@ -2540,14 +2547,10 @@
                                     style="white-space: pre-wrap; word-wrap: break-word; line-height: 1.5;"></div>
                             </div>
                         </div>
-                        <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-top: 1rem; line-height: 1.6;">
-                            The terminal above represents our real-time logging, showing the state transitions and RQ
-                            job processing happening in parallel.
-                        </p>
                     </div>
 
-                    <div style="display: flex; flex-direction: column; justify-content: center;">
-                        <h4 style="color: #fff; font-size: 1.4rem; margin-bottom: 1.5rem;">Finite State Machine</h4>
+                    <div style="display: flex; flex-direction: column; justify-content: flex-start;">
+                        <h4 style="color: #fff; font-size: 1.4rem; margin-bottom: 1.5rem;">System Logic (FSM)</h4>
 
                         <div style="display: grid; grid-template-columns: 40px 1fr; gap: 0; position: relative;">
                             <div
@@ -2555,72 +2558,139 @@
                             </div>
 
                             <div
-                                style="position: relative; height: 100px; display: flex; align-items: flex-start; justify-content: center; padding-top: 5px;">
+                                style="position: relative; height: 70px; display: flex; align-items: flex-start; justify-content: center; padding-top: 5px;">
                                 <div
                                     style="width: 14px; height: 14px; background: #2d3748; border: 2px solid #718096; border-radius: 50%; z-index: 2; position: relative;">
                                 </div>
                             </div>
-                            <div
-                                style="height: 100px; display: flex; flex-direction: column; justify-content: flex-start;">
-                                <strong style="color: #a0aec0; display: block; margin-bottom: 0.25rem;">IDLE</strong>
-                                <span style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Waiting for user trigger
-                                    or voice command.</span>
+                            <div style="height: 70px;">
+                                <strong style="color: #a0aec0; display: block; margin-bottom: 0.1rem;">IDLE</strong>
+                                <span style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">System standby.</span>
                             </div>
 
                             <div
-                                style="position: relative; height: 100px; display: flex; align-items: flex-start; justify-content: center; padding-top: 5px;">
+                                style="position: relative; height: 70px; display: flex; align-items: flex-start; justify-content: center; padding-top: 5px;">
+                                <div
+                                    style="width: 14px; height: 14px; background: #2d3748; border: 2px solid var(--accent); border-radius: 50%; z-index: 2; position: relative;">
+                                </div>
+                            </div>
+                            <div style="height: 70px;">
+                                <strong
+                                    style="color: var(--accent); display: block; margin-bottom: 0.1rem;">SCOOPING</strong>
+                                <span style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Executes recorded
+                                    trajectory.</span>
+                            </div>
+
+                            <div
+                                style="position: relative; height: 70px; display: flex; align-items: flex-start; justify-content: center; padding-top: 5px;">
+                                <div
+                                    style="width: 14px; height: 14px; background: #2d3748; border: 2px solid #fbbf24; border-radius: 50%; z-index: 2; position: relative;">
+                                </div>
+                            </div>
+                            <div style="height: 70px;">
+                                <strong style="color: #fbbf24; display: block; margin-bottom: 0.1rem;">WAIT FOR OPEN
+                                    MOUTH</strong>
+                                <span style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Scans for open mouth
+                                    landmarks.</span>
+                            </div>
+
+                            <div
+                                style="position: relative; height: 70px; display: flex; align-items: flex-start; justify-content: center; padding-top: 5px;">
                                 <div
                                     style="width: 14px; height: 14px; background: rgba(52, 211, 153, 0.2); border: 2px solid #34d399; border-radius: 50%; z-index: 2; box-shadow: 0 0 10px rgba(52, 211, 153, 0.3); position: relative;">
                                 </div>
                             </div>
+                            <div style="height: 70px;">
+                                <strong style="color: #34d399; display: block; margin-bottom: 0.1rem;">TRACKING</strong>
+                                <span style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Servoing to mouth
+                                    position.</span>
+                            </div>
+
                             <div
-                                style="height: 100px; display: flex; flex-direction: column; justify-content: flex-start;">
-                                <strong
-                                    style="color: #34d399; display: block; margin-bottom: 0.25rem;">TRACKING</strong>
-                                <span style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Closed-loop gradient
-                                    descent active.</span>
+                                style="position: relative; height: 70px; display: flex; align-items: flex-start; justify-content: center; padding-top: 5px;">
+                                <div
+                                    style="width: 14px; height: 14px; background: #2d3748; border: 2px solid #ef4444; border-radius: 50%; z-index: 2; position: relative;">
+                                </div>
+                            </div>
+                            <div style="height: 70px;">
+                                <strong style="color: #ef4444; display: block; margin-bottom: 0.1rem;">PROXIMITY
+                                    WAIT</strong>
+                                <span style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Triggered at <10cm
+                                        distance.</span>
                             </div>
 
                             <div
                                 style="position: relative; height: auto; display: flex; align-items: flex-start; justify-content: center; padding-top: 5px;">
                                 <div
-                                    style="width: 14px; height: 14px; background: #2d3748; border: 2px solid #6366f1; border-radius: 50%; z-index: 2; position: relative;">
+                                    style="width: 14px; height: 14px; background: #2d3748; border: 2px solid #718096; border-radius: 50%; z-index: 2; position: relative;">
                                 </div>
                             </div>
-                            <div
-                                style="height: auto; display: flex; flex-direction: column; justify-content: flex-start;">
-                                <strong
-                                    style="color: var(--accent); display: block; margin-bottom: 0.25rem;">SCOOPING</strong>
-                                <span style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Replaying recorded human
-                                    trajectory.</span>
+                            <div style="height: auto;">
+                                <strong style="color: #a0aec0; display: block; margin-bottom: 0.1rem;">RETRACT</strong>
+                                <span style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Backs off and resets to
+                                    Scoop.</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4rem;">
-                    <h4 style="color: #fff; font-size: 1.4rem; margin-bottom: 2rem;">Priority Safety Layer</h4>
+                    <h4 style="color: #fff; font-size: 1.4rem; margin-bottom: 2rem;">Safety Interrupts</h4>
+
+                    <style>
+                        .safety-trigger {
+                            cursor: pointer;
+                            transition: all 0.1s ease;
+                        }
+
+                        .safety-trigger:active {
+                            transform: scale(0.98);
+                            background: rgba(255, 255, 255, 0.1) !important;
+                        }
+
+                        /* The "Lit Up" State */
+                        .interrupt-active {
+                            background-color: #dc2626 !important;
+                            /* Bright Red */
+                            border-color: #fca5a5 !important;
+                            box-shadow: 0 0 30px rgba(220, 38, 38, 0.6);
+                            transform: scale(1.02);
+                        }
+
+                        /* Force text colors to white when active for readability */
+                        .interrupt-active div,
+                        .interrupt-active p,
+                        .interrupt-active strong {
+                            color: #ffffff !important;
+                            border-color: rgba(255, 255, 255, 0.5) !important;
+                            /* For the separator line */
+                        }
+                    </style>
+
                     <div style="display: grid; grid-template-columns: 1fr 100px 1fr; gap: 1rem; align-items: center;">
+
                         <div style="display: flex; flex-direction: column; gap: 1rem;">
-                            <div
+                            <div class="safety-trigger"
                                 style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
                                 <span style="color: #fff; font-weight: 600;">Primary E-Stop</span>
                                 <span style="font-family: monospace; color: #a0aec0; font-size: 0.8rem;">GPIO_17</span>
                             </div>
-                            <div
+                            <div class="safety-trigger"
                                 style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
                                 <span style="color: #fff; font-weight: 600;">Shoulder Stop</span>
                                 <span style="font-family: monospace; color: #a0aec0; font-size: 0.8rem;">GPIO_27</span>
                             </div>
                         </div>
+
                         <div style="display: flex; justify-content: center; color: rgba(255,255,255,0.2);">
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
                                 <path d="M5 12h14M13 5l7 7-7 7" />
                             </svg>
                         </div>
-                        <div
-                            style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 12px; padding: 1.5rem; text-align: center;">
+
+                        <div id="interrupt-target"
+                            style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 12px; padding: 1.5rem; text-align: center; transition: all 0.1s ease;">
                             <div
                                 style="color: #fca5a5; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem;">
                                 Hardware Interrupt</div>
@@ -2630,6 +2700,30 @@
                         </div>
                     </div>
                 </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const triggers = document.querySelectorAll('.safety-trigger');
+                        const target = document.getElementById('interrupt-target');
+
+                        const activate = () => target.classList.add('interrupt-active');
+                        const deactivate = () => target.classList.remove('interrupt-active');
+
+                        triggers.forEach(trigger => {
+                            // Mouse Events
+                            trigger.addEventListener('mousedown', activate);
+                            trigger.addEventListener('mouseup', deactivate);
+                            trigger.addEventListener('mouseleave', deactivate);
+
+                            // Touch Events (for mobile)
+                            trigger.addEventListener('touchstart', (e) => {
+                                e.preventDefault(); // Prevents simulated mouse events
+                                activate();
+                            });
+                            trigger.addEventListener('touchend', deactivate);
+                        });
+                    });
+                </script>
 
                 <div class="code-link">
                     <a href="[YOUR_GITHUB_LINK]" class="btn-primary">
@@ -2642,124 +2736,157 @@
                         multithreading logic.</p>
                 </div>
             </div>
+        </div>
 
-            <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    const textElement = document.getElementById('typewriter');
-                    const telemetry = document.getElementById('telemetryBar');
-                    if (window.innerWidth > 768) { telemetry.style.display = 'flex'; }
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const textElement = document.getElementById('typewriter');
+                const telemetry = document.getElementById('telemetryBar');
+                if (window.innerWidth > 768) { telemetry.style.display = 'flex'; }
 
-                    const lines = [
-                        { text: "> initializing system...", color: "#718096" },
-                        { text: "[INFO] BusLinker connected on /dev/ttyUSB0", color: "#a0aec0" },
-                        { text: "[INFO] Camera stream started (30fps)", color: "#a0aec0" },
-                        { text: "[SUCCESS] Motor controller online. Voltage: 9.1V", color: "#34d399" },
-                        { text: "> starting main_control_loop.py", color: "#6366f1" },
-                        { text: "[THREAD-1] Vision Queue: ACTIVE", color: "#a0aec0" },
-                        { text: "[THREAD-2] Safety Monitor: ACTIVE", color: "#a0aec0" },
-                        { text: "----------------------------------------", color: "#4a5568" },
-                        { text: "STATE: IDLE", color: "#f59e0b" },
-                        { text: "waiting for user input...", color: "#718096" },
-                        { text: "STATE: TRACKING", color: "#34d399" },
-                        { text: "Target: [x:120, y:45, z:300] | Err: 12mm", color: "#a0aec0" },
-                        { text: "STATE: SCOOPING", color: "#6366f1" }
-                    ];
+                const lines = [
+                    // SYSTEM BOOT
+                    { text: "> initializing munchkin_core...", color: "#718096" },
+                    { text: "[INFO] BusLinker connected on /dev/ttyUSB0", color: "#a0aec0" },
+                    { text: "[INFO] Realsense D435 stream started (30fps)", color: "#a0aec0" },
+                    { text: "[SUCCESS] Motor controller online. Voltage: 12.4V", color: "#34d399" },
+                    { text: "> starting main_control_loop.py", color: "#6366f1" },
+                    { text: "----------------------------------------", color: "#4a5568" },
 
-                    let lineIndex = 0; let charIndex = 0;
-                    function typeLine() {
-                        if (lineIndex < lines.length) {
-                            const currentLine = lines[lineIndex];
-                            if (charIndex === 0) {
-                                const div = document.createElement('div');
-                                div.style.color = currentLine.color;
-                                div.style.marginBottom = '4px';
-                                div.id = `line-${lineIndex}`;
-                                textElement.appendChild(div);
-                            }
-                            const currentDiv = document.getElementById(`line-${lineIndex}`);
-                            currentDiv.textContent += currentLine.text.charAt(charIndex);
-                            charIndex++;
-                            if (charIndex < currentLine.text.length) {
-                                setTimeout(typeLine, Math.random() * 20 + 5);
-                            } else {
-                                lineIndex++; charIndex = 0;
-                                const terminalWindow = textElement.parentElement;
-                                terminalWindow.scrollTop = terminalWindow.scrollHeight;
-                                setTimeout(typeLine, 150);
-                            }
-                        } else {
-                            setTimeout(() => { textElement.innerHTML = ''; lineIndex = 0; charIndex = 0; typeLine(); }, 5000);
+                    // STATE 1: IDLE
+                    { text: "STATE: IDLE", color: "#718096" }, // Grey
+                    { text: "waiting for user trigger...", color: "#4a5568" },
+                    { text: "> TRIGGER RECEIVED (Voice Cmd)", color: "#fff" },
+
+                    // STATE 2: SCOOPING
+                    { text: "STATE: SCOOPING", color: "#6366f1" }, // Purple
+                    { text: "[TRAJ] Loading 'scoop_v3.csv'...", color: "#a0aec0" },
+                    { text: "[TRAJ] Executing 145 waypoints...", color: "#a0aec0" },
+                    { text: "[SUCCESS] Scoop complete.", color: "#34d399" },
+
+                    // STATE 3: WAIT FOR MOUTH
+                    { text: "STATE: WAIT_FOR_MOUTH", color: "#fbbf24" }, // Yellow
+                    { text: "[VIS] Searching for landmarks...", color: "#a0aec0" },
+                    { text: "[VIS] Face found. Mouth Aspect Ratio: 0.05 (CLOSED)", color: "#a0aec0" },
+                    { text: "[VIS] Mouth Aspect Ratio: 0.12 (CLOSED)", color: "#a0aec0" },
+                    { text: "[VIS] Mouth Aspect Ratio: 0.65 (OPEN)", color: "#34d399" },
+
+                    // STATE 4: TRACKING
+                    { text: "STATE: TRACKING", color: "#34d399" }, // Green
+                    { text: "[RQ] Vision Lag: 32ms | Control Loop: 10ms", color: "#a0aec0" },
+                    { text: "[SERVO] dX: 45mm, dY: -12mm | Correction vector applied", color: "#a0aec0" },
+                    { text: "[SERVO] Error: 2.1mm (CONVERGED)", color: "#34d399" },
+
+                    // STATE 5: PROXIMITY WAIT
+                    { text: "STATE: PROXIMITY_WAIT", color: "#ef4444" }, // Red
+                    { text: "[DIST] Range: 15.2cm", color: "#a0aec0" },
+                    { text: "[DIST] Range: 8.9cm (THRESHOLD_REACHED)", color: "#ef4444" },
+                    { text: "> Holding for 2.0s...", color: "#a0aec0" },
+
+                    // STATE 6: RETRACT
+                    { text: "STATE: RETRACT", color: "#a0aec0" }, // Grey
+                    { text: "> Backing off safety buffer...", color: "#a0aec0" },
+                    { text: "> Resetting to home position.", color: "#a0aec0" }
+                ];
+
+                let lineIndex = 0; let charIndex = 0;
+                function typeLine() {
+                    if (lineIndex < lines.length) {
+                        const currentLine = lines[lineIndex];
+                        if (charIndex === 0) {
+                            const div = document.createElement('div');
+                            div.style.color = currentLine.color;
+                            div.style.marginBottom = '4px';
+                            div.id = `line-${lineIndex}`;
+                            textElement.appendChild(div);
                         }
+                        const currentDiv = document.getElementById(`line-${lineIndex}`);
+                        currentDiv.textContent += currentLine.text.charAt(charIndex);
+                        charIndex++;
+                        if (charIndex < currentLine.text.length) {
+                            setTimeout(typeLine, Math.random() * 10 + 5); // Typing speed
+                        } else {
+                            lineIndex++; charIndex = 0;
+                            const terminalWindow = textElement.parentElement;
+                            terminalWindow.scrollTop = terminalWindow.scrollHeight;
+                            // Pause longer after state changes for realism
+                            const delay = currentLine.text.includes("STATE:") ? 800 : 150;
+                            setTimeout(typeLine, delay);
+                        }
+                    } else {
+                        setTimeout(() => { textElement.innerHTML = ''; lineIndex = 0; charIndex = 0; typeLine(); }, 5000);
                     }
-                    const observer = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => { if (entry.isIntersecting && textElement.innerHTML === '') typeLine(); });
-                    });
-                    observer.observe(document.getElementById('software'));
+                }
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => { if (entry.isIntersecting && textElement.innerHTML === '') typeLine(); });
                 });
-            </script>
+                observer.observe(document.getElementById('software'));
+            });
+        </script>
 
-            <style>
-                @keyframes pulse {
-                    0% {
-                        transform: scale(1);
-                        opacity: 1;
-                    }
-
-                    50% {
-                        transform: scale(1.5);
-                        opacity: 0.5;
-                    }
-
-                    100% {
-                        transform: scale(1);
-                        opacity: 1;
-                    }
+        <style>
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
                 }
 
-                @keyframes blink {
-
-                    0%,
-                    100% {
-                        opacity: 1;
-                    }
-
-                    50% {
-                        opacity: 0.3;
-                    }
+                50% {
+                    transform: scale(1.5);
+                    opacity: 0.5;
                 }
 
-                @keyframes scrub {
-                    0% {
-                        width: 0%;
-                    }
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
 
-                    100% {
-                        width: 100%;
-                    }
+            @keyframes blink {
+
+                0%,
+                100% {
+                    opacity: 1;
                 }
 
-                @keyframes moveTarget {
-                    0% {
-                        left: 10%;
-                    }
+                50% {
+                    opacity: 0.3;
+                }
+            }
 
-                    100% {
-                        left: 90%;
-                    }
+            @keyframes scrub {
+                0% {
+                    width: 0%;
                 }
 
-                @keyframes dropData {
-                    0% {
-                        top: -10px;
-                        opacity: 1;
-                    }
-
-                    100% {
-                        top: 100%;
-                        opacity: 0;
-                    }
+                100% {
+                    width: 100%;
                 }
-            </style>
+            }
+
+            @keyframes moveTarget {
+                0% {
+                    left: 10%;
+                }
+
+                100% {
+                    left: 90%;
+                }
+            }
+
+            @keyframes dropData {
+                0% {
+                    top: -10px;
+                    opacity: 1;
+                }
+
+                100% {
+                    top: 100%;
+                    opacity: 0;
+                }
+            }
+        </style>
+
         </div>
 
 
@@ -2773,7 +2900,8 @@
             .decisions-grid {
                 display: flex;
                 flex-direction: column;
-                gap: 3rem; /* <--- CHANGE THIS VALUE */
+                gap: 3rem;
+                /* <--- CHANGE THIS VALUE */
                 margin: 3rem 0;
             }
 
@@ -2781,14 +2909,16 @@
                 background: rgba(255, 255, 255, 0.02);
                 border: 1px solid rgba(255, 255, 255, 0.1);
                 border-radius: 16px;
-                padding: 2.5rem; /* <--- CHANGE THIS VALUE */
+                padding: 2.5rem;
+                /* <--- CHANGE THIS VALUE */
                 margin: 0 !important;
             }
 
             .decision-card:has(.decision-showcase) {
                 display: grid;
                 grid-template-columns: 1.2fr 0.8fr;
-                gap: 2rem; /* <--- CHANGE THIS VALUE */
+                gap: 2rem;
+                /* <--- CHANGE THIS VALUE */
                 align-items: start;
             }
 
@@ -4309,4 +4439,4 @@
         <script src="main.js"></script>
 </body>
 
-</html> 
+</html>
