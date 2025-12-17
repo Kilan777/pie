@@ -94,3 +94,44 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 console.log('✨ Stars background loaded');
 
+/* 1. The 3D Shape Background (Fixed globally) */
+.webgl {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Behind everything */
+}
+
+/* 2. The Hero Section (Video covers the 3D background here) */
+.hero {
+    position: relative;
+    background: transparent; /* Clear background */
+    overflow: hidden; /* Cut off video if it overflows */
+    /* Ensure hero content sits on top of video */
+    z-index: 1; 
+}
+
+/* 3. The Video Styling */
+.hero-video-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures video fills the area */
+    z-index: -1; /* Behind hero text, but in front of global 3D canvas */
+    opacity: 0.6; /* Adjust brightness */
+}
+
+/* 4. Overlay to make text readable on top of video */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.8));
+    z-index: -1;
+}
