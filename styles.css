@@ -109,8 +109,8 @@ body {
 
 .hero-video-background video {
     width: auto;
-    height: 100vh;
-    max-width: 50%;
+    height: 110vh;
+    max-width: 65%;
     object-fit: contain;
     opacity: 0.5;
 }

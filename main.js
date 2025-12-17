@@ -118,3 +118,206 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 console.log('✨ Starfield background loaded');
+
+// ========================================
+// 3D MODEL VIEWER MODAL
+// ========================================
+
+let modelScene, modelCamera, modelRenderer, modelControls;
+let model3DAnimationId;
+let modelLoaded = false;
+
+const modal = document.getElementById('model3DModal');
+const openBtn = document.getElementById('view3DModelBtn');
+const closeBtn = document.getElementById('closeModalBtn');
+const modelCanvas = document.getElementById('model3DCanvas');
+const loadingText = document.getElementById('modelLoadingText');
+
+// Open modal and initialize 3D viewer
+openBtn.addEventListener('click', () => {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+
+    if (!modelLoaded) {
+        init3DModelViewer();
+    } else {
+        animate3DModel();
+    }
+});
+
+// Close modal
+function closeModal() {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+
+    if (model3DAnimationId) {
+        cancelAnimationFrame(model3DAnimationId);
+        model3DAnimationId = null;
+    }
+}
+
+closeBtn.addEventListener('click', closeModal);
+
+// Close on background click
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        closeModal();
+    }
+});
+
+// Initialize 3D Model Viewer
+function init3DModelViewer() {
+    // Create scene
+    modelScene = new THREE.Scene();
+    modelScene.background = new THREE.Color(0x0a0a0a);
+
+    // Create camera
+    const container = modelCanvas.parentElement;
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    modelCamera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+    modelCamera.position.set(2, 2, 5);
+
+    // Create renderer
+    modelRenderer = new THREE.WebGLRenderer({
+        canvas: modelCanvas,
+        antialias: true,
+        alpha: true
+    });
+    modelRenderer.setSize(width, height);
+    modelRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    modelRenderer.shadowMap.enabled = true;
+    modelRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    // Add lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    modelScene.add(ambientLight);
+
+    const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight1.position.set(5, 5, 5);
+    directionalLight1.castShadow = true;
+    modelScene.add(directionalLight1);
+
+    const directionalLight2 = new THREE.DirectionalLight(0x667eea, 0.4);
+    directionalLight2.position.set(-5, 3, -5);
+    modelScene.add(directionalLight2);
+
+    const directionalLight3 = new THREE.DirectionalLight(0x764ba2, 0.3);
+    directionalLight3.position.set(0, -5, 0);
+    modelScene.add(directionalLight3);
+
+    // Add OrbitControls
+    modelControls = new THREE.OrbitControls(modelCamera, modelRenderer.domElement);
+    modelControls.enableDamping = true;
+    modelControls.dampingFactor = 0.05;
+    modelControls.autoRotate = true;
+    modelControls.autoRotateSpeed = 2.0;
+    modelControls.minDistance = 2;
+    modelControls.maxDistance = 10;
+
+    // Load 3D Model
+    const loader = new THREE.GLTFLoader();
+
+    // Try to load the model - update 'model.gltf' with actual filename when provided
+    loader.load(
+        'robot_arm.glb', // Change this to your model filename
+        function (gltf) {
+            const model = gltf.scene;
+
+            // Center and scale the model
+            const box = new THREE.Box3().setFromObject(model);
+            const center = box.getCenter(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
+
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const scale = 2 / maxDim;
+            model.scale.multiplyScalar(scale);
+
+            model.position.sub(center.multiplyScalar(scale));
+
+            // Enable shadows
+            model.traverse((child) => {
+                if (child.isMesh) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+
+                    // Enhance materials
+                    if (child.material) {
+                        child.material.metalness = 0.3;
+                        child.material.roughness = 0.6;
+                    }
+                }
+            });
+
+            modelScene.add(model);
+            modelLoaded = true;
+            loadingText.style.display = 'none';
+
+            animate3DModel();
+        },
+        function (xhr) {
+            const percent = (xhr.loaded / xhr.total * 100).toFixed(0);
+            loadingText.querySelector('div:first-child').textContent = `Loading 3D Model... ${percent}%`;
+        },
+        function (error) {
+            console.error('Error loading 3D model:', error);
+            loadingText.innerHTML = '<div style="color: #ff6b6b;">Model not found. Please add your 3D model file to the project.</div><div style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-top: 1rem;">Expected filename: robot_arm.glb</div>';
+        }
+    );
+
+    // Handle window resize
+    window.addEventListener('resize', onModelWindowResize, false);
+
+    animate3DModel();
+}
+
+function onModelWindowResize() {
+    if (!modelCamera || !modelRenderer) return;
+
+    const container = modelCanvas.parentElement;
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    modelCamera.aspect = width / height;
+    modelCamera.updateProjectionMatrix();
+    modelRenderer.setSize(width, height);
+}
+
+function animate3DModel() {
+    model3DAnimationId = requestAnimationFrame(animate3DModel);
+
+    if (modelControls) {
+        modelControls.update();
+    }
+
+    if (modelRenderer && modelScene && modelCamera) {
+        modelRenderer.render(modelScene, modelCamera);
+    }
+}
+
+// Add hover effect to button
+openBtn.addEventListener('mouseenter', () => {
+    openBtn.style.transform = 'translateY(-3px)';
+    openBtn.style.boxShadow = '0 15px 40px rgba(99, 102, 241, 0.4)';
+});
+
+openBtn.addEventListener('mouseleave', () => {
+    openBtn.style.transform = 'translateY(0)';
+    openBtn.style.boxShadow = 'none';
+});
+
+// Add hover effect to close button
+closeBtn.addEventListener('mouseenter', () => {
+    closeBtn.style.background = 'rgba(255, 255, 255, 0.2)';
+    closeBtn.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+    closeBtn.style.transform = 'scale(1.1) rotate(90deg)';
+});
+
+closeBtn.addEventListener('mouseleave', () => {
+    closeBtn.style.background = 'rgba(255, 255, 255, 0.1)';
+    closeBtn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+    closeBtn.style.transform = 'scale(1) rotate(0deg)';
+});
+
+console.log('✨ 3D Model Viewer initialized');

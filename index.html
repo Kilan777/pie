@@ -2207,7 +2207,7 @@
                         <p style="color: rgba(255,255,255,0.7); font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem;">
                             Custom linkage topology minimizes moment arm on the base servo for smooth, stall-free operation. Built with PLA and precision bearings for durability.
                         </p>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
                             <div>
                                 <div style="font-size: 2rem; font-weight: 700; color: #667eea;">850g</div>
                                 <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Total Weight</div>
@@ -2225,6 +2225,12 @@
                                 <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Tool Swap</div>
                             </div>
                         </div>
+                        <button id="view3DModelBtn" style="padding: 1rem 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; display: inline-flex; align-items: center; gap: 0.5rem;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            </svg>
+                            View 3D Model
+                        </button>
                     </div>
                 </div>
 
@@ -4418,7 +4424,23 @@
             </div>
         </footer>
 
+        <!-- 3D Model Viewer Modal -->
+        <div id="model3DModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 9999; align-items: center; justify-content: center;">
+            <button id="closeModalBtn" style="position: absolute; top: 2rem; right: 2rem; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.3); color: #fff; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; z-index: 10000;">
+                ✕
+            </button>
+            <div style="width: 90%; height: 90%; max-width: 1200px; max-height: 800px; position: relative;">
+                <canvas id="model3DCanvas" style="width: 100%; height: 100%; border-radius: 20px;"></canvas>
+                <div id="modelLoadingText" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 1.2rem; text-align: center;">
+                    <div style="margin-bottom: 1rem;">Loading 3D Model...</div>
+                    <div style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">Drag to rotate • Scroll to zoom</div>
+                </div>
+            </div>
+        </div>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
         <script src="main.js"></script>
 </body>
 
