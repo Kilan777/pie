@@ -133,17 +133,19 @@ const closeBtn = document.getElementById('closeModalBtn');
 const modelCanvas = document.getElementById('model3DCanvas');
 const loadingText = document.getElementById('modelLoadingText');
 
-// Open modal and initialize 3D viewer
-openBtn.addEventListener('click', () => {
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+// Open modal and initialize 3D viewer (button removed, but keeping code for potential future use)
+if (openBtn) {
+    openBtn.addEventListener('click', () => {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
 
-    if (!modelLoaded) {
-        init3DModelViewer();
-    } else {
-        animate3DModel();
-    }
-});
+        if (!modelLoaded) {
+            init3DModelViewer();
+        } else {
+            animate3DModel();
+        }
+    });
+}
 
 // Close modal
 function closeModal() {
@@ -156,14 +158,18 @@ function closeModal() {
     }
 }
 
-closeBtn.addEventListener('click', closeModal);
+if (closeBtn) {
+    closeBtn.addEventListener('click', closeModal);
+}
 
 // Close on background click
-modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        closeModal();
-    }
-});
+if (modal) {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+}
 
 // Initialize 3D Model Viewer
 function init3DModelViewer() {
@@ -221,7 +227,7 @@ function init3DModelViewer() {
 
     // Try to load the model - update 'model.gltf' with actual filename when provided
     loader.load(
-        'robot_arm.glb', // Change this to your model filename
+        'FullCAD.gltf', // 3D model file
         function (gltf) {
             const model = gltf.scene;
 
@@ -262,7 +268,7 @@ function init3DModelViewer() {
         },
         function (error) {
             console.error('Error loading 3D model:', error);
-            loadingText.innerHTML = '<div style="color: #ff6b6b;">Model not found. Please add your 3D model file to the project.</div><div style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-top: 1rem;">Expected filename: robot_arm.glb</div>';
+            loadingText.innerHTML = '<div style="color: #ff6b6b;">Model not found. Please add your 3D model file to the project.</div><div style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-top: 1rem;">Expected filename: FullCAD.gltf</div>';
         }
     );
 
@@ -296,29 +302,33 @@ function animate3DModel() {
     }
 }
 
-// Add hover effect to button
-openBtn.addEventListener('mouseenter', () => {
-    openBtn.style.transform = 'translateY(-3px)';
-    openBtn.style.boxShadow = '0 15px 40px rgba(99, 102, 241, 0.4)';
-});
+// Add hover effect to button (if it exists)
+if (openBtn) {
+    openBtn.addEventListener('mouseenter', () => {
+        openBtn.style.transform = 'translateY(-3px)';
+        openBtn.style.boxShadow = '0 15px 40px rgba(99, 102, 241, 0.4)';
+    });
 
-openBtn.addEventListener('mouseleave', () => {
-    openBtn.style.transform = 'translateY(0)';
-    openBtn.style.boxShadow = 'none';
-});
+    openBtn.addEventListener('mouseleave', () => {
+        openBtn.style.transform = 'translateY(0)';
+        openBtn.style.boxShadow = 'none';
+    });
+}
 
-// Add hover effect to close button
-closeBtn.addEventListener('mouseenter', () => {
-    closeBtn.style.background = 'rgba(255, 255, 255, 0.2)';
-    closeBtn.style.borderColor = 'rgba(255, 255, 255, 0.5)';
-    closeBtn.style.transform = 'scale(1.1) rotate(90deg)';
-});
+// Add hover effect to close button (if it exists)
+if (closeBtn) {
+    closeBtn.addEventListener('mouseenter', () => {
+        closeBtn.style.background = 'rgba(255, 255, 255, 0.2)';
+        closeBtn.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+        closeBtn.style.transform = 'scale(1.1) rotate(90deg)';
+    });
 
-closeBtn.addEventListener('mouseleave', () => {
-    closeBtn.style.background = 'rgba(255, 255, 255, 0.1)';
-    closeBtn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-    closeBtn.style.transform = 'scale(1) rotate(0deg)';
-});
+    closeBtn.addEventListener('mouseleave', () => {
+        closeBtn.style.background = 'rgba(255, 255, 255, 0.1)';
+        closeBtn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+        closeBtn.style.transform = 'scale(1) rotate(0deg)';
+    });
+}
 
 console.log('✨ 3D Model Viewer initialized');
 
@@ -489,7 +499,7 @@ function initEmbedded3DViewer() {
     const loader = new THREE.GLTFLoader();
 
     loader.load(
-        'robot_arm.glb',
+        'FullCAD.gltf',
         function (gltf) {
             const model = gltf.scene;
 
@@ -531,7 +541,7 @@ function initEmbedded3DViewer() {
         function (error) {
             console.error('Error loading embedded 3D model:', error);
             if (loadingText) {
-                loadingText.innerHTML = '<div style="color: #ff6b6b;">Model not found</div><div style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-top: 1rem;">Add robot_arm.glb to load the 3D model</div>';
+                loadingText.innerHTML = '<div style="color: #ff6b6b;">Model not found</div><div style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-top: 1rem;">Add FullCAD.gltf to load the 3D model</div>';
             }
         }
     );
