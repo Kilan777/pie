@@ -1826,395 +1826,205 @@ footer a:hover {
     background: #141414 !important;
     border-color: rgba(139, 92, 246, 0.4);
     transform: translateY(-5px);
-}
+
 /* ========================================
-   EPIC MECHANICAL SECTION STYLES
+   MECHANICAL SECTION - CLEAN & POWERFUL
    ======================================== */
 
-/* Telemetry Bar */
-.mech-telemetry-bar {
-    font-family: 'Courier New', monospace;
-    font-size: 0.75rem;
-    color: var(--accent);
-    background: rgba(99, 102, 241, 0.1);
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    border: 1px solid rgba(99, 102, 241, 0.3);
-    display: flex;
-    gap: 1.5rem;
-}
-
-.telemetry-item {
+/* Exploded View Video Section */
+.mech-exploded-section {
+    width: 100%;
+    height: 150vh;
+    position: relative;
+    margin: 4rem 0;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
 }
 
-.status-dot {
-    display: block;
-    width: 6px;
-    height: 6px;
-    background: #34d399;
-    border-radius: 50%;
-    box-shadow: 0 0 8px #34d399;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
-
-/* Assembly Viewer */
-.assembly-viewer {
-    position: relative;
+.exploded-container {
+    position: sticky;
+    top: 0;
     width: 100%;
-    margin: 3rem 0;
-    border-radius: 20px;
-    overflow: hidden;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-    border: 1px solid rgba(139, 92, 246, 0.2);
-}
-
-.viewer-container {
-    position: relative;
-    width: 100%;
-    min-height: 600px;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
 }
 
-.assembly-layer {
-    position: relative;
-    z-index: 1;
-    transition: transform 0.3s ease;
-}
-
-.assembly-main-img {
-    max-width: 100%;
-    height: auto;
-    filter: drop-shadow(0 20px 60px rgba(139, 92, 246, 0.3));
-    animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(2deg); }
-}
-
-/* Tech HUD */
-.tech-hud {
-    position: absolute;
-    top: 0;
-    left: 0;
+.exploded-video {
     width: 100%;
     height: 100%;
-    pointer-events: none;
-    z-index: 2;
+    object-fit: contain;
 }
 
-.hud-corner {
+.exploded-overlay {
     position: absolute;
-    width: 40px;
-    height: 40px;
-    border: 2px solid rgba(139, 92, 246, 0.6);
-}
-
-.hud-corner.top-left {
-    top: 20px;
-    left: 20px;
-    border-right: none;
-    border-bottom: none;
-    animation: hudPulse 3s infinite;
-}
-
-.hud-corner.top-right {
-    top: 20px;
-    right: 20px;
-    border-left: none;
-    border-bottom: none;
-    animation: hudPulse 3s infinite 0.5s;
-}
-
-.hud-corner.bottom-left {
-    bottom: 20px;
-    left: 20px;
-    border-right: none;
-    border-top: none;
-    animation: hudPulse 3s infinite 1s;
-}
-
-.hud-corner.bottom-right {
-    bottom: 20px;
-    right: 20px;
-    border-left: none;
-    border-top: none;
-    animation: hudPulse 3s infinite 1.5s;
-}
-
-@keyframes hudPulse {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; box-shadow: 0 0 20px rgba(139, 92, 246, 0.5); }
-}
-
-.hud-scanline {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.8), transparent);
-    animation: scan 4s linear infinite;
-}
-
-@keyframes scan {
-    0% { top: 0; }
-    100% { top: 100%; }
-}
-
-/* Technical Callouts */
-.tech-callout {
-    position: absolute;
-    animation: fadeInScale 0.8s ease-out forwards;
-    opacity: 0;
-}
-
-.tech-callout:nth-child(6) { animation-delay: 0.2s; }
-.tech-callout:nth-child(7) { animation-delay: 0.4s; }
-.tech-callout:nth-child(8) { animation-delay: 0.6s; }
-
-@keyframes fadeInScale {
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.callout-dot {
-    width: 8px;
-    height: 8px;
-    background: #667eea;
-    border-radius: 50%;
-    box-shadow: 0 0 15px #667eea;
-    animation: dotPulse 2s infinite;
-}
-
-@keyframes dotPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.3); }
-}
-
-.callout-line {
-    width: 60px;
-    height: 1px;
-    background: linear-gradient(90deg, #667eea, transparent);
-    margin-top: 4px;
-}
-
-.callout-line.reverse {
-    background: linear-gradient(270deg, #667eea, transparent);
-}
-
-.callout-label {
-    position: absolute;
-    top: -5px;
-    left: 70px;
-    background: rgba(10, 10, 10, 0.95);
-    border: 1px solid rgba(139, 92, 246, 0.5);
-    border-radius: 6px;
-    padding: 0.5rem 0.75rem;
-    min-width: 140px;
-    backdrop-filter: blur(10px);
-}
-
-.callout-label.right {
-    left: auto;
-    right: 70px;
-}
-
-.label-title {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #667eea;
-    letter-spacing: 0.05em;
-}
-
-.label-spec {
-    font-size: 0.65rem;
-    color: rgba(255, 255, 255, 0.6);
-    margin-top: 0.25rem;
-}
-
-/* View Switcher */
-.view-switcher {
-    position: absolute;
-    bottom: 30px;
+    bottom: 10%;
     left: 50%;
     transform: translateX(-50%);
-    display: flex;
-    gap: 0.5rem;
-    background: rgba(10, 10, 10, 0.9);
-    padding: 0.5rem;
-    border-radius: 8px;
-    border: 1px solid rgba(139, 92, 246, 0.3);
-    z-index: 3;
-    backdrop-filter: blur(10px);
+    z-index: 10;
 }
 
-.view-btn {
-    padding: 0.5rem 1rem;
-    background: transparent;
-    border: 1px solid rgba(139, 92, 246, 0.3);
-    border-radius: 4px;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.view-btn:hover {
-    background: rgba(139, 92, 246, 0.1);
-    color: #667eea;
-    border-color: #667eea;
-}
-
-.view-btn.active {
-    background: #667eea;
-    color: #fff;
-    border-color: #667eea;
-    box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
-}
-
-/* Tech Specs Grid */
-.tech-specs-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    margin: 3rem 0;
-}
-
-.spec-card {
-    background: linear-gradient(135deg, rgba(20, 20, 20, 0.8), rgba(30, 30, 30, 0.8));
-    border: 1px solid rgba(139, 92, 246, 0.2);
-    border-radius: 12px;
-    padding: 2rem;
-    text-align: center;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.spec-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
-    transition: left 0.5s ease;
-}
-
-.spec-card:hover::before {
-    left: 100%;
-}
-
-.spec-card:hover {
-    transform: translateY(-5px);
-    border-color: #667eea;
-    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
-}
-
-.spec-icon {
-    color: #667eea;
-    margin-bottom: 1rem;
-    display: flex;
-    justify-content: center;
-}
-
-.spec-value {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 0.5rem;
-}
-
-.spec-label {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 1rem;
-}
-
-.spec-bar {
-    width: 100%;
-    height: 4px;
-    background: rgba(139, 92, 246, 0.2);
-    border-radius: 2px;
-    overflow: hidden;
-}
-
-.spec-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #667eea, #764ba2);
-    border-radius: 2px;
-    animation: fillBar 1.5s ease-out forwards;
-    transform-origin: left;
-}
-
-@keyframes fillBar {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
-}
-
-/* Component Showcase */
-.component-showcase {
+.scroll-prompt {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
-    margin-top: 4rem;
-}
-
-.component-item {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
     align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    animation: bounce 2s infinite;
 }
 
-.component-item.reverse {
-    direction: rtl;
+.scroll-prompt svg {
+    color: #667eea;
 }
 
-.component-item.reverse > * {
-    direction: ltr;
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
-.component-visual {
+/* Gallery Carousel Section */
+.mech-gallery-section {
+    margin: 6rem 0;
+}
+
+.gallery-carousel {
     position: relative;
-    border-radius: 16px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
     overflow: hidden;
+    border-radius: 20px;
     background: #0a0a0a;
     border: 1px solid rgba(139, 92, 246, 0.2);
-    transition: all 0.3s ease;
 }
 
-.component-visual:hover {
-    border-color: #667eea;
-    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
-    transform: scale(1.02);
+.carousel-track {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.component-visual img {
+.carousel-item {
+    min-width: 100%;
+    position: relative;
+    opacity: 0.4;
+    transition: opacity 0.6s ease;
+}
+
+.carousel-item.active {
+    opacity: 1;
+}
+
+.carousel-item img {
     width: 100%;
     height: auto;
     display: block;
+    max-height: 600px;
+    object-fit: contain;
+    background: #000;
 }
 
-.component-overlay {
+.carousel-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+    padding: 3rem 2rem 2rem 2rem;
+    color: #fff;
+}
+
+.carousel-caption h4 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.carousel-caption p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(102, 126, 234, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.carousel-btn:hover {
+    background: #667eea;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+}
+
+.carousel-btn.prev {
+    left: 20px;
+}
+
+.carousel-btn.next {
+    right: 20px;
+}
+
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+}
+
+.indicator-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.indicator-dot.active {
+    background: #667eea;
+    width: 30px;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+}
+
+/* Features Grid */
+.mech-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 4rem 0;
+}
+
+.mech-feature-card {
+    background: linear-gradient(135deg, rgba(20, 20, 20, 0.9), rgba(30, 30, 30, 0.9));
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 16px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.mech-feature-card::before {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -2222,103 +2032,90 @@ footer a:hover {
     height: 100%;
     background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), transparent);
     opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
+    transition: opacity 0.4s ease;
 }
 
-.component-visual:hover .component-overlay {
+.mech-feature-card:hover {
+    transform: translateY(-10px);
+    border-color: #667eea;
+    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+}
+
+.mech-feature-card:hover::before {
     opacity: 1;
 }
 
-.overlay-grid {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        linear-gradient(rgba(102, 126, 234, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(102, 126, 234, 0.1) 1px, transparent 1px);
-    background-size: 20px 20px;
-}
-
-.component-info {
-    padding: 1rem;
-}
-
-.component-tag {
-    display: inline-block;
-    font-size: 0.75rem;
+.feature-number {
+    font-size: 3rem;
     font-weight: 700;
-    letter-spacing: 0.1em;
-    color: #667eea;
-    background: rgba(102, 126, 234, 0.1);
-    padding: 0.4rem 0.8rem;
-    border-radius: 4px;
-    border: 1px solid rgba(102, 126, 234, 0.3);
+    color: rgba(102, 126, 234, 0.2);
+    line-height: 1;
     margin-bottom: 1rem;
 }
 
-.component-info h4 {
-    font-size: 1.8rem;
+.mech-feature-card h4 {
+    font-size: 1.3rem;
     color: #fff;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
-.component-info p {
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.8;
+.mech-feature-card p {
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
     margin-bottom: 1.5rem;
 }
 
-.component-meta {
+.feature-stat {
     display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(139, 92, 246, 0.2);
 }
 
-.component-meta span {
-    font-size: 0.85rem;
+.stat-big {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #667eea;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.5);
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.4rem 0.8rem;
-    border-radius: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .tech-specs-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .component-item {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .component-item.reverse {
-        direction: ltr;
-    }
-}
-
+/* Responsive */
 @media (max-width: 768px) {
-    .tech-specs-grid {
+    .mech-exploded-section {
+        height: 100vh;
+    }
+    
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .carousel-btn.prev {
+        left: 10px;
+    }
+    
+    .carousel-btn.next {
+        right: 10px;
+    }
+    
+    .carousel-caption {
+        padding: 2rem 1rem 1rem 1rem;
+    }
+    
+    .carousel-caption h4 {
+        font-size: 1.2rem;
+    }
+    
+    .mech-features-grid {
         grid-template-columns: 1fr;
-    }
-    
-    .mech-telemetry-bar {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    
-    .view-switcher {
-        bottom: 20px;
-        gap: 0.25rem;
-    }
-    
-    .view-btn {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.7rem;
     }
 }
