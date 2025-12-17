@@ -321,3 +321,255 @@ closeBtn.addEventListener('mouseleave', () => {
 });
 
 console.log('✨ 3D Model Viewer initialized');
+
+// ========================================
+// MECHANICAL SLIDESHOW
+// ========================================
+
+let mechSlideIndex = 1;
+let mechSlideTimer;
+
+// Initialize slideshow
+function initMechSlideshow() {
+    mechShowSlides(mechSlideIndex);
+    // Auto-play every 4 seconds
+    mechSlideTimer = setInterval(() => {
+        mechChangeslide(1);
+    }, 4000);
+}
+
+// Next/previous controls
+function mechChangeslide(n) {
+    clearInterval(mechSlideTimer);
+    mechShowSlides(mechSlideIndex += n);
+    // Restart auto-play
+    mechSlideTimer = setInterval(() => {
+        mechChangeslide(1);
+    }, 4000);
+}
+
+// Thumbnail image controls
+function mechCurrentSlide(n) {
+    clearInterval(mechSlideTimer);
+    mechShowSlides(mechSlideIndex = n);
+    // Restart auto-play
+    mechSlideTimer = setInterval(() => {
+        mechChangeslide(1);
+    }, 4000);
+}
+
+function mechShowSlides(n) {
+    let slides = document.getElementsByClassName("mech-slide");
+    let dots = document.getElementsByClassName("mech-dot");
+
+    if (n > slides.length) { mechSlideIndex = 1 }
+    if (n < 1) { mechSlideIndex = slides.length }
+
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+        slides[i].style.opacity = "0";
+    }
+
+    for (let i = 0; i < dots.length; i++) {
+        dots[i].style.background = "rgba(255,255,255,0.5)";
+        dots[i].style.transform = "scale(1)";
+    }
+
+    if (slides[mechSlideIndex - 1]) {
+        slides[mechSlideIndex - 1].style.display = "block";
+        setTimeout(() => {
+            slides[mechSlideIndex - 1].style.opacity = "1";
+        }, 10);
+    }
+
+    if (dots[mechSlideIndex - 1]) {
+        dots[mechSlideIndex - 1].style.background = "rgba(99, 102, 241, 1)";
+        dots[mechSlideIndex - 1].style.transform = "scale(1.2)";
+    }
+}
+
+// Add hover effects to arrows
+document.addEventListener('DOMContentLoaded', () => {
+    const prevBtn = document.querySelector('.mech-prev');
+    const nextBtn = document.querySelector('.mech-next');
+
+    if (prevBtn) {
+        prevBtn.addEventListener('mouseenter', () => {
+            prevBtn.style.background = 'rgba(99, 102, 241, 1)';
+            prevBtn.style.transform = 'translateY(-50%) scale(1.1)';
+        });
+        prevBtn.addEventListener('mouseleave', () => {
+            prevBtn.style.background = 'rgba(99, 102, 241, 0.8)';
+            prevBtn.style.transform = 'translateY(-50%) scale(1)';
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('mouseenter', () => {
+            nextBtn.style.background = 'rgba(99, 102, 241, 1)';
+            nextBtn.style.transform = 'translateY(-50%) scale(1.1)';
+        });
+        nextBtn.addEventListener('mouseleave', () => {
+            nextBtn.style.background = 'rgba(99, 102, 241, 0.8)';
+            nextBtn.style.transform = 'translateY(-50%) scale(1)';
+        });
+    }
+
+    // Initialize slideshow
+    initMechSlideshow();
+});
+
+console.log('✨ Mechanical slideshow initialized');
+
+// ========================================
+// EMBEDDED 3D MODEL VIEWER
+// ========================================
+
+let embeddedScene, embeddedCamera, embeddedRenderer, embeddedControls;
+let embeddedAnimationId;
+
+function initEmbedded3DViewer() {
+    const canvas = document.getElementById('embedded3DCanvas');
+    const loadingText = document.getElementById('embedded3DLoadingText');
+
+    if (!canvas) return;
+
+    // Create scene
+    embeddedScene = new THREE.Scene();
+    embeddedScene.background = new THREE.Color(0x0a0a0a);
+
+    // Get container dimensions
+    const container = canvas.parentElement;
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    // Create camera
+    embeddedCamera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+    embeddedCamera.position.set(3, 2, 4);
+
+    // Create renderer
+    embeddedRenderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        antialias: true,
+        alpha: true
+    });
+    embeddedRenderer.setSize(width, height);
+    embeddedRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    embeddedRenderer.shadowMap.enabled = true;
+    embeddedRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    // Add lights with purple/blue accent matching the theme
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    embeddedScene.add(ambientLight);
+
+    const mainLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    mainLight.position.set(5, 5, 5);
+    mainLight.castShadow = true;
+    embeddedScene.add(mainLight);
+
+    const accentLight1 = new THREE.DirectionalLight(0x667eea, 0.5);
+    accentLight1.position.set(-5, 3, -5);
+    embeddedScene.add(accentLight1);
+
+    const accentLight2 = new THREE.DirectionalLight(0x764ba2, 0.4);
+    accentLight2.position.set(0, -3, 5);
+    embeddedScene.add(accentLight2);
+
+    // Add OrbitControls
+    embeddedControls = new THREE.OrbitControls(embeddedCamera, embeddedRenderer.domElement);
+    embeddedControls.enableDamping = true;
+    embeddedControls.dampingFactor = 0.05;
+    embeddedControls.autoRotate = true;
+    embeddedControls.autoRotateSpeed = 1.5;
+    embeddedControls.minDistance = 2;
+    embeddedControls.maxDistance = 15;
+    embeddedControls.target.set(0, 0, 0);
+
+    // Load 3D Model
+    const loader = new THREE.GLTFLoader();
+
+    loader.load(
+        'robot_arm.glb',
+        function (gltf) {
+            const model = gltf.scene;
+
+            // Center and scale the model
+            const box = new THREE.Box3().setFromObject(model);
+            const center = box.getCenter(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
+
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const scale = 2.5 / maxDim;
+            model.scale.multiplyScalar(scale);
+
+            model.position.sub(center.multiplyScalar(scale));
+
+            // Enable shadows and enhance materials
+            model.traverse((child) => {
+                if (child.isMesh) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+
+                    if (child.material) {
+                        child.material.metalness = 0.3;
+                        child.material.roughness = 0.6;
+                    }
+                }
+            });
+
+            embeddedScene.add(model);
+            if (loadingText) loadingText.style.display = 'none';
+
+            animateEmbedded3D();
+        },
+        function (xhr) {
+            if (loadingText && xhr.total > 0) {
+                const percent = (xhr.loaded / xhr.total * 100).toFixed(0);
+                loadingText.querySelector('div:first-child').textContent = `Loading 3D Model... ${percent}%`;
+            }
+        },
+        function (error) {
+            console.error('Error loading embedded 3D model:', error);
+            if (loadingText) {
+                loadingText.innerHTML = '<div style="color: #ff6b6b;">Model not found</div><div style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-top: 1rem;">Add robot_arm.glb to load the 3D model</div>';
+            }
+        }
+    );
+
+    // Handle window resize
+    function onEmbeddedResize() {
+        if (!embeddedCamera || !embeddedRenderer) return;
+
+        const container = canvas.parentElement;
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+
+        embeddedCamera.aspect = width / height;
+        embeddedCamera.updateProjectionMatrix();
+        embeddedRenderer.setSize(width, height);
+    }
+
+    window.addEventListener('resize', onEmbeddedResize, false);
+
+    animateEmbedded3D();
+}
+
+function animateEmbedded3D() {
+    embeddedAnimationId = requestAnimationFrame(animateEmbedded3D);
+
+    if (embeddedControls) {
+        embeddedControls.update();
+    }
+
+    if (embeddedRenderer && embeddedScene && embeddedCamera) {
+        embeddedRenderer.render(embeddedScene, embeddedCamera);
+    }
+}
+
+// Initialize embedded viewer when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    // Small delay to ensure DOM is fully ready
+    setTimeout(initEmbedded3DViewer, 100);
+});
+
+console.log('✨ Embedded 3D viewer initialized');

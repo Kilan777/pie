@@ -2234,99 +2234,88 @@
                     </div>
                 </div>
 
-                <!-- Component Cards -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-bottom: 4rem; max-width: 100%;">
-                    <div style="background: linear-gradient(135deg, rgba(20, 20, 20, 0.9), rgba(30, 30, 30, 0.9)); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 16px; padding: 0; overflow: hidden;">
-                        <img src="Arm.jpg" alt="Arm" style="width: 100%; height: 200px; object-fit: cover; display: block;">
-                        <div style="padding: 1.5rem;">
-                            <h5 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem;">Robotic Arm</h5>
-                            <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.6;">Custom linkage with dual-shaft servos and PLA construction</p>
+                <!-- Photo Slideshow -->
+                <div class="mech-slideshow-container" style="position: relative; max-width: 1200px; margin: 0 auto 3rem auto; border-radius: 20px; overflow: hidden; background: linear-gradient(135deg, rgba(20, 20, 20, 1), rgba(30, 30, 30, 1)); border: 1px solid rgba(99, 102, 241, 0.3);">
+
+                    <!-- Slides -->
+                    <div class="mech-slides-wrapper" style="position: relative; height: 600px;">
+                        <div class="mech-slide" style="display: none; position: absolute; width: 100%; height: 100%; transition: opacity 1s ease-in-out;">
+                            <img src="mech_iso_view.png" alt="Robotic Arm ISO View" style="width: 100%; height: 100%; object-fit: contain; padding: 2rem;">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 3rem 2rem 2rem 2rem; color: #fff;">
+                                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">4-DOF Manipulator</h4>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">Isometric view of the complete assembly</p>
+                            </div>
+                        </div>
+
+                        <div class="mech-slide" style="display: none; position: absolute; width: 100%; height: 100%; transition: opacity 1s ease-in-out;">
+                            <img src="Arm.jpg" alt="Robotic Arm" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 3rem 2rem 2rem 2rem; color: #fff;">
+                                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Robotic Arm</h4>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">Custom linkage with dual-shaft servos and PLA construction</p>
+                            </div>
+                        </div>
+
+                        <div class="mech-slide" style="display: none; position: absolute; width: 100%; height: 100%; transition: opacity 1s ease-in-out;">
+                            <img src="Tool.png" alt="Tool Changer" style="width: 100%; height: 100%; object-fit: contain; padding: 2rem;">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 3rem 2rem 2rem 2rem; color: #fff;">
+                                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Tool Changer</h4>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">Magnetic dovetail quick-release for instant utensil swapping</p>
+                            </div>
+                        </div>
+
+                        <div class="mech-slide" style="display: none; position: absolute; width: 100%; height: 100%; transition: opacity 1s ease-in-out;">
+                            <img src="Base.jpg" alt="Base Assembly" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 3rem 2rem 2rem 2rem; color: #fff;">
+                                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Base Assembly</h4>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">608ZZ bearings isolate servo from radial loads</p>
+                            </div>
                         </div>
                     </div>
-                    <div style="background: linear-gradient(135deg, rgba(20, 20, 20, 0.9), rgba(30, 30, 30, 0.9)); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 16px; padding: 0; overflow: hidden;">
-                        <img src="Tool.png" alt="Tool" style="width: 100%; height: 200px; object-fit: cover; display: block;">
-                        <div style="padding: 1.5rem;">
-                            <h5 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem;">Tool Changer</h5>
-                            <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.6;">Magnetic dovetail quick-release for instant utensil swapping</p>
-                        </div>
-                    </div>
-                    <div style="background: linear-gradient(135deg, rgba(20, 20, 20, 0.9), rgba(30, 30, 30, 0.9)); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 16px; padding: 0; overflow: hidden;">
-                        <img src="Base.jpg" alt="Base" style="width: 100%; height: 200px; object-fit: cover; display: block;">
-                        <div style="padding: 1.5rem;">
-                            <h5 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem;">Base Assembly</h5>
-                            <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.6;">608ZZ bearings isolate servo from radial loads</p>
-                        </div>
+
+                    <!-- Navigation Arrows -->
+                    <button class="mech-prev" onclick="mechChangeslide(-1)" style="position: absolute; top: 50%; left: 2rem; transform: translateY(-50%); background: rgba(99, 102, 241, 0.8); border: 2px solid rgba(99, 102, 241, 0.3); color: #fff; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; z-index: 10; backdrop-filter: blur(10px);">
+                        ‹
+                    </button>
+                    <button class="mech-next" onclick="mechChangeslide(1)" style="position: absolute; top: 50%; right: 2rem; transform: translateY(-50%); background: rgba(99, 102, 241, 0.8); border: 2px solid rgba(99, 102, 241, 0.3); color: #fff; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; z-index: 10; backdrop-filter: blur(10px);">
+                        ›
+                    </button>
+
+                    <!-- Slide Indicators -->
+                    <div style="position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.5rem; z-index: 10;">
+                        <span class="mech-dot" onclick="mechCurrentSlide(1)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease;"></span>
+                        <span class="mech-dot" onclick="mechCurrentSlide(2)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease;"></span>
+                        <span class="mech-dot" onclick="mechCurrentSlide(3)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease;"></span>
+                        <span class="mech-dot" onclick="mechCurrentSlide(4)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease;"></span>
                     </div>
                 </div>
 
-                <div class="design-features">
-                <div class="design-features">
+                <!-- More Pictures Button -->
+                <div style="text-align: center; margin-bottom: 4rem;">
+                    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="padding: 1rem 2.5rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                        More Pictures
+                    </button>
+                </div>
 
-                    <div class="feature-card-detailed">
-                        <div class="feature-content">
-                            <h4><strong>The Robotic Arm</strong></h4>
-                            <p>
-                                A robust <strong>4-DOF manipulator</strong> optimized for weight and rigidity. We
-                                utilized a custom linkage topology to minimize the moment arm on the base servo,
-                                allowing for smoother operation without stalling.
-                            </p>
-                            <ul class="mech-list">
-                                <li><strong>Material:</strong> PLA (20% Infill)</li>
-                                <li><strong>Joints:</strong> Dual-shaft Servos</li>
-                            </ul>
-                        </div>
-                        <div class="feature-visual">
-                            <img src="Arm.jpg" alt="Arm CAD">
-                        </div>
+                <!-- 3D Model Viewer Section -->
+                <div style="max-width: 1200px; margin: 0 auto 4rem auto; background: linear-gradient(135deg, rgba(20, 20, 20, 1), rgba(30, 30, 30, 1)); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 20px; padding: 3rem; position: relative;">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <div style="display: inline-block; color: var(--accent); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1rem;">Interactive Model</div>
+                        <h4 style="color: #fff; font-size: 2rem; margin-bottom: 1rem;">Explore the 3D Model</h4>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">Drag to rotate • Scroll to zoom • Click and drag to explore</p>
                     </div>
 
-                    <div class="feature-card-detailed reverse">
-                        <div class="feature-content">
-
-                            <h4><strong>Tool Changer</strong></h4>
-                            <p>
-                                We designed a <strong>passive quick-release</strong> system. The dovetail slide
-                                mechanism uses embedded neodymium magnets to snap utensils into place, allowing users to
-                                switch between spoon and fork in seconds.
-                            </p>
-                            <ul class="mech-list">
-                                <li><strong>Lock:</strong> Magnetic Detent</li>
-                                <li><strong>Grip:</strong> Compliant Flexure</li>
-                            </ul>
-                        </div>
-                        <div class="feature-visual">
-                            <img src="Tool.png" alt="End Effector">
+                    <div style="width: 100%; height: 600px; border-radius: 16px; overflow: hidden; background: #0a0a0a; position: relative;">
+                        <canvas id="embedded3DCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
+                        <div id="embedded3DLoadingText" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 1.2rem; text-align: center; pointer-events: none;">
+                            <div style="margin-bottom: 1rem;">Loading 3D Model...</div>
+                            <div style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">This may take a moment</div>
                         </div>
                     </div>
-
-                    <div class="feature-card-detailed">
-                        <div class="feature-content">
-
-                            <h4><strong>Base Assembly</strong></h3>
-                            <p>
-                                To prevent wobble, the main pivot rides on a <strong>machined aluminum shaft</strong>
-                                pressed into 608 skate bearings. This isolates the servo from radial loads, ensuring
-                                long-term durability.
-                            </p>
-                            <ul class="mech-list">
-                                <li><strong>Bearing:</strong> 608ZZ (x2)</li>
-                                <li><strong>Drive:</strong> Direct Coupling</li>
-                            </ul>
-                        </div>
-                        <div class="feature-visual">
-                            <img src="Base.jpg" alt="Base Section">
-                        </div>
-                    </div>
-                    <div class="feature-card-detailed reverse">
-                        <div class="feature-content">
-
-                            <h4><strong>Emergency Stop</strong></h3>
-                            <p>
-                                An additional optional emergency stop can be plugged in to the base, and can clip onto a shirt to be operated by the user's neck, or placed on the floor to be operated by the user's foot.
-                            </p>
-                        </div>
-                        <div class="feature-visual">
-                            <img src="" alt="Portable E-Stop">
                 </div>
             </div>
 

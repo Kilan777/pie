@@ -101,16 +101,16 @@ body {
     overflow: visible;
     background: none;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-end;
-    padding: 8% 0 0 0;
+    padding: 2% 0 0 0;
     pointer-events: none;
 }
 
 .hero-video-background video {
     width: auto;
-    height: 110vh;
-    max-width: 65%;
+    height: 100vh;
+    max-width: 50%;
     object-fit: contain;
     opacity: 0.5;
 }
