@@ -2188,17 +2188,6 @@
             <div class="tech-block" id="mechanical">
                 <h3>Mechanical Design</h3>
 
-                <!-- Exploded View Video Section -->
-                <div class="exploded-video-wrapper" style="position: relative; width: 100%; background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(59, 130, 246, 0.05)); border-radius: 16px; padding: 2rem; margin-bottom: 3rem; border: 1px solid rgba(139, 92, 246, 0.2); overflow: hidden;">
-                    <video id="explosionVideo" muted playsinline preload="auto" style="width: 100%; height: auto; display: block; border-radius: 12px; background: #000;">
-                        <source src="explode.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <div class="video-label" style="text-align: center; margin-top: 1rem; color: rgba(255, 255, 255, 0.5); font-size: 0.85rem; font-weight: 500;">
-                        Scroll to explore assembly
-                    </div>
-                </div>
-
                 <div class="infinite-gallery-wrapper">
                     <div class="infinite-gallery-track">
                         <div class="gallery-card">
@@ -2357,42 +2346,8 @@
                         </div>
                         <div class="feature-visual">
                             <img src="" alt="Portable E-Stop">
-                        </div>
-                    </div>
                 </div>
-
             </div>
-
-            <script>
-                // Exploded View Video - Scroll-based scrubbing
-                (function() {
-                    const video = document.getElementById('explosionVideo');
-                    const videoWrapper = document.querySelector('.exploded-video-wrapper');
-
-                    if (!video || !videoWrapper) return;
-
-                    video.pause();
-                    video.currentTime = 0;
-
-                    const handleScroll = () => {
-                        const rect = videoWrapper.getBoundingClientRect();
-                        const windowHeight = window.innerHeight;
-
-                        // Video is in viewport
-                        if (rect.top < windowHeight && rect.bottom > 0) {
-                            // Calculate progress through the section
-                            const progress = Math.max(0, Math.min(1, (windowHeight - rect.top) / (windowHeight + rect.height)));
-
-                            if (video.duration) {
-                                video.currentTime = progress * video.duration;
-                            }
-                        }
-                    };
-
-                    window.addEventListener('scroll', handleScroll);
-                    video.addEventListener('loadedmetadata', handleScroll);
-                })();
-            </script>
 
             <div class="tech-block" id="software" style="position: relative;">
                 <div style="display: flex; justify-content: space-between; align-items: end; margin-bottom: 2rem;">
