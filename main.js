@@ -7,14 +7,18 @@ const camera = new THREE.PerspectiveCamera(
     1000
 );
 
+const canvas = document.querySelector('.webgl');
 const renderer = new THREE.WebGLRenderer({
-    canvas: document.querySelector('.webgl'),
+    canvas: canvas,
     alpha: true,
     antialias: true
 });
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+// Hide canvas initially (hero section only shows video)
+canvas.style.opacity = '0';
 
 // Camera positioning
 camera.position.z = 5;
@@ -121,21 +125,21 @@ mouth.position.set(2, 1.3, 0.5);
 mouth.rotation.x = Math.PI / 2;
 scene.add(mouth);
 
-// Add particles for visual effect
+// Add particles for visual effect (MORE STARS!)
 const particlesGeometry = new THREE.BufferGeometry();
-const particlesCount = 200;
+const particlesCount = 1500; // Increased from 200 for more stars
 const posArray = new Float32Array(particlesCount * 3);
 
 for (let i = 0; i < particlesCount * 3; i++) {
-    posArray[i] = (Math.random() - 0.5) * 10;
+    posArray[i] = (Math.random() - 0.5) * 15; // Increased spread
 }
 
 particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 const particlesMaterial = new THREE.PointsMaterial({
-    size: 0.02,
+    size: 0.025, // Slightly larger stars
     color: 0x667eea,
     transparent: true,
-    opacity: 0.6
+    opacity: 0.8 // More visible
 });
 const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
 scene.add(particlesMesh);
@@ -143,10 +147,27 @@ scene.add(particlesMesh);
 // Scroll Animation Variables
 let scrollY = window.scrollY;
 const sections = document.querySelectorAll('.section');
+const heroSection = document.querySelector('.hero');
 
-// Update scroll position
+// Update scroll position and canvas visibility
 window.addEventListener('scroll', () => {
     scrollY = window.scrollY;
+
+    // Show/hide 3D canvas based on scroll position
+    // Only show after scrolling past hero section
+    if (heroSection) {
+        const heroHeight = heroSection.offsetHeight;
+        const scrollPastHero = scrollY / heroHeight;
+
+        if (scrollPastHero > 0.7) {
+            // Fade in canvas as we approach end of hero section
+            const fadeProgress = Math.min((scrollPastHero - 0.7) / 0.3, 1);
+            canvas.style.opacity = fadeProgress.toString();
+        } else {
+            // Keep canvas hidden in hero section
+            canvas.style.opacity = '0';
+        }
+    }
 });
 
 // Animation function
