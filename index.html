@@ -2187,58 +2187,73 @@
             <!-- Mechanical -->
             <div class="tech-block" id="mechanical">
                 <h3>Mechanical Design</h3>
-                <p style="color: rgba(255,255,255,0.6); font-size: 1.1rem; max-width: 700px; margin-bottom: 4rem;">Precision-engineered 4-DOF manipulator built for reliability and ease of use.</p>
 
-                <!-- Hero Image -->
-                <div style="margin-bottom: 4rem;">
-                    <img src="mech_iso_view.png" alt="Robotic Arm Assembly" style="width: 100%; max-width: 100%; height: auto; border-radius: 20px; box-shadow: 0 20px 80px rgba(102, 126, 234, 0.3); display: block;">
-                </div>
+                <!-- Featured Showcase (like software section) -->
+                <div style="background: linear-gradient(135deg, rgba(20, 20, 20, 1), rgba(30, 30, 30, 1)); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 0; margin-bottom: 4rem; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr;">
 
-                <!-- Stats Grid -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 5rem; max-width: 100%;">
-                    <div style="text-align: center; padding: 2rem; background: rgba(139, 92, 246, 0.05); border-radius: 12px; border: 1px solid rgba(139, 92, 246, 0.2);">
-                        <div style="font-size: 3rem; font-weight: 700; color: #667eea; margin-bottom: 0.5rem;">4</div>
-                        <div style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Degrees of Freedom</div>
+                    <!-- Image Side -->
+                    <div style="margin: 0; background: #050505; padding: 3rem; display: flex; align-items: center; justify-content: center;">
+                        <img src="mech_iso_view.png" alt="Robotic Arm" style="width: 100%; height: auto; max-width: 500px; filter: drop-shadow(0 20px 60px rgba(102, 126, 234, 0.4));">
                     </div>
-                    <div style="text-align: center; padding: 2rem; background: rgba(139, 92, 246, 0.05); border-radius: 12px; border: 1px solid rgba(139, 92, 246, 0.2);">
-                        <div style="font-size: 3rem; font-weight: 700; color: #667eea; margin-bottom: 0.5rem;">850g</div>
-                        <div style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Total Weight</div>
-                    </div>
-                    <div style="text-align: center; padding: 2rem; background: rgba(139, 92, 246, 0.05); border-radius: 12px; border: 1px solid rgba(139, 92, 246, 0.2);">
-                        <div style="font-size: 3rem; font-weight: 700; color: #667eea; margin-bottom: 0.5rem;">20%</div>
-                        <div style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">PLA Infill</div>
-                    </div>
-                    <div style="text-align: center; padding: 2rem; background: rgba(139, 92, 246, 0.05); border-radius: 12px; border: 1px solid rgba(139, 92, 246, 0.2);">
-                        <div style="font-size: 3rem; font-weight: 700; color: #667eea; margin-bottom: 0.5rem;">&lt;2s</div>
-                        <div style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Tool Swap Time</div>
-                    </div>
-                </div>
 
-                <!-- Image Grid -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 5rem; max-width: 100%;">
-                    <div style="position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 1; background: #0a0a0a; border: 1px solid rgba(139, 92, 246, 0.2);">
-                        <img src="Arm.jpg" alt="Robotic Arm" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: #fff;">
-                            <div style="font-weight: 600; margin-bottom: 0.25rem;">4-DOF Manipulator</div>
-                            <div style="font-size: 0.85rem; color: rgba(255,255,255,0.6);">Custom linkage design</div>
+                    <!-- Content Side -->
+                    <div style="padding: 3rem; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: inline-block; color: var(--accent); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1rem;">
+                            Engineering
                         </div>
-                    </div>
-                    <div style="position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 1; background: #0a0a0a; border: 1px solid rgba(139, 92, 246, 0.2);">
-                        <img src="Tool.png" alt="Tool Changer" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: #fff;">
-                            <div style="font-weight: 600; margin-bottom: 0.25rem;">Tool Changer</div>
-                            <div style="font-size: 0.85rem; color: rgba(255,255,255,0.6);">Magnetic quick-release</div>
-                        </div>
-                    </div>
-                    <div style="position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 1; background: #0a0a0a; border: 1px solid rgba(139, 92, 246, 0.2);">
-                        <img src="Base.jpg" alt="Base Assembly" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: #fff;">
-                            <div style="font-weight: 600; margin-bottom: 0.25rem;">Base Assembly</div>
-                            <div style="font-size: 0.85rem; color: rgba(255,255,255,0.6);">608ZZ bearings</div>
+                        <h4 style="color: #fff; font-size: 2.5rem; margin-bottom: 1.5rem; line-height: 1.1;">
+                            4-Degree-of-Freedom Manipulator
+                        </h4>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem;">
+                            Custom linkage topology minimizes moment arm on the base servo for smooth, stall-free operation. Built with PLA and precision bearings for durability.
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+                            <div>
+                                <div style="font-size: 2rem; font-weight: 700; color: #667eea;">850g</div>
+                                <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Total Weight</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 2rem; font-weight: 700; color: #667eea;">4 DOF</div>
+                                <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Articulation</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 2rem; font-weight: 700; color: #667eea;">20%</div>
+                                <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">PLA Infill</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 2rem; font-weight: 700; color: #667eea;">&lt;2s</div>
+                                <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Tool Swap</div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Component Cards -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-bottom: 4rem; max-width: 100%;">
+                    <div style="background: linear-gradient(135deg, rgba(20, 20, 20, 0.9), rgba(30, 30, 30, 0.9)); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 16px; padding: 0; overflow: hidden;">
+                        <img src="Arm.jpg" alt="Arm" style="width: 100%; height: 200px; object-fit: cover; display: block;">
+                        <div style="padding: 1.5rem;">
+                            <h5 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem;">Robotic Arm</h5>
+                            <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.6;">Custom linkage with dual-shaft servos and PLA construction</p>
+                        </div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, rgba(20, 20, 20, 0.9), rgba(30, 30, 30, 0.9)); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 16px; padding: 0; overflow: hidden;">
+                        <img src="Tool.png" alt="Tool" style="width: 100%; height: 200px; object-fit: cover; display: block;">
+                        <div style="padding: 1.5rem;">
+                            <h5 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem;">Tool Changer</h5>
+                            <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.6;">Magnetic dovetail quick-release for instant utensil swapping</p>
+                        </div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, rgba(20, 20, 20, 0.9), rgba(30, 30, 30, 0.9)); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 16px; padding: 0; overflow: hidden;">
+                        <img src="Base.jpg" alt="Base" style="width: 100%; height: 200px; object-fit: cover; display: block;">
+                        <div style="padding: 1.5rem;">
+                            <h5 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem;">Base Assembly</h5>
+                            <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.6;">608ZZ bearings isolate servo from radial loads</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="design-features">
                 <div class="design-features">
 
                     <div class="feature-card-detailed">
