@@ -7,8 +7,9 @@ const camera = new THREE.PerspectiveCamera(
     1000
 );
 
+const canvas = document.querySelector('.webgl');
 const renderer = new THREE.WebGLRenderer({
-    canvas: document.querySelector('.webgl'),
+    canvas: canvas,
     alpha: true,
     antialias: true
 });
@@ -16,137 +17,55 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
+// Hide canvas initially (hero section only shows video)
+canvas.style.opacity = '0';
+
 // Camera positioning
 camera.position.z = 5;
 camera.position.y = 1;
 
-// Lighting
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-scene.add(ambientLight);
-
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-directionalLight.position.set(5, 5, 5);
-scene.add(directionalLight);
-
-const pointLight = new THREE.PointLight(0x667eea, 2, 100);
-pointLight.position.set(-5, 3, 3);
-scene.add(pointLight);
-
-// Create robotic arm components
-const armMaterial = new THREE.MeshStandardMaterial({
-    color: 0x667eea,
-    metalness: 0.7,
-    roughness: 0.2
-});
-
-const jointMaterial = new THREE.MeshStandardMaterial({
-    color: 0x764ba2,
-    metalness: 0.8,
-    roughness: 0.3
-});
-
-// Base
-const baseGeometry = new THREE.CylinderGeometry(0.5, 0.6, 0.3, 32);
-const base = new THREE.Mesh(baseGeometry, jointMaterial);
-base.position.set(-2, -1, 0);
-scene.add(base);
-
-// Arm segment 1 (lower arm)
-const arm1Geometry = new THREE.CylinderGeometry(0.15, 0.15, 2, 16);
-const arm1 = new THREE.Mesh(arm1Geometry, armMaterial);
-arm1.position.set(-2, 0, 0);
-scene.add(arm1);
-
-// Joint 1
-const joint1Geometry = new THREE.SphereGeometry(0.25, 32, 32);
-const joint1 = new THREE.Mesh(joint1Geometry, jointMaterial);
-joint1.position.set(-2, 1, 0);
-scene.add(joint1);
-
-// Arm segment 2 (upper arm)
-const arm2Geometry = new THREE.CylinderGeometry(0.12, 0.12, 1.5, 16);
-const arm2 = new THREE.Mesh(arm2Geometry, armMaterial);
-arm2.position.set(-1, 1.5, 0);
-scene.add(arm2);
-
-// Joint 2
-const joint2Geometry = new THREE.SphereGeometry(0.2, 32, 32);
-const joint2 = new THREE.Mesh(joint2Geometry, jointMaterial);
-joint2.position.set(-1, 2.25, 0);
-scene.add(joint2);
-
-// End effector (spoon holder)
-const spoonHolderGeometry = new THREE.CylinderGeometry(0.1, 0.1, 0.4, 16);
-const spoonHolder = new THREE.Mesh(spoonHolderGeometry, armMaterial);
-spoonHolder.position.set(-0.5, 2.5, 0);
-scene.add(spoonHolder);
-
-// Spoon
-const spoonHandleGeometry = new THREE.CylinderGeometry(0.03, 0.03, 0.8, 16);
-const spoonHandleMaterial = new THREE.MeshStandardMaterial({
-    color: 0xc0c0c0,
-    metalness: 0.9,
-    roughness: 0.1
-});
-const spoonHandle = new THREE.Mesh(spoonHandleGeometry, spoonHandleMaterial);
-spoonHandle.position.set(-0.5, 2.9, 0);
-scene.add(spoonHandle);
-
-const spoonBowlGeometry = new THREE.SphereGeometry(0.15, 32, 32);
-const spoonBowl = new THREE.Mesh(spoonBowlGeometry, spoonHandleMaterial);
-spoonBowl.position.set(-0.5, 3.3, 0);
-spoonBowl.scale.set(1, 0.5, 1);
-scene.add(spoonBowl);
-
-// Create simple person head outline
-const headGeometry = new THREE.SphereGeometry(0.6, 32, 32);
-const headMaterial = new THREE.MeshStandardMaterial({
-    color: 0xffdbac,
-    metalness: 0.1,
-    roughness: 0.8
-});
-const head = new THREE.Mesh(headGeometry, headMaterial);
-head.position.set(2, 1.5, 0);
-scene.add(head);
-
-// Mouth indicator
-const mouthGeometry = new THREE.TorusGeometry(0.15, 0.05, 16, 32);
-const mouthMaterial = new THREE.MeshStandardMaterial({
-    color: 0xff6b6b,
-    emissive: 0xff6b6b,
-    emissiveIntensity: 0.3
-});
-const mouth = new THREE.Mesh(mouthGeometry, mouthMaterial);
-mouth.position.set(2, 1.3, 0.5);
-mouth.rotation.x = Math.PI / 2;
-scene.add(mouth);
-
-// Add particles for visual effect
+// Add particles for visual effect (STARS!)
 const particlesGeometry = new THREE.BufferGeometry();
-const particlesCount = 200;
+const particlesCount = 1500;
 const posArray = new Float32Array(particlesCount * 3);
 
 for (let i = 0; i < particlesCount * 3; i++) {
-    posArray[i] = (Math.random() - 0.5) * 10;
+    posArray[i] = (Math.random() - 0.5) * 15;
 }
 
 particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 const particlesMaterial = new THREE.PointsMaterial({
-    size: 0.02,
+    size: 0.025,
     color: 0x667eea,
     transparent: true,
-    opacity: 0.6
+    opacity: 0.8
 });
 const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
 scene.add(particlesMesh);
 
 // Scroll Animation Variables
 let scrollY = window.scrollY;
-const sections = document.querySelectorAll('.section');
+const heroSection = document.querySelector('.hero');
 
-// Update scroll position
+// Update scroll position and canvas visibility
 window.addEventListener('scroll', () => {
     scrollY = window.scrollY;
+
+    // Show/hide 3D canvas based on scroll position
+    // Only show after scrolling past hero section
+    if (heroSection) {
+        const heroHeight = heroSection.offsetHeight;
+        const scrollPastHero = scrollY / heroHeight;
+
+        if (scrollPastHero > 0.7) {
+            // Fade in canvas as we approach end of hero section
+            const fadeProgress = Math.min((scrollPastHero - 0.7) / 0.3, 1);
+            canvas.style.opacity = fadeProgress.toString();
+        } else {
+            // Keep canvas hidden in hero section
+            canvas.style.opacity = '0';
+        }
+    }
 });
 
 // Animation function
@@ -158,57 +77,6 @@ function animateOnScroll() {
     // Animate camera
     camera.position.y = 1 - scrollProgress * 0.5;
     camera.position.z = 5 - scrollProgress * 1;
-
-    // Rotate base slightly as we scroll
-    base.rotation.y = scrollProgress * Math.PI * 0.3;
-
-    // Animate arm segments based on scroll
-    // Start position: arm down
-    // End position: arm extended toward mouth
-
-    // Arm 1 rotation (lift up)
-    const arm1TargetRotation = scrollProgress * Math.PI * 0.4;
-    arm1.rotation.z = THREE.MathUtils.lerp(arm1.rotation.z, arm1TargetRotation, 0.1);
-
-    // Update arm1 position to pivot from base
-    const arm1PivotOffset = Math.sin(arm1.rotation.z) * 1;
-    arm1.position.x = -2 + arm1PivotOffset * 0.5;
-    arm1.position.y = Math.cos(arm1.rotation.z) * 1;
-
-    // Arm 2 rotation and position (extend toward person)
-    const arm2TargetRotation = scrollProgress * Math.PI * 0.5;
-    arm2.rotation.z = THREE.MathUtils.lerp(arm2.rotation.z, arm2TargetRotation, 0.1);
-
-    // Update joint1 and arm2 positions
-    joint1.position.x = arm1.position.x + Math.cos(arm1.rotation.z) * 1;
-    joint1.position.y = arm1.position.y + Math.sin(arm1.rotation.z) * 1;
-
-    arm2.position.x = joint1.position.x + Math.cos(arm1.rotation.z + arm2.rotation.z) * 0.75;
-    arm2.position.y = joint1.position.y + Math.sin(arm1.rotation.z + arm2.rotation.z) * 0.75;
-
-    // Update joint2, spoon holder, and spoon positions
-    joint2.position.x = arm2.position.x + Math.cos(arm1.rotation.z + arm2.rotation.z) * 0.75;
-    joint2.position.y = arm2.position.y + Math.sin(arm1.rotation.z + arm2.rotation.z) * 0.75;
-
-    spoonHolder.position.x = joint2.position.x + Math.cos(arm1.rotation.z + arm2.rotation.z) * 0.3;
-    spoonHolder.position.y = joint2.position.y + Math.sin(arm1.rotation.z + arm2.rotation.z) * 0.3;
-
-    spoonHandle.position.x = spoonHolder.position.x;
-    spoonHandle.position.y = spoonHolder.position.y + 0.4;
-    spoonHandle.rotation.z = arm1.rotation.z + arm2.rotation.z;
-
-    spoonBowl.position.x = spoonHandle.position.x + Math.sin(spoonHandle.rotation.z) * 0.4;
-    spoonBowl.position.y = spoonHandle.position.y + Math.cos(spoonHandle.rotation.z) * 0.4;
-
-    // Make mouth glow more as spoon approaches
-    if (scrollProgress > 0.7) {
-        const approachProgress = (scrollProgress - 0.7) / 0.3;
-        mouthMaterial.emissiveIntensity = 0.3 + approachProgress * 0.5;
-        mouth.scale.setScalar(1 + approachProgress * 0.2);
-    } else {
-        mouthMaterial.emissiveIntensity = 0.3;
-        mouth.scale.setScalar(1);
-    }
 
     // Rotate particles
     particlesMesh.rotation.y = scrollProgress * Math.PI * 2;
@@ -229,14 +97,7 @@ window.addEventListener('resize', () => {
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
-
     animateOnScroll();
-
-    // Subtle floating animation
-    const time = Date.now() * 0.001;
-    head.position.y = 1.5 + Math.sin(time * 0.5) * 0.05;
-    mouth.position.y = 1.3 + Math.sin(time * 0.5) * 0.05;
-
     renderer.render(scene, camera);
 }
 
@@ -256,5 +117,477 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-console.log('🤖 Assistive Feeding Device - 3D Visualization Loaded');
-console.log('Scroll down to see the robotic arm move toward the person\'s mouth!');
+console.log('✨ Starfield background loaded');
+
+// ========================================
+// 3D MODEL VIEWER MODAL
+// ========================================
+
+let modelScene, modelCamera, modelRenderer, modelControls;
+let model3DAnimationId;
+let modelLoaded = false;
+
+const modal = document.getElementById('model3DModal');
+const openBtn = document.getElementById('view3DModelBtn');
+const closeBtn = document.getElementById('closeModalBtn');
+const modelCanvas = document.getElementById('model3DCanvas');
+const loadingText = document.getElementById('modelLoadingText');
+
+// Open modal and initialize 3D viewer (button removed, but keeping code for potential future use)
+if (openBtn) {
+    openBtn.addEventListener('click', () => {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+
+        if (!modelLoaded) {
+            init3DModelViewer();
+        } else {
+            animate3DModel();
+        }
+    });
+}
+
+// Close modal
+function closeModal() {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+
+    if (model3DAnimationId) {
+        cancelAnimationFrame(model3DAnimationId);
+        model3DAnimationId = null;
+    }
+}
+
+if (closeBtn) {
+    closeBtn.addEventListener('click', closeModal);
+}
+
+// Close on background click
+if (modal) {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+}
+
+// Initialize 3D Model Viewer
+function init3DModelViewer() {
+    // Create scene
+    modelScene = new THREE.Scene();
+    modelScene.background = new THREE.Color(0x0a0a0a);
+
+    // Create camera
+    const container = modelCanvas.parentElement;
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    modelCamera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+    modelCamera.position.set(2, 2, 5);
+
+    // Create renderer
+    modelRenderer = new THREE.WebGLRenderer({
+        canvas: modelCanvas,
+        antialias: true,
+        alpha: true
+    });
+    modelRenderer.setSize(width, height);
+    modelRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    modelRenderer.shadowMap.enabled = true;
+    modelRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    // Add lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    modelScene.add(ambientLight);
+
+    const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight1.position.set(5, 5, 5);
+    directionalLight1.castShadow = true;
+    modelScene.add(directionalLight1);
+
+    const directionalLight2 = new THREE.DirectionalLight(0x667eea, 0.4);
+    directionalLight2.position.set(-5, 3, -5);
+    modelScene.add(directionalLight2);
+
+    const directionalLight3 = new THREE.DirectionalLight(0x764ba2, 0.3);
+    directionalLight3.position.set(0, -5, 0);
+    modelScene.add(directionalLight3);
+
+    // Add OrbitControls
+    modelControls = new THREE.OrbitControls(modelCamera, modelRenderer.domElement);
+    modelControls.enableDamping = true;
+    modelControls.dampingFactor = 0.05;
+    modelControls.autoRotate = true;
+    modelControls.autoRotateSpeed = 2.0;
+    modelControls.minDistance = 2;
+    modelControls.maxDistance = 10;
+
+    // Load 3D Model
+    const loader = new THREE.GLTFLoader();
+
+    // Try to load the model - update 'model.gltf' with actual filename when provided
+    loader.load(
+        'FullCAD.gltf', // 3D model file
+        function (gltf) {
+            const model = gltf.scene;
+
+            // Center and scale the model
+            const box = new THREE.Box3().setFromObject(model);
+            const center = box.getCenter(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
+
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const scale = 2 / maxDim;
+            model.scale.multiplyScalar(scale);
+
+            model.position.sub(center.multiplyScalar(scale));
+
+            // Enable shadows
+            model.traverse((child) => {
+                if (child.isMesh) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+
+                    // Enhance materials
+                    if (child.material) {
+                        child.material.metalness = 0.3;
+                        child.material.roughness = 0.6;
+                    }
+                }
+            });
+
+            modelScene.add(model);
+            modelLoaded = true;
+            loadingText.style.display = 'none';
+
+            animate3DModel();
+        },
+        function (xhr) {
+            const percent = (xhr.loaded / xhr.total * 100).toFixed(0);
+            loadingText.querySelector('div:first-child').textContent = `Loading 3D Model... ${percent}%`;
+        },
+        function (error) {
+            console.error('Error loading 3D model:', error);
+            loadingText.innerHTML = '<div style="color: #ff6b6b;">Model not found. Please add your 3D model file to the project.</div><div style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-top: 1rem;">Expected filename: FullCAD.gltf</div>';
+        }
+    );
+
+    // Handle window resize
+    window.addEventListener('resize', onModelWindowResize, false);
+
+    animate3DModel();
+}
+
+function onModelWindowResize() {
+    if (!modelCamera || !modelRenderer) return;
+
+    const container = modelCanvas.parentElement;
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    modelCamera.aspect = width / height;
+    modelCamera.updateProjectionMatrix();
+    modelRenderer.setSize(width, height);
+}
+
+function animate3DModel() {
+    model3DAnimationId = requestAnimationFrame(animate3DModel);
+
+    if (modelControls) {
+        modelControls.update();
+    }
+
+    if (modelRenderer && modelScene && modelCamera) {
+        modelRenderer.render(modelScene, modelCamera);
+    }
+}
+
+// Add hover effect to button (if it exists)
+if (openBtn) {
+    openBtn.addEventListener('mouseenter', () => {
+        openBtn.style.transform = 'translateY(-3px)';
+        openBtn.style.boxShadow = '0 15px 40px rgba(99, 102, 241, 0.4)';
+    });
+
+    openBtn.addEventListener('mouseleave', () => {
+        openBtn.style.transform = 'translateY(0)';
+        openBtn.style.boxShadow = 'none';
+    });
+}
+
+// Add hover effect to close button (if it exists)
+if (closeBtn) {
+    closeBtn.addEventListener('mouseenter', () => {
+        closeBtn.style.background = 'rgba(255, 255, 255, 0.2)';
+        closeBtn.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+        closeBtn.style.transform = 'scale(1.1) rotate(90deg)';
+    });
+
+    closeBtn.addEventListener('mouseleave', () => {
+        closeBtn.style.background = 'rgba(255, 255, 255, 0.1)';
+        closeBtn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+        closeBtn.style.transform = 'scale(1) rotate(0deg)';
+    });
+}
+
+console.log('✨ 3D Model Viewer initialized');
+
+// ========================================
+// MECHANICAL SLIDESHOW
+// ========================================
+
+let mechSlideIndex = 1;
+let mechSlideTimer;
+
+// Initialize slideshow
+function initMechSlideshow() {
+    mechShowSlides(mechSlideIndex);
+    // Auto-play every 4 seconds
+    mechSlideTimer = setInterval(() => {
+        mechChangeslide(1);
+    }, 4000);
+}
+
+// Next/previous controls
+function mechChangeslide(n) {
+    clearInterval(mechSlideTimer);
+    mechShowSlides(mechSlideIndex += n);
+    // Restart auto-play
+    mechSlideTimer = setInterval(() => {
+        mechChangeslide(1);
+    }, 4000);
+}
+
+// Thumbnail image controls
+function mechCurrentSlide(n) {
+    clearInterval(mechSlideTimer);
+    mechShowSlides(mechSlideIndex = n);
+    // Restart auto-play
+    mechSlideTimer = setInterval(() => {
+        mechChangeslide(1);
+    }, 4000);
+}
+
+function mechShowSlides(n) {
+    let slides = document.getElementsByClassName("mech-slide");
+    let dots = document.getElementsByClassName("mech-dot");
+
+    if (n > slides.length) { mechSlideIndex = 1 }
+    if (n < 1) { mechSlideIndex = slides.length }
+
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+        slides[i].style.opacity = "0";
+    }
+
+    for (let i = 0; i < dots.length; i++) {
+        dots[i].style.background = "rgba(255,255,255,0.5)";
+        dots[i].style.transform = "scale(1)";
+    }
+
+    if (slides[mechSlideIndex - 1]) {
+        slides[mechSlideIndex - 1].style.display = "block";
+        setTimeout(() => {
+            slides[mechSlideIndex - 1].style.opacity = "1";
+        }, 10);
+    }
+
+    if (dots[mechSlideIndex - 1]) {
+        dots[mechSlideIndex - 1].style.background = "rgba(99, 102, 241, 1)";
+        dots[mechSlideIndex - 1].style.transform = "scale(1.2)";
+    }
+}
+
+// Add hover effects to arrows
+document.addEventListener('DOMContentLoaded', () => {
+    const prevBtn = document.querySelector('.mech-prev');
+    const nextBtn = document.querySelector('.mech-next');
+
+    if (prevBtn) {
+        prevBtn.addEventListener('mouseenter', () => {
+            prevBtn.style.background = 'rgba(99, 102, 241, 1)';
+            prevBtn.style.transform = 'translateY(-50%) scale(1.1)';
+        });
+        prevBtn.addEventListener('mouseleave', () => {
+            prevBtn.style.background = 'rgba(99, 102, 241, 0.8)';
+            prevBtn.style.transform = 'translateY(-50%) scale(1)';
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('mouseenter', () => {
+            nextBtn.style.background = 'rgba(99, 102, 241, 1)';
+            nextBtn.style.transform = 'translateY(-50%) scale(1.1)';
+        });
+        nextBtn.addEventListener('mouseleave', () => {
+            nextBtn.style.background = 'rgba(99, 102, 241, 0.8)';
+            nextBtn.style.transform = 'translateY(-50%) scale(1)';
+        });
+    }
+
+    // Initialize slideshow
+    initMechSlideshow();
+});
+
+console.log('✨ Mechanical slideshow initialized');
+
+// ========================================
+// EMBEDDED 3D MODEL VIEWER
+// ========================================
+
+let embeddedScene, embeddedCamera, embeddedRenderer, embeddedControls;
+let embeddedAnimationId;
+
+function initEmbedded3DViewer() {
+    const canvas = document.getElementById('embedded3DCanvas');
+    const loadingText = document.getElementById('embedded3DLoadingText');
+
+    if (!canvas) return;
+
+    // Create scene
+    embeddedScene = new THREE.Scene();
+    embeddedScene.background = new THREE.Color(0x0a0a0a);
+
+    // Get container dimensions
+    const container = canvas.parentElement;
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    // Create camera
+    embeddedCamera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+    embeddedCamera.position.set(3, 2, 4);
+
+    // Create renderer
+    embeddedRenderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        antialias: true,
+        alpha: true
+    });
+    embeddedRenderer.setSize(width, height);
+    embeddedRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    embeddedRenderer.shadowMap.enabled = true;
+    embeddedRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    // Add lights with purple/blue accent matching the theme
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    embeddedScene.add(ambientLight);
+
+    const mainLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    mainLight.position.set(5, 5, 5);
+    mainLight.castShadow = true;
+    embeddedScene.add(mainLight);
+
+    const accentLight1 = new THREE.DirectionalLight(0x667eea, 0.5);
+    accentLight1.position.set(-5, 3, -5);
+    embeddedScene.add(accentLight1);
+
+    const accentLight2 = new THREE.DirectionalLight(0x764ba2, 0.4);
+    accentLight2.position.set(0, -3, 5);
+    embeddedScene.add(accentLight2);
+
+    // Add OrbitControls
+    embeddedControls = new THREE.OrbitControls(embeddedCamera, embeddedRenderer.domElement);
+    embeddedControls.enableDamping = true;
+    embeddedControls.dampingFactor = 0.05;
+    embeddedControls.autoRotate = true;
+    embeddedControls.autoRotateSpeed = 1.5;
+    embeddedControls.minDistance = 2;
+    embeddedControls.maxDistance = 15;
+    embeddedControls.target.set(0, 0, 0);
+
+    // Load 3D Model
+    const loader = new THREE.GLTFLoader();
+
+    console.log('Starting to load FullCAD.gltf...');
+    loader.load(
+        'FullCAD.gltf',
+        function (gltf) {
+            console.log('GLTF file loaded successfully!');
+            const model = gltf.scene;
+
+            // Center and scale the model
+            const box = new THREE.Box3().setFromObject(model);
+            const center = box.getCenter(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
+
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const scale = 2.5 / maxDim;
+            model.scale.multiplyScalar(scale);
+
+            model.position.sub(center.multiplyScalar(scale));
+
+            // Enable shadows and enhance materials
+            model.traverse((child) => {
+                if (child.isMesh) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+
+                    if (child.material) {
+                        child.material.metalness = 0.3;
+                        child.material.roughness = 0.6;
+                    }
+                }
+            });
+
+            embeddedScene.add(model);
+            if (loadingText) loadingText.style.display = 'none';
+
+            animateEmbedded3D();
+        },
+        function (xhr) {
+            console.log(`Loading progress: ${xhr.loaded} / ${xhr.total} bytes`);
+            if (loadingText) {
+                if (xhr.total > 0) {
+                    const percent = (xhr.loaded / xhr.total * 100).toFixed(0);
+                    loadingText.querySelector('div:first-child').textContent = `Loading 3D Model... ${percent}%`;
+                } else {
+                    const mb = (xhr.loaded / 1024 / 1024).toFixed(2);
+                    loadingText.querySelector('div:first-child').textContent = `Loading 3D Model... ${mb}MB`;
+                }
+            }
+        },
+        function (error) {
+            console.error('Error loading embedded 3D model:', error);
+            if (loadingText) {
+                loadingText.innerHTML = '<div style="color: #ff6b6b;">Model not found</div><div style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-top: 1rem;">Add FullCAD.gltf to load the 3D model</div>';
+            }
+        }
+    );
+
+    // Handle window resize
+    function onEmbeddedResize() {
+        if (!embeddedCamera || !embeddedRenderer) return;
+
+        const container = canvas.parentElement;
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+
+        embeddedCamera.aspect = width / height;
+        embeddedCamera.updateProjectionMatrix();
+        embeddedRenderer.setSize(width, height);
+    }
+
+    window.addEventListener('resize', onEmbeddedResize, false);
+
+    animateEmbedded3D();
+}
+
+function animateEmbedded3D() {
+    embeddedAnimationId = requestAnimationFrame(animateEmbedded3D);
+
+    if (embeddedControls) {
+        embeddedControls.update();
+    }
+
+    if (embeddedRenderer && embeddedScene && embeddedCamera) {
+        embeddedRenderer.render(embeddedScene, embeddedCamera);
+    }
+}
+
+// Initialize embedded viewer when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    // Small delay to ensure DOM is fully ready
+    setTimeout(initEmbedded3DViewer, 100);
+});
+
+console.log('✨ Embedded 3D viewer initialized');

@@ -16,12 +16,6 @@
 </head>
 
 <body>
-    <!-- Video Background - DISABLED for 3D scroll animation -->
-    <!-- <div class="video-background">
-        <video id="bgVideo" muted playsinline autoplay loop>
-            <source src="background.mp4" type="video/mp4">
-        </video>
-    </div> -->
     <canvas class="webgl"></canvas>
 
     <!-- Navigation -->
@@ -54,6 +48,12 @@
 
     <!-- Section 1: Hero -->
     <section class="hero" id="home">
+        <!-- Video Background - Only for Hero Section -->
+        <div class="hero-video-background">
+            <video id="bgVideo" muted playsinline autoplay loop>
+                <source src="background.mp4" type="video/mp4">
+            </video>
+        </div>
         <div class="hero-badge">PIE Project 2025</div>
         <h1 class="hero-title">
             We help people<br>
@@ -2188,160 +2188,124 @@
             <div class="tech-block" id="mechanical">
                 <h3>Mechanical Design</h3>
 
-                <div class="infinite-gallery-wrapper">
-                    <div class="infinite-gallery-track">
-                        <div class="gallery-card">
-                            <img src="mech_iso_view.png" alt="Isometric Assembly">
-                            <div class="card-overlay">
-                                <span class="card-label">Device with Shoulder E-Stop</span>
-                                <h4>E-Stop</h4>
-                            </div>
-                        </div>
-                        <div class="gallery-card">
-                            <img src="Pic2.jpg" alt="Side Profile">
-                            <div class="card-overlay">
-                                <span class="card-label">Motion</span>
-                                <h4>Mid Scooping</h4>
-                            </div>
-                        </div>
-                        <div class="gallery-card">
-                            <img src="images/mech_exploded.png" alt="Exploded View">
-                            <div class="card-overlay">
-                                <span class="card-label">Internals</span>
-                                <h4>Exploded View</h4>
-                            </div>
-                        </div>
-                        <div class="gallery-card">
-                            <img src="images/prototype.png" alt="Prototype">
-                            <div class="card-overlay">
-                                <span class="card-label">Iteration</span>
-                                <h4>Initial Prototype</h4>
-                            </div>
-                        </div>
-                        <div class="gallery-card">
-                            <img src="images/arm_detail.png" alt="Arm Detail">
-                            <div class="card-overlay">
-                                <span class="card-label">Structure</span>
-                                <h4>Linkage Detail</h4>
-                            </div>
-                        </div>
+                <!-- Featured Showcase (like software section) -->
+                <div style="background: linear-gradient(135deg, rgba(20, 20, 20, 1), rgba(30, 30, 30, 1)); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 0; margin-bottom: 4rem; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr;">
 
-                        <div class="gallery-card">
-                            <img src="images/mech_iso_view.png" alt="Isometric Assembly">
-                            <div class="card-overlay">
-                                <span class="card-label">Full Assembly</span>
-                                <h4>Isometric View</h4>
-                            </div>
-                        </div>
-                        <div class="gallery-card">
-                            <img src="images/base_section_view.png" alt="Section View">
-                            <div class="card-overlay">
-                                <span class="card-label">Kinematics</span>
-                                <h4>Side Profile</h4>
-                            </div>
-                        </div>
-                        <div class="gallery-card">
-                            <img src="images/mech_exploded.jpg" alt="Exploded View">
-                            <div class="card-overlay">
-                                <span class="card-label">Internals</span>
-                                <h4>Exploded View</h4>
-                            </div>
-                        </div>
-                        <div class="gallery-card">
-                            <img src="images/mech_prototype.jpg" alt="Prototype">
-                            <div class="card-overlay">
-                                <span class="card-label">Real World</span>
-                                <h4>Physical Prototype</h4>
-                            </div>
-                        </div>
-                        <div class="gallery-card">
-                            <img src="images/arm_detail.jpg" alt="Arm Detail">
-                            <div class="card-overlay">
-                                <span class="card-label">Structure</span>
-                                <h4>Linkage Detail</h4>
-                            </div>
-                        </div>
+                    <!-- Image Side -->
+                    <div style="margin: 0; background: #050505; padding: 3rem; display: flex; align-items: center; justify-content: center;">
+                        <img src="mech_iso_view.png" alt="Robotic Arm" style="width: 100%; height: auto; max-width: 500px; filter: drop-shadow(0 20px 60px rgba(102, 126, 234, 0.4));">
                     </div>
 
-                    <div class="gallery-fade-left"></div>
-                    <div class="gallery-fade-right"></div>
+                    <!-- Content Side -->
+                    <div style="padding: 3rem; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: inline-block; color: var(--accent); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1rem;">
+                            Engineering
+                        </div>
+                        <h4 style="color: #fff; font-size: 2.5rem; margin-bottom: 1.5rem; line-height: 1.1;">
+                            4-Degree-of-Freedom Manipulator
+                        </h4>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem;">
+                            Custom linkage topology minimizes moment arm on the base servo for smooth, stall-free operation. Built with PLA and precision bearings for durability.
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+                            <div>
+                                <div style="font-size: 2rem; font-weight: 700; color: #667eea;">850g</div>
+                                <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Total Weight</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 2rem; font-weight: 700; color: #667eea;">4 DOF</div>
+                                <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Articulation</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 2rem; font-weight: 700; color: #667eea;">20%</div>
+                                <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">PLA Infill</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 2rem; font-weight: 700; color: #667eea;">&lt;2s</div>
+                                <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Tool Swap</div>
+                            </div>
+                        </div>
+                        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="padding: 1rem 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; display: inline-flex; align-items: center; gap: 0.5rem;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <polyline points="21 15 16 10 5 21"></polyline>
+                            </svg>
+                            More Pictures
+                        </button>
+                    </div>
                 </div>
 
-                <div class="gallery-action">
-                    <a href="https://drive.google.com/drive/folders/17wvsKrLq0pKz2s5NYYXmZkd0iY5JW-Lp?usp=sharing" target="_blank" class="btn-primary">
-                        <span>View Full Gallery</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
-                            <polyline points="16 6 12 2 8 6"></polyline>
-                            <line x1="12" y1="2" x2="12" y2="15"></line>
-                        </svg>
-                    </a>
+                <!-- Photo Slideshow -->
+                <div class="mech-slideshow-container" style="position: relative; max-width: 1200px; margin: 0 auto 3rem auto; border-radius: 20px; overflow: hidden; background: linear-gradient(135deg, rgba(20, 20, 20, 1), rgba(30, 30, 30, 1)); border: 1px solid rgba(99, 102, 241, 0.3);">
+
+                    <!-- Slides -->
+                    <div class="mech-slides-wrapper" style="position: relative; height: 600px;">
+                        <div class="mech-slide" style="display: none; position: absolute; width: 100%; height: 100%; transition: opacity 1s ease-in-out;">
+                            <img src="mech_iso_view.png" alt="Robotic Arm ISO View" style="width: 100%; height: 100%; object-fit: contain; padding: 2rem;">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 3rem 2rem 2rem 2rem; color: #fff;">
+                                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">4-DOF Manipulator</h4>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">Isometric view of the complete assembly</p>
+                            </div>
+                        </div>
+
+                        <div class="mech-slide" style="display: none; position: absolute; width: 100%; height: 100%; transition: opacity 1s ease-in-out;">
+                            <img src="Arm.jpg" alt="Robotic Arm" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 3rem 2rem 2rem 2rem; color: #fff;">
+                                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Robotic Arm</h4>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">Custom linkage with dual-shaft servos and PLA construction</p>
+                            </div>
+                        </div>
+
+                        <div class="mech-slide" style="display: none; position: absolute; width: 100%; height: 100%; transition: opacity 1s ease-in-out;">
+                            <img src="Tool.png" alt="Tool Changer" style="width: 100%; height: 100%; object-fit: contain; padding: 2rem;">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 3rem 2rem 2rem 2rem; color: #fff;">
+                                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Tool Changer</h4>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">Magnetic dovetail quick-release for instant utensil swapping</p>
+                            </div>
+                        </div>
+
+                        <div class="mech-slide" style="display: none; position: absolute; width: 100%; height: 100%; transition: opacity 1s ease-in-out;">
+                            <img src="Base.jpg" alt="Base Assembly" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 3rem 2rem 2rem 2rem; color: #fff;">
+                                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Base Assembly</h4>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">608ZZ bearings isolate servo from radial loads</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Arrows -->
+                    <button class="mech-prev" onclick="mechChangeslide(-1)" style="position: absolute; top: 50%; left: 2rem; transform: translateY(-50%); background: rgba(99, 102, 241, 0.8); border: 2px solid rgba(99, 102, 241, 0.3); color: #fff; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; z-index: 10; backdrop-filter: blur(10px);">
+                        ‹
+                    </button>
+                    <button class="mech-next" onclick="mechChangeslide(1)" style="position: absolute; top: 50%; right: 2rem; transform: translateY(-50%); background: rgba(99, 102, 241, 0.8); border: 2px solid rgba(99, 102, 241, 0.3); color: #fff; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; z-index: 10; backdrop-filter: blur(10px);">
+                        ›
+                    </button>
+
+                    <!-- Slide Indicators -->
+                    <div style="position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.5rem; z-index: 10;">
+                        <span class="mech-dot" onclick="mechCurrentSlide(1)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease;"></span>
+                        <span class="mech-dot" onclick="mechCurrentSlide(2)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease;"></span>
+                        <span class="mech-dot" onclick="mechCurrentSlide(3)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease;"></span>
+                        <span class="mech-dot" onclick="mechCurrentSlide(4)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease;"></span>
+                    </div>
                 </div>
 
-                <div class="design-features">
-
-                    <div class="feature-card-detailed">
-                        <div class="feature-content">
-                            <h4><strong>The Robotic Arm</strong></h4>
-                            <p>
-                                A classic 4-DOF arm that utilizes a utensil attachment to safely and smoothly deliver food to the user.
-                            </p>
-                            <ul class="mech-list">
-                                <li><strong>Material:</strong> PLA (20% Infill)</li>
-                                <li><strong>Joints:</strong> Dual-shaft Servos</li>
-                            </ul>
-                        </div>
-                        <div class="feature-visual">
-                            <img src="Arm.jpg" alt="Arm CAD">
-                        </div>
+                <!-- 3D Model Viewer Section -->
+                <div style="max-width: 1200px; margin: 0 auto 4rem auto; background: linear-gradient(135deg, rgba(20, 20, 20, 1), rgba(30, 30, 30, 1)); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 20px; padding: 3rem; position: relative;">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <div style="display: inline-block; color: var(--accent); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1rem;">Interactive Model</div>
+                        <h4 style="color: #fff; font-size: 2rem; margin-bottom: 1rem;">Explore the 3D Model</h4>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">Drag to rotate • Scroll to zoom • Click and drag to explore</p>
                     </div>
 
-                    <div class="feature-card-detailed reverse">
-                        <div class="feature-content">
-
-                            <h4><strong>Tool Changer</strong></h4>
-                            <p>
-                                We designed a quick-release tool change, that allows the user or a friend to easily change utensils. It has a human-centered design with grips that help reduce the clamping force needed to remove.
-                            </p>
-                            <ul class="mech-list">
-                                <li>Friction fit connection</li>
-                                <li>Easy-grip handholds</li>
-                            </ul>
-                        </div>
-                        <div class="feature-visual">
-                            <img src="Tool.png" alt="End Effector">
+                    <div style="width: 100%; height: 600px; border-radius: 16px; overflow: hidden; background: #0a0a0a; position: relative;">
+                        <canvas id="embedded3DCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
+                        <div id="embedded3DLoadingText" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 1.2rem; text-align: center; pointer-events: none;">
+                            <div style="margin-bottom: 1rem;">Loading 3D Model...</div>
+                            <div style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">This may take a moment</div>
                         </div>
                     </div>
-
-                    <div class="feature-card-detailed">
-                        <div class="feature-content">
-
-                            <h4><strong>Base Assembly</strong></h3>
-                            <p>
-                                To prevent wobble, the main pivot rides on a <strong>machined aluminum shaft</strong>
-                                pressed into 608 skate bearings. This isolates the servo from radial loads, ensuring
-                                long-term durability.
-                            </p>
-                            <ul class="mech-list">
-                                <li><strong>Bearing:</strong> 608ZZ (x2)</li>
-                                <li><strong>Drive:</strong> Direct Coupling</li>
-                            </ul>
-                        </div>
-                        <div class="feature-visual">
-                            <img src="Base.jpg" alt="Base Section">
-                        </div>
-                    </div>
-                    <div class="feature-card-detailed reverse">
-                        <div class="feature-content">
-
-                            <h4><strong>Emergency Stop</strong></h3>
-                            <p>
-                                An additional optional emergency stop can be plugged in to the base, and can clip onto a shirt to be operated by the user's neck, or placed on the floor to be operated by the user's foot.
-                            </p>
-                        </div>
-                        <div class="feature-visual">
-                            <img src="" alt="Portable E-Stop">
                 </div>
             </div>
 
@@ -4439,7 +4403,23 @@
             </div>
         </footer>
 
+        <!-- 3D Model Viewer Modal -->
+        <div id="model3DModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 9999; align-items: center; justify-content: center;">
+            <button id="closeModalBtn" style="position: absolute; top: 2rem; right: 2rem; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.3); color: #fff; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; z-index: 10000;">
+                ✕
+            </button>
+            <div style="width: 90%; height: 90%; max-width: 1200px; max-height: 800px; position: relative;">
+                <canvas id="model3DCanvas" style="width: 100%; height: 100%; border-radius: 20px;"></canvas>
+                <div id="modelLoadingText" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 1.2rem; text-align: center;">
+                    <div style="margin-bottom: 1rem;">Loading 3D Model...</div>
+                    <div style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">Drag to rotate • Scroll to zoom</div>
+                </div>
+            </div>
+        </div>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
         <script src="main.js"></script>
 </body>
 

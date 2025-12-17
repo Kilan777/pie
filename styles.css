@@ -49,6 +49,7 @@ html {
     width: 100% !important;
     height: 100% !important;
     z-index: -3 !important;
+    transition: opacity 0.5s ease-in-out !important;
 }
 
 /* Pure black background */
@@ -64,6 +65,7 @@ body {
     height: 100% !important;
     z-index: -3 !important;
     background: #000000 !important; /* Pure black */
+    transition: opacity 0.5s ease-in-out !important;
 }
 
 .video-background::after {
@@ -78,6 +80,42 @@ body {
 
 /* Darken video for better text readability */
 .video-background::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+}
+
+/* Hero Video Background - Only shows in hero section */
+.hero-video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Behind hero content, in front of 3D canvas */
+    overflow: visible;
+    background: none;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 2% 0 0 0;
+    pointer-events: none;
+}
+
+.hero-video-background video {
+    width: auto;
+    height: 100vh;
+    max-width: 50%;
+    object-fit: contain;
+    opacity: 0.5;
+}
+
+.hero-video-background::after {
     content: '';
     position: absolute;
     top: 0;
@@ -455,6 +493,8 @@ body {
 }
 
 .hero-badge {
+    position: relative;
+    z-index: 1;
     display: inline-block;
     padding: 0.5rem 1rem;
     background: rgba(99, 102, 241, 0.1);
@@ -470,6 +510,8 @@ body {
 }
 
 .hero-title {
+    position: relative;
+    z-index: 1;
     font-size: clamp(2.4rem, 7vw, 6rem);
     font-weight: 700;
     line-height: 1.1;
@@ -494,6 +536,8 @@ body {
 }
 
 .hero-stats {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 3rem;
