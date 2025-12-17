@@ -2186,168 +2186,212 @@
 
             <!-- Mechanical -->
             <div class="tech-block" id="mechanical">
-                <h3>Mechanical Design</h3>
-
-                <div class="infinite-gallery-wrapper">
-                    <div class="infinite-gallery-track">
-                        <div class="gallery-card">
-                            <img src="mech_iso_view.png" alt="Isometric Assembly">
-                            <div class="card-overlay">
-                                <span class="card-label">Device with Shoulder E-Stop</span>
-                                <h4>E-Stop</h4>
-                            </div>
-                        </div>
-                        <div class="gallery-card">
-                            <img src="Pic2.jpg" alt="Side Profile">
-                            <div class="card-overlay">
-                                <span class="card-label">Motion</span>
-                                <h4>Mid Scooping</h4>
-                            </div>
-                        </div>
-                        <div class="gallery-card">
-                            <img src="images/mech_exploded.png" alt="Exploded View">
-                            <div class="card-overlay">
-                                <span class="card-label">Internals</span>
-                                <h4>Exploded View</h4>
-                            </div>
-                        </div>
-                        <div class="gallery-card">
-                            <img src="images/prototype.png" alt="Prototype">
-                            <div class="card-overlay">
-                                <span class="card-label">Iteration</span>
-                                <h4>Initial Prototype</h4>
-                            </div>
-                        </div>
-                        <div class="gallery-card">
-                            <img src="images/arm_detail.png" alt="Arm Detail">
-                            <div class="card-overlay">
-                                <span class="card-label">Structure</span>
-                                <h4>Linkage Detail</h4>
-                            </div>
-                        </div>
-
-                        <div class="gallery-card">
-                            <img src="images/mech_iso_view.png" alt="Isometric Assembly">
-                            <div class="card-overlay">
-                                <span class="card-label">Full Assembly</span>
-                                <h4>Isometric View</h4>
-                            </div>
-                        </div>
-                        <div class="gallery-card">
-                            <img src="images/base_section_view.png" alt="Section View">
-                            <div class="card-overlay">
-                                <span class="card-label">Kinematics</span>
-                                <h4>Side Profile</h4>
-                            </div>
-                        </div>
-                        <div class="gallery-card">
-                            <img src="images/mech_exploded.jpg" alt="Exploded View">
-                            <div class="card-overlay">
-                                <span class="card-label">Internals</span>
-                                <h4>Exploded View</h4>
-                            </div>
-                        </div>
-                        <div class="gallery-card">
-                            <img src="images/mech_prototype.jpg" alt="Prototype">
-                            <div class="card-overlay">
-                                <span class="card-label">Real World</span>
-                                <h4>Physical Prototype</h4>
-                            </div>
-                        </div>
-                        <div class="gallery-card">
-                            <img src="images/arm_detail.jpg" alt="Arm Detail">
-                            <div class="card-overlay">
-                                <span class="card-label">Structure</span>
-                                <h4>Linkage Detail</h4>
-                            </div>
-                        </div>
+                <div style="display: flex; justify-content: space-between; align-items: end; margin-bottom: 2rem;">
+                    <h3>Mechanical Design</h3>
+                    <div class="mech-telemetry-bar">
+                        <span class="telemetry-item">
+                            <span class="status-dot"></span>
+                            ASSEMBLY: READY
+                        </span>
+                        <span class="telemetry-item">PARTS: 47</span>
+                        <span class="telemetry-item">WEIGHT: 850g</span>
                     </div>
-
-                    <div class="gallery-fade-left"></div>
-                    <div class="gallery-fade-right"></div>
                 </div>
 
-                <div class="gallery-action">
-                    <a href="[YOUR_LINK_HERE]" target="_blank" class="btn-primary">
-                        <span>View Full Gallery</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
-                            <polyline points="16 6 12 2 8 6"></polyline>
-                            <line x1="12" y1="2" x2="12" y2="15"></line>
-                        </svg>
-                    </a>
+                <!-- EPIC 3D Assembly Viewer -->
+                <div class="assembly-viewer">
+                    <div class="viewer-container">
+                        <div class="assembly-layer" data-depth="0.2">
+                            <img src="mech_iso_view.png" alt="Device Assembly" class="assembly-main-img">
+                        </div>
+
+                        <!-- Technical HUD Overlays -->
+                        <div class="tech-hud">
+                            <div class="hud-corner top-left"></div>
+                            <div class="hud-corner top-right"></div>
+                            <div class="hud-corner bottom-left"></div>
+                            <div class="hud-corner bottom-right"></div>
+
+                            <div class="hud-scanline"></div>
+
+                            <!-- Callout Annotations -->
+                            <div class="tech-callout" style="top: 15%; left: 20%;">
+                                <div class="callout-dot"></div>
+                                <div class="callout-line"></div>
+                                <div class="callout-label">
+                                    <div class="label-title">4-DOF ARM</div>
+                                    <div class="label-spec">±120° Range</div>
+                                </div>
+                            </div>
+
+                            <div class="tech-callout" style="top: 50%; right: 25%;">
+                                <div class="callout-dot"></div>
+                                <div class="callout-line reverse"></div>
+                                <div class="callout-label right">
+                                    <div class="label-title">TOOL CHANGER</div>
+                                    <div class="label-spec">Magnetic Lock</div>
+                                </div>
+                            </div>
+
+                            <div class="tech-callout" style="bottom: 20%; left: 30%;">
+                                <div class="callout-dot"></div>
+                                <div class="callout-line"></div>
+                                <div class="callout-label">
+                                    <div class="label-title">BASE PIVOT</div>
+                                    <div class="label-spec">608ZZ Bearings</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- View Mode Switcher -->
+                        <div class="view-switcher">
+                            <button class="view-btn active" data-view="iso">ISO</button>
+                            <button class="view-btn" data-view="exploded">EXPLODED</button>
+                            <button class="view-btn" data-view="prototype">BUILT</button>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="design-features">
-
-                    <div class="feature-card-detailed">
-                        <div class="feature-content">
-                            <h4><strong>The Robotic Arm</strong></h4>
-                            <p>
-                                A robust <strong>4-DOF manipulator</strong> optimized for weight and rigidity. We
-                                utilized a custom linkage topology to minimize the moment arm on the base servo,
-                                allowing for smoother operation without stalling.
-                            </p>
-                            <ul class="mech-list">
-                                <li><strong>Material:</strong> PLA (20% Infill)</li>
-                                <li><strong>Joints:</strong> Dual-shaft Servos</li>
-                            </ul>
+                <!-- Technical Specs Grid -->
+                <div class="tech-specs-grid">
+                    <div class="spec-card">
+                        <div class="spec-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
                         </div>
-                        <div class="feature-visual">
-                            <img src="Arm.jpg" alt="Arm CAD">
-                        </div>
+                        <div class="spec-value">20%</div>
+                        <div class="spec-label">PLA Infill</div>
+                        <div class="spec-bar"><div class="spec-fill" style="width: 20%"></div></div>
                     </div>
 
-                    <div class="feature-card-detailed reverse">
-                        <div class="feature-content">
-
-                            <h4><strong>Tool Changer</strong></h4>
-                            <p>
-                                We designed a <strong>passive quick-release</strong> system. The dovetail slide
-                                mechanism uses embedded neodymium magnets to snap utensils into place, allowing users to
-                                switch between spoon and fork in seconds.
-                            </p>
-                            <ul class="mech-list">
-                                <li><strong>Lock:</strong> Magnetic Detent</li>
-                                <li><strong>Grip:</strong> Compliant Flexure</li>
-                            </ul>
+                    <div class="spec-card">
+                        <div class="spec-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
                         </div>
-                        <div class="feature-visual">
-                            <img src="Tool.png" alt="End Effector">
-                        </div>
+                        <div class="spec-value">&lt;500ms</div>
+                        <div class="spec-label">Response Time</div>
+                        <div class="spec-bar"><div class="spec-fill" style="width: 95%"></div></div>
                     </div>
 
-                    <div class="feature-card-detailed">
-                        <div class="feature-content">
-
-                            <h4><strong>Base Assembly</strong></h3>
-                            <p>
-                                To prevent wobble, the main pivot rides on a <strong>machined aluminum shaft</strong>
-                                pressed into 608 skate bearings. This isolates the servo from radial loads, ensuring
-                                long-term durability.
-                            </p>
-                            <ul class="mech-list">
-                                <li><strong>Bearing:</strong> 608ZZ (x2)</li>
-                                <li><strong>Drive:</strong> Direct Coupling</li>
-                            </ul>
+                    <div class="spec-card">
+                        <div class="spec-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 20V10M12 20V4M6 20v-6"/>
+                            </svg>
                         </div>
-                        <div class="feature-visual">
-                            <img src="Base.jpg" alt="Base Section">
-                        </div>
+                        <div class="spec-value">4</div>
+                        <div class="spec-label">Degrees of Freedom</div>
+                        <div class="spec-bar"><div class="spec-fill" style="width: 100%"></div></div>
                     </div>
-                    <div class="feature-card-detailed reverse">
-                        <div class="feature-content">
 
-                            <h4><strong>Emergency Stop</strong></h3>
-                            <p>
-                                An additional optional emergency stop can be plugged in to the base, and can clip onto a shirt to be operated by the user's neck, or placed on the floor to be operated by the user's foot.
-                            </p>
+                    <div class="spec-card">
+                        <div class="spec-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            </svg>
                         </div>
-                        <div class="feature-visual">
-                            <img src="" alt="Portable E-Stop">
+                        <div class="spec-value">850g</div>
+                        <div class="spec-label">Total Weight</div>
+                        <div class="spec-bar"><div class="spec-fill" style="width: 70%"></div></div>
+                    </div>
                 </div>
+
+                <!-- Component Breakdown -->
+                <div class="component-showcase">
+                    <div class="component-item">
+                        <div class="component-visual">
+                            <img src="Arm.jpg" alt="Robotic Arm">
+                            <div class="component-overlay">
+                                <div class="overlay-grid"></div>
+                            </div>
+                        </div>
+                        <div class="component-info">
+                            <div class="component-tag">PRIMARY STRUCTURE</div>
+                            <h4>4-DOF Manipulator</h4>
+                            <p>Custom linkage topology minimizes moment arm on base servo for smooth operation without stalling.</p>
+                            <div class="component-meta">
+                                <span>PLA 20% Infill</span>
+                                <span>Dual-shaft Servos</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="component-item reverse">
+                        <div class="component-visual">
+                            <img src="Tool.png" alt="Tool Changer">
+                            <div class="component-overlay">
+                                <div class="overlay-grid"></div>
+                            </div>
+                        </div>
+                        <div class="component-info">
+                            <div class="component-tag">END EFFECTOR</div>
+                            <h4>Magnetic Tool Changer</h4>
+                            <p>Passive quick-release with dovetail slide and embedded neodymium magnets. Switch between utensils in seconds.</p>
+                            <div class="component-meta">
+                                <span>Magnetic Detent Lock</span>
+                                <span>Compliant Flexure Grip</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="component-item">
+                        <div class="component-visual">
+                            <img src="Base.jpg" alt="Base Assembly">
+                            <div class="component-overlay">
+                                <div class="overlay-grid"></div>
+                            </div>
+                        </div>
+                        <div class="component-info">
+                            <div class="component-tag">FOUNDATION</div>
+                            <h4>Bearing-Mounted Base</h4>
+                            <p>Machined aluminum shaft on 608 skate bearings isolates servo from radial loads for long-term durability.</p>
+                            <div class="component-meta">
+                                <span>608ZZ Bearings (x2)</span>
+                                <span>Direct Coupling Drive</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+
+            <script>
+                // Mechanical Section - View Switcher Functionality
+                document.addEventListener('DOMContentLoaded', () => {
+                    const viewBtns = document.querySelectorAll('.view-btn');
+                    const assemblyImg = document.querySelector('.assembly-main-img');
+
+                    const viewImages = {
+                        'iso': 'mech_iso_view.png',
+                        'exploded': 'images/mech_exploded.png',
+                        'prototype': 'images/mech_prototype.jpg'
+                    };
+
+                    viewBtns.forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            // Remove active class from all buttons
+                            viewBtns.forEach(b => b.classList.remove('active'));
+                            // Add active class to clicked button
+                            btn.classList.add('active');
+
+                            // Change image
+                            const view = btn.getAttribute('data-view');
+                            if (assemblyImg && viewImages[view]) {
+                                assemblyImg.style.opacity = '0';
+                                setTimeout(() => {
+                                    assemblyImg.src = viewImages[view];
+                                    assemblyImg.style.opacity = '1';
+                                }, 200);
+                            }
+                        });
+                    });
+                });
+            </script>
 
             <div class="tech-block" id="software" style="position: relative;">
                 <div style="display: flex; justify-content: space-between; align-items: end; margin-bottom: 2rem;">
