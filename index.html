@@ -2250,6 +2250,13 @@
                             <div style="margin-bottom: 1rem;">Loading 3D Model...</div>
                             <div style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">This may take a moment</div>
                         </div>
+                        <div id="embedded3DOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: opacity 0.3s ease; z-index: 10;">
+                            <div style="text-align: center; pointer-events: none;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem; color: rgba(99, 102, 241, 1);">🖱️</div>
+                                <div style="font-size: 1.5rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem;">Click to Interact</div>
+                                <div style="font-size: 1rem; color: rgba(255,255,255,0.7);">Drag to rotate • Scroll to zoom</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
