@@ -498,9 +498,11 @@ function initEmbedded3DViewer() {
     // Load 3D Model
     const loader = new THREE.GLTFLoader();
 
+    console.log('Starting to load FullCAD.gltf...');
     loader.load(
         'FullCAD.gltf',
         function (gltf) {
+            console.log('GLTF file loaded successfully!');
             const model = gltf.scene;
 
             // Center and scale the model
@@ -533,9 +535,15 @@ function initEmbedded3DViewer() {
             animateEmbedded3D();
         },
         function (xhr) {
-            if (loadingText && xhr.total > 0) {
-                const percent = (xhr.loaded / xhr.total * 100).toFixed(0);
-                loadingText.querySelector('div:first-child').textContent = `Loading 3D Model... ${percent}%`;
+            console.log(`Loading progress: ${xhr.loaded} / ${xhr.total} bytes`);
+            if (loadingText) {
+                if (xhr.total > 0) {
+                    const percent = (xhr.loaded / xhr.total * 100).toFixed(0);
+                    loadingText.querySelector('div:first-child').textContent = `Loading 3D Model... ${percent}%`;
+                } else {
+                    const mb = (xhr.loaded / 1024 / 1024).toFixed(2);
+                    loadingText.querySelector('div:first-child').textContent = `Loading 3D Model... ${mb}MB`;
+                }
             }
         },
         function (error) {
