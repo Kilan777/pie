@@ -58,7 +58,7 @@
         <h1 class="hero-title">
             We help people<br>
             with disabilities<br>
-            <span class="hero-gradient">feed independently</span><br>
+            <span class="hero-gradient">eat independently</span><br>
             with intelligent robotics.<br>
         </h1>
         <div class="hero-stats">
@@ -1888,68 +1888,13 @@
                     </div>
                 </div>
 
-                <!-- Technical Analysis -->
-                <div class="analysis-grid">
-                    <div class="analysis-item">
-                        <h4>Power Architecture</h4>
-                        <p><strong>5V Rail (25W):</strong> Powers Raspberry Pi (3-7W), Intel RealSense camera (3-5W),
-                            and cooling fan (2W). Uses switching power adapter with ~85% efficiency.</p>
-                        <p><strong>9V Rail (27W):</strong> Dedicated servo power through BusLinker V2.2. Isolated from
-                            computing components to prevent motor noise interference.</p>
-                        <p><strong>Peak Consumption:</strong> ~50W with all servos under load during active feeding
-                            motion.</p>
-                    </div>
-                    <div class="analysis-item">
-                        <h4>Signal Architecture</h4>
-                        <p><strong>Camera Interface:</strong> USB 3.0 connection provides high-bandwidth RGB-D streaming
-                            at 30fps.</p>
-                        <p><strong>Servo Protocol:</strong> USB → Serial Bus communication at 115200 baud. BusLinker
-                            converts USB commands to daisy-chained serial bus protocol for 4 servos.</p>
-                        <p><strong>Safety I/O:</strong> E-stop buttons wired directly to Raspberry Pi GPIO pins for
-                            <10ms emergency response time.</p>
-                    </div>
-                    <div class="analysis-item">
-                        <h4>Safety Features</h4>
-                        <p><strong>Dual E-Stops:</strong> Primary hard-wired button plus shoulder-mounted option for
-                            hands-free accessibility. Both trigger immediate motor power cut via GPIO monitoring.</p>
-                        <p><strong>Power Isolation:</strong> Physical power switch allows servo system shutdown while
-                            keeping Pi active for testing/calibration.</p>
-                        <p><strong>Thermal Management:</strong> Active cooling keeps Pi below 65°C during continuous
-                            operation.</p>
-                    </div>
-                </div>
-
-                <!-- Wiring Specifications -->
-                <div class="wiring-specs">
-                    <h4>Key Connections</h4>
-                    <div class="connections-grid">
-                        <div class="connection-item">
-                            <strong>Camera → Pi</strong>
-                            <p>USB 3.0 (blue port)</p>
-                        </div>
-                        <div class="connection-item">
-                            <strong>BusLinker → Pi</strong>
-                            <p>USB 2.0</p>
-                        </div>
-                        <div class="connection-item">
-                            <strong>E-Stops → Pi</strong>
-                            <p>GPIO pins (pull-down)</p>
-                        </div>
-                        <div class="connection-item">
-                            <strong>Servos → BusLinker</strong>
-                            <p>Serial bus daisy-chain</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <style>
                 /* Circuit Diagrams Container - Side by Side */
                 .circuits-container {
                     display: grid;
                     grid-template-columns: 1fr 1fr;
                     gap: 2rem;
-                    margin: 2rem 0 3rem 0;
+                    margin: 2rem 0 3rem 0;S
                 }
 
                 .circuit-overview h4,
@@ -2193,7 +2138,7 @@
 
                     <!-- Image Side -->
                     <div style="margin: 0; background: #050505; padding: 3rem; display: flex; align-items: center; justify-content: center;">
-                        <img src="mech_iso_view.png" alt="Robotic Arm" style="width: 100%; height: auto; max-width: 500px; filter: drop-shadow(0 20px 60px rgba(102, 126, 234, 0.4));">
+                        <img src="GoodPic.png" alt="Robotic Arm" style="width: 100%; height: auto; max-width: 500px; filter: drop-shadow(0 20px 60px rgba(102, 126, 234, 0.4));">
                     </div>
 
                     <!-- Content Side -->

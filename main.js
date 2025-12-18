@@ -57,9 +57,9 @@ window.addEventListener('scroll', () => {
         const heroHeight = heroSection.offsetHeight;
         const scrollPastHero = scrollY / heroHeight;
 
-        if (scrollPastHero > 0.7) {
+        if (scrollPastHero > 0.9) {
             // Fade in canvas as we approach end of hero section
-            const fadeProgress = Math.min((scrollPastHero - 0.7) / 0.3, 1);
+            const fadeProgress = Math.min((scrollPastHero - 0.2) / 0.1, 1);
             canvas.style.opacity = fadeProgress.toString();
         } else {
             // Keep canvas hidden in hero section
