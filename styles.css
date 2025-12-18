@@ -17,6 +17,7 @@
 html {
     scroll-behavior: smooth;
     font-size: 16px;
+    overflow-x: hidden;
 }
 .video-background {
     position: fixed;
@@ -132,6 +133,9 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
+    position: relative;
 }
 
 /* Start Mechanical Css */
@@ -1118,9 +1122,10 @@ section {
 .footer {
     background: var(--bg-secondary);
     border-top: 1px solid var(--border);
-    padding: 4rem 0 2rem 0; /* 2rem is about 32px - a bit tight */
+    padding: 4rem 0 2rem 0;
     position: relative;
     z-index: 10;
+    margin-bottom: 0;
 }
 
 .footer-content {
@@ -1632,9 +1637,10 @@ footer {
     position: relative;
     z-index: 10;
     text-align: center;
-    padding: 3rem;
+    padding: 3rem 3rem 2rem 3rem;
     background: rgba(20, 20, 20, 0.9);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 0;
 }
 
 footer p {
