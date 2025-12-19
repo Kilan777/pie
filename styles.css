@@ -18,6 +18,8 @@ html {
     scroll-behavior: smooth;
     font-size: 16px;
     overflow-x: hidden;
+    height: 100%;
+    overscroll-behavior: none;
 }
 .video-background {
     position: fixed;
@@ -136,6 +138,8 @@ body {
     margin: 0;
     padding: 0;
     position: relative;
+    min-height: 100%;
+    overscroll-behavior: none;
 }
 
 /* Start Mechanical Css */
@@ -1122,10 +1126,10 @@ section {
 .footer {
     background: var(--bg-secondary);
     border-top: 1px solid var(--border);
-    padding: 4rem 0 0 0;
+    padding: 4rem 0 2rem 0;
     position: relative;
     z-index: 10;
-    margin-bottom: 0;
+    margin: 0;
 }
 
 .footer-content {
