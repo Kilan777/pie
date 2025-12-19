@@ -17,6 +17,9 @@
 html {
     scroll-behavior: smooth;
     font-size: 16px;
+    overflow-x: hidden;
+    height: 100%;
+    overscroll-behavior: none;
 }
 .video-background {
     position: fixed;
@@ -132,6 +135,11 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    min-height: 100%;
+    overscroll-behavior: none;
 }
 
 /* Start Mechanical Css */
@@ -1118,9 +1126,10 @@ section {
 .footer {
     background: var(--bg-secondary);
     border-top: 1px solid var(--border);
-    padding: 4rem 0 2rem 0; /* 2rem is about 32px - a bit tight */
+    padding: 4rem 0 2rem 0;
     position: relative;
     z-index: 10;
+    margin: 0;
 }
 
 .footer-content {
@@ -1159,13 +1168,17 @@ section {
 
 .footer-bottom {
     padding-top: 2rem;
+    padding-bottom: 0;
     border-top: 1px solid var(--border);
     text-align: center;
+    margin-bottom: 0;
 }
 
 .footer-bottom p {
     color: var(--text-secondary);
     font-size: 0.9rem;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 /* Responsive Design */
@@ -1632,14 +1645,15 @@ footer {
     position: relative;
     z-index: 10;
     text-align: center;
-    padding: 3rem;
+    padding: 3rem 3rem 0 3rem;
     background: rgba(20, 20, 20, 0.9);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 0;
 }
 
 footer p {
     color: #808080;
-    margin: 0.5rem 0;
+    margin: 0.5rem 0 0 0;
 }
 
 footer a {

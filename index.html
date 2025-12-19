@@ -58,7 +58,7 @@
         <h1 class="hero-title">
             We help people<br>
             with disabilities<br>
-            <span class="hero-gradient">feed independently</span><br>
+            <span class="hero-gradient">eat independently</span><br>
             with intelligent robotics.<br>
         </h1>
         <div class="hero-stats">
@@ -1888,68 +1888,13 @@
                     </div>
                 </div>
 
-                <!-- Technical Analysis -->
-                <div class="analysis-grid">
-                    <div class="analysis-item">
-                        <h4>Power Architecture</h4>
-                        <p><strong>5V Rail (25W):</strong> Powers Raspberry Pi (3-7W), Intel RealSense camera (3-5W),
-                            and cooling fan (2W). Uses switching power adapter with ~85% efficiency.</p>
-                        <p><strong>9V Rail (27W):</strong> Dedicated servo power through BusLinker V2.2. Isolated from
-                            computing components to prevent motor noise interference.</p>
-                        <p><strong>Peak Consumption:</strong> ~50W with all servos under load during active feeding
-                            motion.</p>
-                    </div>
-                    <div class="analysis-item">
-                        <h4>Signal Architecture</h4>
-                        <p><strong>Camera Interface:</strong> USB 3.0 connection provides high-bandwidth RGB-D streaming
-                            at 30fps.</p>
-                        <p><strong>Servo Protocol:</strong> USB → Serial Bus communication at 115200 baud. BusLinker
-                            converts USB commands to daisy-chained serial bus protocol for 4 servos.</p>
-                        <p><strong>Safety I/O:</strong> E-stop buttons wired directly to Raspberry Pi GPIO pins for
-                            <10ms emergency response time.</p>
-                    </div>
-                    <div class="analysis-item">
-                        <h4>Safety Features</h4>
-                        <p><strong>Dual E-Stops:</strong> Primary hard-wired button plus shoulder-mounted option for
-                            hands-free accessibility. Both trigger immediate motor power cut via GPIO monitoring.</p>
-                        <p><strong>Power Isolation:</strong> Physical power switch allows servo system shutdown while
-                            keeping Pi active for testing/calibration.</p>
-                        <p><strong>Thermal Management:</strong> Active cooling keeps Pi below 65°C during continuous
-                            operation.</p>
-                    </div>
-                </div>
-
-                <!-- Wiring Specifications -->
-                <div class="wiring-specs">
-                    <h4>Key Connections</h4>
-                    <div class="connections-grid">
-                        <div class="connection-item">
-                            <strong>Camera → Pi</strong>
-                            <p>USB 3.0 (blue port)</p>
-                        </div>
-                        <div class="connection-item">
-                            <strong>BusLinker → Pi</strong>
-                            <p>USB 2.0</p>
-                        </div>
-                        <div class="connection-item">
-                            <strong>E-Stops → Pi</strong>
-                            <p>GPIO pins (pull-down)</p>
-                        </div>
-                        <div class="connection-item">
-                            <strong>Servos → BusLinker</strong>
-                            <p>Serial bus daisy-chain</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <style>
                 /* Circuit Diagrams Container - Side by Side */
                 .circuits-container {
                     display: grid;
                     grid-template-columns: 1fr 1fr;
                     gap: 2rem;
-                    margin: 2rem 0 3rem 0;
+                    margin: 2rem 0 3rem 0;S
                 }
 
                 .circuit-overview h4,
@@ -2193,7 +2138,7 @@
 
                     <!-- Image Side -->
                     <div style="margin: 0; background: #050505; padding: 3rem; display: flex; align-items: center; justify-content: center;">
-                        <img src="mech_iso_view.png" alt="Robotic Arm" style="width: 100%; height: auto; max-width: 500px; filter: drop-shadow(0 20px 60px rgba(102, 126, 234, 0.4));">
+                        <img src="GoodPic.png" alt="Robotic Arm" style="width: 100%; height: auto; max-width: 500px; filter: drop-shadow(0 20px 60px rgba(102, 126, 234, 0.4));">
                     </div>
 
                     <!-- Content Side -->
@@ -2225,14 +2170,14 @@
                                 <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Tool Swap</div>
                             </div>
                         </div>
-                        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="padding: 1rem 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <a href="https://drive.google.com/drive/folders/17wvsKrLq0pKz2s5NYYXmZkd0iY5JW-Lp" target="_blank" style="padding: 1rem 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                                 <circle cx="8.5" cy="8.5" r="1.5"></circle>
                                 <polyline points="21 15 16 10 5 21"></polyline>
                             </svg>
                             More Pictures
-                        </button>
+                        </a>
                     </div>
                 </div>
 
@@ -2240,36 +2185,60 @@
                 <div class="mech-slideshow-container" style="position: relative; max-width: 1200px; margin: 0 auto 3rem auto; border-radius: 20px; overflow: hidden; background: linear-gradient(135deg, rgba(20, 20, 20, 1), rgba(30, 30, 30, 1)); border: 1px solid rgba(99, 102, 241, 0.3);">
 
                     <!-- Slides -->
+                     <div class="mech-slide" style="display: none; position: absolute; width: 100%; height: 100%; transition: opacity 1s ease-in-out;">
+                            <img src="cable_protector.png" alt="Robotic Arm" style="width: 100%; height: 100%; object-fit: contain; padding: 3rem;">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 3rem 2rem 2rem 2rem; color: #fff;">
+                                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Cable Protector Links</h4>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">Aesthetic traingle pieces that clip into arm and protect the wiring</p>
+                            </div>
+                        </div>
+
                     <div class="mech-slides-wrapper" style="position: relative; height: 600px;">
                         <div class="mech-slide" style="display: none; position: absolute; width: 100%; height: 100%; transition: opacity 1s ease-in-out;">
-                            <img src="mech_iso_view.png" alt="Robotic Arm ISO View" style="width: 100%; height: 100%; object-fit: contain; padding: 2rem;">
+                            <img src="base_section_view.png" alt="Robotic Arm ISO View" style="width: 100%; height: 100%; object-fit: contain; padding: 3rem;">
                             <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 3rem 2rem 2rem 2rem; color: #fff;">
-                                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">4-DOF Manipulator</h4>
-                                <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">Isometric view of the complete assembly</p>
+                                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Cross Pin Shaft</h4>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">Isometric view of the base assembly with a cross pin shaft</p>
                             </div>
                         </div>
 
                         <div class="mech-slide" style="display: none; position: absolute; width: 100%; height: 100%; transition: opacity 1s ease-in-out;">
-                            <img src="Arm.jpg" alt="Robotic Arm" style="width: 100%; height: 100%; object-fit: cover;">
-                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 3rem 2rem 2rem 2rem; color: #fff;">
-                                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Robotic Arm</h4>
-                                <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">Custom linkage with dual-shaft servos and PLA construction</p>
-                            </div>
-                        </div>
-
-                        <div class="mech-slide" style="display: none; position: absolute; width: 100%; height: 100%; transition: opacity 1s ease-in-out;">
-                            <img src="Tool.png" alt="Tool Changer" style="width: 100%; height: 100%; object-fit: contain; padding: 2rem;">
+                            <img src="Tool.png" alt="Tool Changer" style="width: 100%; height: 100%; object-fit: contain; padding: 3rem;">
                             <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 3rem 2rem 2rem 2rem; color: #fff;">
                                 <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Tool Changer</h4>
-                                <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">Magnetic dovetail quick-release for instant utensil swapping</p>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">Dovetail quick-release for instant utensil swapping</p>
                             </div>
                         </div>
 
                         <div class="mech-slide" style="display: none; position: absolute; width: 100%; height: 100%; transition: opacity 1s ease-in-out;">
-                            <img src="Base.jpg" alt="Base Assembly" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img src="Base.jpg" alt="Base Assembly" style="width: 100%; height: 100%; object-fit: contain; padding: 3rem;">
                             <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 3rem 2rem 2rem 2rem; color: #fff;">
                                 <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Base Assembly</h4>
                                 <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">608ZZ bearings isolate servo from radial loads</p>
+                            </div>
+                        </div>
+
+                        <div class="mech-slide" style="display: none; position: absolute; width: 100%; height: 100%; transition: opacity 1s ease-in-out;">
+                            <img src="Electronics.png" alt="Base Assembly" style="width: 100%; height: 100%; object-fit: contain; padding: 3rem;">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 3rem 2rem 2rem 2rem; color: #fff;">
+                                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Electronics Base Housing</h4>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">Electronics base housing with integrated circuitry and mounting points</p>
+                            </div>
+                        </div>
+
+                        <div class="mech-slide" style="display: none; position: absolute; width: 100%; height: 100%; transition: opacity 1s ease-in-out;">
+                            <img src="prototype.png" alt="Base Assembly" style="width: 100%; height: 100%; object-fit: contain; padding: 3rem;">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 3rem 2rem 2rem 2rem; color: #fff;">
+                                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">First Version Prototype</h4>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">First version mvp with cheap servos and fast prototyping</p>
+                            </div>
+                        </div>
+
+                        <div class="mech-slide" style="display: none; position: absolute; width: 100%; height: 100%; transition: opacity 1s ease-in-out;">
+                            <img src="arm_working.png" alt="Base Assembly" style="width: 100%; height: 100%; object-fit: contain; padding: 3rem;">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 3rem 2rem 2rem 2rem; color: #fff;">
+                                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Arm Working</h4>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">Fully functional arm with all joints and camera working mid scoop</p>
                             </div>
                         </div>
                     </div>
@@ -2288,6 +2257,9 @@
                         <span class="mech-dot" onclick="mechCurrentSlide(2)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease;"></span>
                         <span class="mech-dot" onclick="mechCurrentSlide(3)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease;"></span>
                         <span class="mech-dot" onclick="mechCurrentSlide(4)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease;"></span>
+                        <span class="mech-dot" onclick="mechCurrentSlide(5)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease;"></span>
+                        <span class="mech-dot" onclick="mechCurrentSlide(6)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease;"></span>
+                        <span class="mech-dot" onclick="mechCurrentSlide(7)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease;"></span>
                     </div>
                 </div>
 
@@ -2304,6 +2276,13 @@
                         <div id="embedded3DLoadingText" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 1.2rem; text-align: center; pointer-events: none;">
                             <div style="margin-bottom: 1rem;">Loading 3D Model...</div>
                             <div style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">This may take a moment</div>
+                        </div>
+                        <div id="embedded3DOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: opacity 0.3s ease; z-index: 10;">
+                            <div style="text-align: center; pointer-events: none;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem; color: rgba(99, 102, 241, 1);">🖱️</div>
+                                <div style="font-size: 1.5rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem;">Click to Interact</div>
+                                <div style="font-size: 1rem; color: rgba(255,255,255,0.7);">Drag to rotate • Scroll to zoom</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2693,8 +2672,39 @@
                     });
                 </script>
 
+                <!-- Software Dependencies -->
+                <div style="margin: 4rem 0;">
+                    <h4 style="color: #fff; font-size: 1.3rem; margin-bottom: 1.5rem; font-weight: 600;">External Dependencies</h4>
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                        <div style="padding: 0.6rem 1.2rem; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 50px; font-size: 0.9rem; color: var(--accent-light);">
+                            PyLX16a
+                        </div>
+                        <div style="padding: 0.6rem 1.2rem; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 50px; font-size: 0.9rem; color: var(--accent-light);">
+                            MediaPipe
+                        </div>
+                        <div style="padding: 0.6rem 1.2rem; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 50px; font-size: 0.9rem; color: var(--accent-light);">
+                            NumPy
+                        </div>
+                        <div style="padding: 0.6rem 1.2rem; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 50px; font-size: 0.9rem; color: var(--accent-light);">
+                            RQ (Redis Queue)
+                        </div>
+                        <div style="padding: 0.6rem 1.2rem; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 50px; font-size: 0.9rem; color: var(--accent-light);">
+                            pyrealsense2
+                        </div>
+                        <div style="padding: 0.6rem 1.2rem; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 50px; font-size: 0.9rem; color: var(--accent-light);">
+                            OpenCV
+                        </div>
+                        <div style="padding: 0.6rem 1.2rem; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 50px; font-size: 0.9rem; color: var(--accent-light);">
+                            Python 3.9+
+                        </div>
+                        <div style="padding: 0.6rem 1.2rem; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 50px; font-size: 0.9rem; color: var(--accent-light);">
+                            Raspberry Pi OS
+                        </div>
+                    </div>
+                </div>
+
                 <div class="code-link">
-                    <a href="[YOUR_GITHUB_LINK]" class="btn-primary">
+                    <a href="https://www.github.com/Dh-Van/Munchkin" class="btn-primary">
                         <span>View Source Code</span>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                             <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" />
@@ -3591,136 +3601,122 @@
                                 <th>Component</th>
                                 <th>Qty</th>
                                 <th>Unit Cost</th>
-                                <th>Total</th>
                                 <th>Source</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="category-row">
-                                <td colspan="5">Computing & Vision</td>
+                                <td colspan="4">Computing & Vision</td>
                             </tr>
                             <tr>
-                                <td>Raspberry Pi 4B</td>
+                                <td><a href="#" target="_blank" style="color: var(--accent); text-decoration: none; transition: color 0.3s;">Raspberry Pi 4B</a></td>
                                 <td>1</td>
-                                <td>$62.39</td>
                                 <td>$62.39</td>
                                 <td>Found</td>
                             </tr>
                             <tr>
-                                <td>Intel RealSense Camera</td>
+                                <td><a href="#" target="_blank" style="color: var(--accent); text-decoration: none; transition: color 0.3s;">Intel RealSense Camera</a></td>
                                 <td>1</td>
                                 <td>$314.00</td>
-                                <td>$163.97</td>
                                 <td>Found</td>
                             </tr>
 
                             <tr class="category-row">
-                                <td colspan="5">Motors & Control</td>
+                                <td colspan="4">Motors & Control</td>
                             </tr>
                             <tr>
-                                <td>5 Servos and Control Board</td>
+                                <td><a href="#" target="_blank" style="color: var(--accent); text-decoration: none; transition: color 0.3s;">5 Servos and Control Board</a></td>
                                 <td>1</td>
-                                <td>$95.61</td>
                                 <td>$95.61</td>
                                 <td>Bought</td>
                             </tr>
                             <tr>
-                                <td>Thrust Bearing 2-1/4 inch</td>
+                                <td><a href="#" target="_blank" style="color: var(--accent); text-decoration: none; transition: color 0.3s;">Thrust Bearing 2-1/4 inch</a></td>
                                 <td>1</td>
-                                <td>$13.82</td>
                                 <td>$13.82</td>
                                 <td>Bought</td>
                             </tr>
 
                             <tr class="category-row">
-                                <td colspan="5">Electronics & Connections</td>
+                                <td colspan="4">Electronics & Connections</td>
                             </tr>
                             <tr>
-                                <td>Push Down Button</td>
+                                <td><a href="#" target="_blank" style="color: var(--accent); text-decoration: none; transition: color 0.3s;">Push Down Button</a></td>
                                 <td>1</td>
-                                <td>$8.12</td>
                                 <td>$8.12</td>
                                 <td>Found</td>
                             </tr>
                             <tr>
-                                <td>E-Stop</td>
+                                <td><a href="#" target="_blank" style="color: var(--accent); text-decoration: none; transition: color 0.3s;">E-Stop</a></td>
                                 <td>1</td>
-                                <td>$6.99</td>
                                 <td>$6.99</td>
                                 <td>Found</td>
                             </tr>
                             <tr>
-                                <td>USB - USB C Cable Low Profile</td>
+                                <td><a href="#" target="_blank" style="color: var(--accent); text-decoration: none; transition: color 0.3s;">USB - USB C Cable Low Profile</a></td>
                                 <td>1</td>
-                                <td>$10.61</td>
                                 <td>$10.61</td>
                                 <td>Bought</td>
                             </tr>
                             <tr>
-                                <td>90 Degree USB C Adapter 2pck</td>
+                                <td><a href="#" target="_blank" style="color: var(--accent); text-decoration: none; transition: color 0.3s;">90 Degree USB C Adapter 2pck</a></td>
                                 <td>1</td>
-                                <td>$5.09</td>
                                 <td>$5.09</td>
                                 <td>Bought</td>
                             </tr>
                             <tr>
-                                <td>USB C Extender 1ft</td>
+                                <td><a href="#" target="_blank" style="color: var(--accent); text-decoration: none; transition: color 0.3s;">USB C Extender 1ft</a></td>
                                 <td>1</td>
-                                <td>$8.49</td>
                                 <td>$8.49</td>
                                 <td>Bought</td>
                             </tr>
                             <tr>
-                                <td>4 Pack USB Fans</td>
+                                <td><a href="#" target="_blank" style="color: var(--accent); text-decoration: none; transition: color 0.3s;">4 Pack USB Fans</a></td>
                                 <td>1</td>
-                                <td>$8.81</td>
                                 <td>$8.81</td>
                                 <td>Bought</td>
                             </tr>
 
                             <tr class="category-row">
-                                <td colspan="5">Mechanical Components</td>
+                                <td colspan="4">Mechanical Components</td>
                             </tr>
                             <tr>
-                                <td>eSUN White PLA Filament</td>
+                                <td><a href="#" target="_blank" style="color: var(--accent); text-decoration: none; transition: color 0.3s;">eSUN White PLA Filament</a></td>
                                 <td>1</td>
-                                <td>$11.99</td>
                                 <td>$11.99</td>
                                 <td>Bought</td>
                             </tr>
                             <tr>
-                                <td>M2 Screws Pack</td>
+                                <td><a href="#" target="_blank" style="color: var(--accent); text-decoration: none; transition: color 0.3s;">M2 Screws Pack</a></td>
                                 <td>1</td>
-                                <td>$9.55</td>
                                 <td>$9.55</td>
                                 <td>Bought</td>
                             </tr>
 
                             <tr class="category-row">
-                                <td colspan="5">Miscellaneous</td>
+                                <td colspan="4">Miscellaneous</td>
                             </tr>
                             <tr>
                                 <td>Other MISC estimated cost (wires, connectors, 2x shaft bearings, power adapters,
                                     screws)</td>
                                 <td>1</td>
                                 <td>$40.00</td>
-                                <td>$40.00</td>
                                 <td>Found</td>
                             </tr>
 
                             <tr class="total-row">
-                                <td colspan="3">Total Project Cost</td>
+                                <td colspan="2">Total Budget Spent (Bought Items)</td>
+                                <td>$163.97</td>
+                                <td></td>
+                            </tr>
+                            <tr class="total-row">
+                                <td colspan="2">Total Including Found Items</td>
                                 <td>$445.44</td>
                                 <td></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-
-                <p class="budget-note">
-                    <em>Note: Items marked as "obtained for free" show estimated market cost to enable project
-                        replication at other institutions.</em>
-                </p>
             </div>
         </section>
 
@@ -4394,7 +4390,7 @@
                     </div>
                     <div class="footer-links">
                         <a href="https://olincollege.github.io/pie-2025-03/">All PIE Projects</a>
-                        <a href="[YOUR_GITHUB_LINK]">GitHub Repository</a>
+                        <a href="https://www.github.com/Dh-Van/Munchkin">GitHub Repository</a>
                     </div>
                 </div>
                 <div class="footer-bottom">

@@ -57,9 +57,9 @@ window.addEventListener('scroll', () => {
         const heroHeight = heroSection.offsetHeight;
         const scrollPastHero = scrollY / heroHeight;
 
-        if (scrollPastHero > 0.7) {
+        if (scrollPastHero > 0.9) {
             // Fade in canvas as we approach end of hero section
-            const fadeProgress = Math.min((scrollPastHero - 0.7) / 0.3, 1);
+            const fadeProgress = Math.min((scrollPastHero - 0.2) / 0.1, 1);
             canvas.style.opacity = fadeProgress.toString();
         } else {
             // Keep canvas hidden in hero section
@@ -441,6 +441,7 @@ let embeddedAnimationId;
 function initEmbedded3DViewer() {
     const canvas = document.getElementById('embedded3DCanvas');
     const loadingText = document.getElementById('embedded3DLoadingText');
+    const overlay = document.getElementById('embedded3DOverlay');
 
     if (!canvas) return;
 
@@ -485,7 +486,7 @@ function initEmbedded3DViewer() {
     accentLight2.position.set(0, -3, 5);
     embeddedScene.add(accentLight2);
 
-    // Add OrbitControls
+    // Add OrbitControls (initially disabled to prevent scroll hijacking)
     embeddedControls = new THREE.OrbitControls(embeddedCamera, embeddedRenderer.domElement);
     embeddedControls.enableDamping = true;
     embeddedControls.dampingFactor = 0.05;
@@ -494,6 +495,11 @@ function initEmbedded3DViewer() {
     embeddedControls.minDistance = 2;
     embeddedControls.maxDistance = 15;
     embeddedControls.target.set(0, 0, 0);
+
+    // Disable user interaction until overlay is clicked (but keep auto-rotate working)
+    embeddedControls.enableRotate = false;
+    embeddedControls.enableZoom = false;
+    embeddedControls.enablePan = false;
 
     // Load 3D Model
     const loader = new THREE.GLTFLoader();
@@ -532,6 +538,11 @@ function initEmbedded3DViewer() {
             embeddedScene.add(model);
             if (loadingText) loadingText.style.display = 'none';
 
+            // Show overlay once model is loaded
+            if (overlay) {
+                overlay.style.display = 'flex';
+            }
+
             animateEmbedded3D();
         },
         function (xhr) {
@@ -568,6 +579,24 @@ function initEmbedded3DViewer() {
     }
 
     window.addEventListener('resize', onEmbeddedResize, false);
+
+    // Handle overlay click to enable controls
+    if (overlay) {
+        overlay.addEventListener('click', () => {
+            // Enable user controls
+            if (embeddedControls) {
+                embeddedControls.enableRotate = true;
+                embeddedControls.enableZoom = true;
+                embeddedControls.enablePan = true;
+            }
+
+            // Fade out overlay
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 300);
+        });
+    }
 
     animateEmbedded3D();
 }
