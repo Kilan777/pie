@@ -256,7 +256,7 @@ function init3DModelViewer() {
                 }
             });
 
-            model.rotation.y = Math.PI / 2;
+            model.rotation.z = Math.PI / 2;
 
             modelScene.add(model);
             modelLoaded = true;
